@@ -1,0 +1,16 @@
+<% if(err.statusCode === 404){ %>
+    <head>
+        <%- include("../Partials/head.ejs") %>    
+    </head>
+   <body>
+<% } %> 
+<div class="row justify-content-center">
+<div class="alert alert-danger col-6 mt-5" role="alert">
+    <h4 class="alert-heading">Error - <%= err.statusCode %> </h4>
+    <h4 class="alert-heading"><%= err.message %> </h4>
+    <p><%= err.stack %> </p>
+</div>
+</div>
+<% if(err.statusCode === 404){ %>
+   </body>
+   <% } %> 

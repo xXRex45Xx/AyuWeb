@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('Partials/head.ejs') %>
+    <link rel="stylesheet" href="/css/HomePage/HomePage.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <%- include('Partials/mainnav.ejs')%>
+            <main class="mainContainer p-4">
+                <div class="infoBoxContainer">
+                    <div class="infoBox">
+                        <div class="infoBox_text">
+                            <h2 class="infoBox_value">0</h2>
+                            <h3 class="infoBox_tag">Hospitalized Patients</h3>
+                        </div>
+                        <img src="/Images/HomePageIcons/hospital_bed_80px.png" class="infoBox_image">
+                    </div>
+                    <div class="infoBox">
+                        <div class="infoBox_text">
+                            <h2 class="infoBox_value">0</h2>
+                            <h3 class="infoBox_tag">Today's Appointments</h3>
+                        </div>
+                        <img src="/Images/HomePageIcons/today_80px.png" class="infoBox_image">
+                    </div>
+                    <div class="infoBox">
+                        <div class="infoBox_text">
+                            <h2 class="infoBox_value">0</h2>
+                            <h3 class="infoBox_tag">Today's Patients</h3>
+                        </div>
+                        <img src="/Images/HomePageIcons/patient_65px.png" class="infoBox_image">
+                    </div>
+                    <div class="infoBox">
+                        <div class="infoBox_text">
+                            <h2 class="infoBox_value">0.00</h2>
+                            <h3 class="infoBox_tag">Total Income</h3>
+                        </div>
+                        <img src="/Images/HomePageIcons/income_80px.png" class="infoBox_image">
+                    </div>
+                </div>
+                <div class="container-fluid mt-5">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-12 col-xl-6">                           
+                                <table class="table table-borderless">
+                                    <caption>This Week's Appointments</caption>
+                                    <thead>
+                                        <tr>
+                                            <th>Mon</th>
+                                            <th>Tue</th>
+                                            <th>Wed</th>
+                                            <th>Thu</th>
+                                            <th>Fri</th>
+                                            <th>Sat</th>
+                                            <th>Sun</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>                                
+                        </div>
+                        <div class="col-12 col-xl-6">
+                            <table class="table table-borderless">
+                                <caption>This Week's Incomes</caption>
+                                <thead>
+                                    <th>Mon</th>
+                                    <th>Tue</th>
+                                    <th>Wed</th>
+                                    <th>Thu</th>
+                                    <th>Fri</th>
+                                    <th>Sat</th>
+                                    <th>Sun</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center align-items-center mt-3">
+                        <div class="col">
+                            <div class="tableContainer">
+                                <table class="table table-borderless table-hover">
+                                    <caption>Pending Payments</caption>
+                                    <thead>
+                                        <tr>
+                                            <th>Patient Number</th>
+                                            <th>Patient Name</th>
+                                            <th>Details</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+            </main>
+    </div>
+    <script src="/js/HomePage.js"></script>
+</body>
+
+</html>

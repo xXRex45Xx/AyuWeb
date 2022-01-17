@@ -1,0 +1,14 @@
+{
+  "name": "ayuhospitalmanagementsystem",
+  "version": "1.0.0",
+  "description": "Web based management system built on jquery, ejs, nodejs, express, and mysql.",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "joi": "^17.5.0",
+    "method-override": "^3.0.0",
+    "mysql": "^2.18.1"
+  }
+}

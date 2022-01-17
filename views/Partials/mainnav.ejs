@@ -1,0 +1,9 @@
+<aside class="mainNav h-100">
+    <img src="/Images/APHLogo.png" alt="" class="mainNav_logo">
+    <a href="/" class="mainNav_link <% if(page == 'homepage') {%> mainNav_link--active <% } %> "><img
+            src="<%= page === 'homepage' ? '/Images/NavIconsActive/home_30px.png' : '/Images/NavIconsInactive/home_white_30px.png' %> " alt="" class="mainNav_linkImage">Home
+    </a>
+    <a href="/patientpage" class="mainNav_link <% if(page == 'patientpage') {%> mainNav_link--active <% } %>"><img
+            src="<%= page === 'patientpage' ? '/Images/NavIconsActive/patient_65px.png' : '/Images/NavIconsInactive/patient_white_40px.png' %> " alt="" class="mainNav_linkImage">Patient
+    </a>
+</aside>

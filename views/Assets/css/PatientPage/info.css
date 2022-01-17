@@ -1,0 +1,25 @@
+.infoBox_element{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin: 10px;
+}
+
+.infoBox_label{
+    display: inline-block;
+    color: #0076d4;
+    width:max-content;
+}
+.infoBox_value{
+    display: inline-block;
+    text-align: center;
+    border-bottom: 1px solid #0076d4;
+    width: 150px;
+    margin-left: 10px;
+
+}
+
+/* .appointmentContainer{
+    height:auto;
+    background-color: red;
+} */

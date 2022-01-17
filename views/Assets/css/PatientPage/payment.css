@@ -1,0 +1,28 @@
+.paymentContainer{
+    display: flex;
+    flex-flow: column;
+}
+
+.paymentContainer_history{
+    flex: 2;
+}
+
+.paymentContainer_pending{
+    flex: 1;
+}
+
+.paymentContainer_handlers{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+}
+
+.paymentContainer_button{
+    width: 140px;
+    background-color: #0076d4;
+    border-radius: 20px;
+    padding: 10px;
+    border: none;
+    color: white;
+    margin-left: 20px;
+}
