@@ -8,7 +8,7 @@ async function changeButtonClass(button) {
 
     if (!button.hasClass("search")) {
         await clearSelection()
-        button.addClass("containerNav_link--active")
+        button.toggleClass("containerNav_link--active")
     } else
         clearSelection()
 }
@@ -65,10 +65,8 @@ $(".containerNav_info").on("click", async function () {
         }).catch(e => { });;
     }
     else {
-        setTimeout(() => {
-            $("#infoBtn").removeClass("containerNav_link--active")
-        }, 0);
         alert("Please, select a patient.")
+        $(".containerNav_info").toggleClass("containerNav_link--active")
     }
 
 })
@@ -88,10 +86,8 @@ $(".containerNav_payment").on("click", async function () {
         }).catch(e => { });;
     }
     else{
-        setTimeout(() => {
-            $("#paymentBtn").removeClass("containerNav_link--active")
-        }, 0)
         alert("Please, select a patient.")
+        $(".containerNav_payment").toggleClass("containerNav_link--active")        
     }
 });
 
@@ -108,12 +104,6 @@ $(".containerNav_new").on("click", async function () {
         }
     }).catch(e => { });
 
-    // document.querySelector(".newPatientForm").addEventListener("submit",function(e){
-    //     e.preventDefault()
-    //     e.stopPropagation()
-    //     console.log(this.checkValidity())
-    // })
-
     $(".newPatientForm").on("submit", function(e){
         if(!this.checkValidity()){
             e.preventDefault()
@@ -122,10 +112,3 @@ $(".containerNav_new").on("click", async function () {
         $(this).addClass('was-validated');
     })
 });
-
-
-
-
-
-
-// $(".containerNav").hide();
