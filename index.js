@@ -15,10 +15,7 @@ const db = mysql.createPool({
     database: 'APHMSDB'
 })
 
-const app = express((err) => {
-    if (err)
-        console.log("Error Occured")
-})
+const app = express()
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, '/views'))

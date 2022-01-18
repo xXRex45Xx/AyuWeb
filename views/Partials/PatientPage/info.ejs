@@ -52,7 +52,7 @@
 </div>
 
 <div class="container-fluid row appointmentContainer mt-4 h-75">
-    <table class="table table-borderless h-auto shadow-lg">
+    <table class="table table-borderless shadow-lg">
         <caption>Appointments</caption>
         <thead>
             <tr>
@@ -62,11 +62,7 @@
             </tr>
         </thead>
         <tbody>
-            
-            <%# appointments[0].forEach(appointment => { %>
-            <%# console.log(appointment) %> 
-            <%# }); %> 
-
+            <tr></tr>
             <% for(let appointment of appointments[0]){ %> 
                 <tr>
                     <td><%= appointment.DoctorName %> </td>

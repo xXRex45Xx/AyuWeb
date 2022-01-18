@@ -49,6 +49,10 @@ html,body{
     color: #0076d4;
 }
 
+.table thead > tr{
+    height: 1em;
+}
+
 .table tr.selected{
     background-color: #2ca0ff;
 }
