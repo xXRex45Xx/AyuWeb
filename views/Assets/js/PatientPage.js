@@ -109,6 +109,14 @@ $(".containerNav_new").on("click", async function () {
             e.preventDefault()
             e.stopPropagation()
         }
+        else if(isNaN($("#phoneNo").val()))
+        {
+            $("#phoneNoValidationFeedback").html(`${$('#phoneNo').val()} is not a valid phone number.`)
+            $('#phoneNo').addClass("is-invalid")
+            $('#phoneNo').val("");
+            e.preventDefault()
+            e.stopPropagation()
+        }
         $(this).addClass('was-validated');
     })
     
