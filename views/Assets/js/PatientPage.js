@@ -120,6 +120,6 @@ $(".containerNav_new").on("click", async function () {
         dd = '0' + dd
     if(mm < 10)
         mm = '0' + mm
-    $("#dateOfBirth").attr(max, `${yyyy}-${mm}-${dd}`);
+    $("#dateOfBirth").attr('max', `${yyyy}-${mm}-${dd}`);
 
 });
