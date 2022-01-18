@@ -1,10 +1,11 @@
 const express = require("express")
 const path = require("path")
 const mysql = require("mysql")
-const joi = require('joi')
+const Joi = require('joi')
 const AppError = require("./utils/AppError")
 const catchAsync = require("./utils/catchAsync")
 const methodOverride = require("method-override")
+const validationSchemas = require("./utils/validationSchemas")
 
 //Create connection
 const db = mysql.createPool({
@@ -26,6 +27,18 @@ app.set('views', path.join(__dirname, '/views'))
 app.use(express.static(path.join(__dirname, '/views/Assets')))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+
+const validatePatient = (req, res, next) =>{
+    const validation = validationSchemas.patientSchema.validate(req.body)
+    if(validation.error)
+    {
+        const msg = validation.error.details.map(e => e.message).join(', ')
+        throw new AppError(400, msg)
+    }
+    else{
+        next()
+    }
+}
 
 app.get('/', catchAsync(async (req, res) => {
     res.render('HomePage.ejs', { page: "homepage" })
@@ -97,7 +110,8 @@ function generateCardNo(lastCardNo) {
         return lastCardNo.charAt(0) + (parseInt(cardNums) + 1).toString()        
 }
 
-app.post('/patientpage', catchAsync(async (req, res) => {
+app.post('/patientpage', validatePatient,catchAsync(async (req, res) => {
+    console.log("Validated")
     if (!req.body.patient)
         throw new AppError(400, "Invalid Patient Data")
     const { patient } = req.body
