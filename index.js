@@ -24,17 +24,16 @@ app.use(express.static(path.join(__dirname, '/views/Assets')))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
-const validatePatient = (req, res, next) =>{
+const validatePatient = (req, res, next) => {
     const validation = validationSchemas.patientSchema.validate(req.body)
-    const {gender} = req.body.patient
-    if(validation.error)
-    {
+    const { gender } = req.body.patient
+    if (validation.error) {
         const msg = validation.error.details.map(e => e.message).join(', ')
         throw new AppError(400, msg)
     }
-    else if(gender !== 'M' && gender !== 'F')
+    else if (gender !== 'M' && gender !== 'F')
         throw new AppError(400, "Invalid Gender")
-    else{
+    else {
         next()
     }
 }
@@ -53,11 +52,13 @@ app.get('/patientpage/search', catchAsync(async (req, res) => {
         throw new AppError(400, "Please enter a valid phone number!")
     db.getConnection((err, con) => {
         if (err) {
-            throw new AppError(500, "Database error occured! Pleas contact your system administrator.")
+            throw new AppError(500, "Database error occured! Please contact your system administrator.")
         }
         con.query(`call spReception_SearchPatient(?)`, q, (error, results, fields) => {
-            if (err)
-                throw new AppError(500, "Database error occured! Pleas contact your system administrator.")
+            if (error) {
+                con.release()
+                throw new AppError(500, "Database error occured! Please contact your system administrator.")
+            }
             else
                 res.render('Partials/PatientPage/search.ejs', { patients: results })
         })
@@ -68,16 +69,19 @@ app.get('/patientpage/search', catchAsync(async (req, res) => {
 app.get('/patientpage/:id/info', catchAsync(async (req, res) => {
     const { id } = req.params
     db.getConnection((err, con) => {
-        if (err) {
-            throw new AppError(500, "Database error occured! Pleas contact your system administrator.")
-        }
+        if (err)
+            throw new AppError(500, "Database error occured! Please contact your system administrator.")
         con.query(`call spReception_GetPatientInfo(?)`, id, (error, info, fields) => {
-            if (error)
+            if (error) {
+                con.release()
                 throw new AppError(500, "Database error occured! Please, contact your system administrator.")
+            }
             else {
                 con.query(`call spReception_GetPatientAppointments(?)`, id, (error, appointments, fields) => {
-                    if (error)
-                        throw new AppError(500, "Database error occured! Pleas contact your system administrator.")
+                    if (error) {
+                        con.release()
+                        throw new AppError(500, "Database error occured! Please contact your system administrator.")
+                    }
                     else
                         res.render('Partials/PatientPage/info.ejs', { info, appointments })
                     con.release()
@@ -90,7 +94,23 @@ app.get('/patientpage/:id/info', catchAsync(async (req, res) => {
 
 app.get('/patientpage/:id/payment', catchAsync(async (req, res) => {
     const { id } = req.params
-    res.render("Partials/PatientPage/payment.ejs")
+    db.getConnection((err, con) => {
+        if (err)
+            throw new AppError(500, "Database error occured!")
+        con.query("call spReception_GetPatientPendingPayments(?)", id, (error, pendingPayments, fields) => {
+            if (error) {
+                con.release()
+                throw new AppError(500, "Database error occured!")
+            }
+            con.query("call spReception_GetPatientCompletedPayments(?)", id,(error, completedPayments, fields) =>{
+                if(error){
+                    con.release()
+                    throw new AppError(500, "Database error occured!")
+                }                
+                res.render("Partials/PatientPage/payment.ejs", {pendingPayments, completedPayments})
+            })
+        })
+    })
 }))
 
 app.get('/patientpage/new', catchAsync(async (req, res) => {
@@ -98,7 +118,7 @@ app.get('/patientpage/new', catchAsync(async (req, res) => {
 }))
 
 function generateCardNo(lastCardNo) {
-    if(!lastCardNo)
+    if (!lastCardNo)
         return null
     let cardNums = lastCardNo.substring(1, lastCardNo.length)
     if (cardNums === "9999") {
@@ -106,10 +126,10 @@ function generateCardNo(lastCardNo) {
         return firstLetter + "0000"
     }
     else
-        return lastCardNo.charAt(0) + (parseInt(cardNums) + 1).toString()        
+        return lastCardNo.charAt(0) + (parseInt(cardNums) + 1).toString()
 }
 
-app.post('/patientpage', validatePatient,catchAsync(async (req, res) => {
+app.post('/patientpage', validatePatient, catchAsync(async (req, res) => {
     console.log("Validated")
     if (!req.body.patient)
         throw new AppError(400, "Invalid Patient Data")
@@ -124,16 +144,20 @@ app.post('/patientpage', validatePatient,catchAsync(async (req, res) => {
                 patient.hospitalized = false
             const patientArr = [patient.firstName, patient.fatherName, patient.dateOfBirth, patient.gender, patient.address, patient.phoneNo, patient.hospitalized]
             con.query("call spReception_AddPatient(?, ?, ?, ?, ?, ?, ?)", patientArr, (error, results, fields) => {
-                if (error)
+                if (error) {
+                    con.release()
                     throw new AppError(500, error.sqlMessage)
+                }
                 else {
                     console.log(results)
                     const { lastId } = results[0][0]
                     const { lastCardNo } = results[1][0]
                     const cardNo = generateCardNo(lastCardNo)
-                    con.query("call spReception_AddCard(?, ?)", [lastId, cardNo], (error, results, fields) =>{
-                        if(error)
+                    con.query("call spReception_AddCard(?, ?)", [lastId, cardNo], (error, results, fields) => {
+                        if (error) {
+                            con.release()
                             throw new AppError(500, error.sqlMessage)
+                        }
                     })
                 }
                 con.release()
@@ -148,11 +172,8 @@ app.all('*', catchAsync(async (req, res, next) => {
 }))
 
 app.use((err, req, res, next) => {
-    if (!err.statusCode) {
-        res.status(500).send(err.message)
-        return
-    }
-    res.status(err.statusCode).render("Partials/error.ejs", { err })
+    const { statusCode = 500 } = err
+    res.status(statusCode).render("Partials/error.ejs", { err })
 })
 
 app.listen(3000, "localhost", () => {

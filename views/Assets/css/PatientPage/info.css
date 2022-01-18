@@ -19,7 +19,6 @@
 
 }
 
-/* .appointmentContainer{
-    height:auto;
-    background-color: red;
-} */
+.appointmentContainer_appointment{
+    border-radius: 10px;
+}

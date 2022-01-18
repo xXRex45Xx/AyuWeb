@@ -21,6 +21,27 @@ begin
 end &&
 
 delimiter &&
+create procedure spReception_GetPatientCompletedPayments(in `@patientNo` int)
+begin
+	select PaymentNumber, PaymentDetails, DateOfPayment, Price 
+    from Reception_Patient_CompletedPaymentView
+    where  PatientNumber = `@patientNo`;
+end &&
+
+delimiter &&
+create procedure spReception_GetPatientPendingPayments(in `@patientNo` int)
+begin
+	select PaymentNumber, PaymentDetails, Price
+    from Reception_Patient_PendingPaymentView
+    where PatientNumber = `@patientNo`;
+end &&
+
+
+insert into Payment (paymentNo, patientNo, paymentDetails, price) value
+(1,1, "This is a test", 50.00)
+
+select * from Payment
+delimiter &&
 create procedure spReception_AddPatient(
 	in `@firstName` varchar(25),
     in `@fatherName` varchar(25),

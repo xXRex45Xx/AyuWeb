@@ -33,5 +33,31 @@ from Appointment as A
 join Doctor as D
 on A.DoctorNo = D.doctorNo;
 
+alter view Reception_Patient_CompletedPaymentView
+as
+select
+	Pay.patientNo as PatientNumber,
+	Pay.paymentNo as PaymentNumber,
+	Pay.paymentDetails as PaymentDetails,
+	Pay.dateOfPayment as DateOfPayment,
+    Pay.price as Price
+from Payment as Pay
+join Patient as Pat
+on Pay.patientNo = Pat.patientNo
+where Pay.PaymentCompleted = true;
+
+alter view Reception_Patient_PendingPaymentView
+as
+select
+	Pay.patientNo as PatientNumber,
+	Pay.paymentNo as PaymentNumber,
+	Pay.paymentDetails as PaymentDetails,
+    Pay.price as Price
+from Payment as Pay
+join Patient as Pat
+on Pay.patientNo = Pat.patientNo
+where Pay.PaymentCompleted = false;
+
+
 
 

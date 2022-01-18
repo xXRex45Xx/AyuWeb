@@ -1,13 +1,16 @@
 .paymentContainer{
     display: flex;
     flex-flow: column;
+    justify-content: space-evenly;
 }
 
 .paymentContainer_history{
+    border-radius: 10px;
     flex: 2;
 }
 
 .paymentContainer_pending{
+    border-radius: 10px;
     flex: 1;
 }
 

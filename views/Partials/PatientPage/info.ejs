@@ -52,26 +52,34 @@
 </div>
 
 <div class="container-fluid row appointmentContainer mt-4 h-75">
-    <table class="table table-borderless shadow-lg">
-        <caption>Appointments</caption>
-        <thead>
-            <tr>
-                <th>Doctor Name</th>
-                <th>Date Of Appointment</th>
-                <th>Time Of Appointment</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr></tr>
-            <% for(let appointment of appointments[0]){ %> 
+    <div class="shadow-lg appointmentContainer_appointment">
+        <table class="table table-borderless">
+            <caption>Appointments</caption>
+            <thead>
                 <tr>
-                    <td><%= appointment.DoctorName %> </td>
-                    <td><%= appointment.DateOfAppointment %> </td>
-                    <td><%= appointment.TimeOfAppointment %> </td>
+                    <th>Doctor Name</th>
+                    <th>Date Of Appointment</th>
+                    <th>Time Of Appointment</th>
                 </tr>
-            <% } %> 
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <tr></tr>
+                <% for(let appointment of appointments[0]){ %>
+                    <tr>
+                        <td>
+                            <%= appointment.DoctorName %>
+                        </td>
+                        <td>
+                            <%= appointment.DateOfAppointment %>
+                        </td>
+                        <td>
+                            <%= appointment.TimeOfAppointment %>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 
