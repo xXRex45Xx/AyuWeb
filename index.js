@@ -5,7 +5,6 @@ const joi = require('joi')
 const AppError = require("./utils/AppError")
 const catchAsync = require("./utils/catchAsync")
 const methodOverride = require("method-override")
-const { string } = require("joi")
 
 //Create connection
 const db = mysql.createPool({
@@ -86,22 +85,44 @@ app.get('/patientpage/new', catchAsync(async (req, res) => {
     res.render("Partials/PatientPage/new.ejs")
 }))
 
+function generateCardNo(lastCardNo) {
+    if(!lastCardNo)
+        return null
+    let cardNums = lastCardNo.substring(1, lastCardNo.length)
+    if (cardNums === "9999") {
+        firstLetter = String.fromCharCode(lastCardNo.charCodeAt(0) + 1)
+        return firstLetter + "0000"
+    }
+    else
+        return lastCardNo.charAt(0) + (parseInt(cardNums) + 1).toString()        
+}
+
 app.post('/patientpage', catchAsync(async (req, res) => {
-    const {patient} = req.body
-    db.getConnection((err, con) =>{
-        if(err)
+    if (!req.body.patient)
+        throw new AppError(400, "Invalid Patient Data")
+    const { patient } = req.body
+    db.getConnection((err, con) => {
+        if (err)
             throw new AppError(500, "Database error occured! Please, contact your system administrator.")
-        else
-        {
-            if(patient.hospitalized)
+        else {
+            if (patient.hospitalized)
                 patient.hospitalized = true
             else
-                patient.hospitalized = false            
-            con.query("call spReception_AddPatient(?, ?, ?, ?, ?, ?, ?)", [patient.firstName,patient.fatherName, patient.dateOfBirth, patient.gender, patient.address, patient.phoneNo, patient.hospitalized], (error, results, fields) => {
-                if(error)
+                patient.hospitalized = false
+            const patientArr = [patient.firstName, patient.fatherName, patient.dateOfBirth, patient.gender, patient.address, patient.phoneNo, patient.hospitalized]
+            con.query("call spReception_AddPatient(?, ?, ?, ?, ?, ?, ?)", patientArr, (error, results, fields) => {
+                if (error)
                     throw new AppError(500, error.sqlMessage)
-                else
+                else {
                     console.log(results)
+                    const { lastId } = results[0][0]
+                    const { lastCardNo } = results[1][0]
+                    const cardNo = generateCardNo(lastCardNo)
+                    con.query("call spReception_AddCard(?, ?)", [lastId, cardNo], (error, results, fields) =>{
+                        if(error)
+                            throw new AppError(500, error.sqlMessage)
+                    })
+                }
                 con.release()
             })
         }
@@ -116,12 +137,11 @@ app.all('*', catchAsync(async (req, res, next) => {
 app.use((err, req, res, next) => {
     if (!err.statusCode) {
         res.status(500).send(err.message)
-        console.log(err)
         return
     }
     res.status(err.statusCode).render("Partials/error.ejs", { err })
 })
 
-app.listen(3000, "192.168.1.200", () => {
+app.listen(3000, "localhost", () => {
     console.log("Server started")
 })
