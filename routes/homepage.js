@@ -1,9 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const catchAsync = require("../utils/catchAsync")
 
-router.get('/', catchAsync(async (req, res) => {
+router.get('/', async (req, res, next) => {
+    try{
     res.render('HomePage.ejs', { page: "homepage" })
-}))
+    }
+    catch(e){
+        next(e)
+    }
+})
 
 module.exports = router

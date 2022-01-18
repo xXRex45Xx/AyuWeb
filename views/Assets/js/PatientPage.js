@@ -41,7 +41,10 @@ $(".containerNav_search").on("click", async function () {
                 $(".mainContainer_subContainer").html(error.responseText)
             }
 
-        }).catch(e => { });
+        }).catch(e => { 
+            console.log(e.responseText)
+            $(".mainContainer_subContainer").html(e.responseText);
+        });
         $(".searchTable tbody tr").on("click", function () {
             $(".searchTable tbody tr").removeClass("selected");
             $(this).toggleClass("selected");
@@ -59,10 +62,12 @@ $(".containerNav_info").on("click", async function () {
             success: function (response) {
                 $(".mainContainer_subContainer").html(response);
             },
-            error: function(error){
+            error: function (error) {
                 $(".mainContianer_subContainer").html(error.responseText)
             }
-        }).catch(e => { });;
+        }).catch(e => { 
+            $(".mainContainer_subContainer").html(e.responseText);
+        });
     }
     else {
         alert("Please, select a patient.")
@@ -72,22 +77,24 @@ $(".containerNav_info").on("click", async function () {
 })
 
 $(".containerNav_payment").on("click", async function () {
-    if(selectedPatient){
+    if (selectedPatient) {
         $.ajax({
             type: "GET",
             url: `/patientpage/${selectedPatient}/payment`,
             dataType: "html",
             success: function (response) {
                 $(".mainContainer_subContainer").html(response)
-            },            
-            error: function(error){
+            },
+            error: function (error) {
                 $(".mainContianer_subContainer").html(error.responseText)
             }
-        }).catch(e => { });;
+        }).catch(e => { 
+            $(".mainContainer_subContainer").html(e.responseText);
+        });
     }
-    else{
+    else {
         alert("Please, select a patient.")
-        $(".containerNav_payment").toggleClass("containerNav_link--active")        
+        $(".containerNav_payment").toggleClass("containerNav_link--active")
     }
 });
 
@@ -98,19 +105,21 @@ $(".containerNav_new").on("click", async function () {
         dataType: "html",
         success: function (response) {
             $(".mainContainer_subContainer").html(response);
-        },        
-        error: function(error){
+        },
+        error: function (error) {
             $(".mainContianer_subContainer").html(error.responseText)
         }
-    }).catch(e => { });
+    }).catch(e => { 
+        console.log(e.responseText)
+        $(".mainContainer_subContainer").html(e.responseText);
+    });
 
-    $(".newPatientForm").on("submit", function(e){
-        if(!this.checkValidity()){
+    $(".newPatientForm").on("submit", function (e) {
+        if (!this.checkValidity()) {
             e.preventDefault()
             e.stopPropagation()
         }
-        else if(isNaN($("#phoneNo").val()))
-        {
+        else if (isNaN($("#phoneNo").val())) {
             $("#phoneNoValidationFeedback").html(`${$('#phoneNo').val()} is not a valid phone number.`)
             $('#phoneNo').addClass("is-invalid")
             $('#phoneNo').val("");
@@ -119,14 +128,14 @@ $(".containerNav_new").on("click", async function () {
         }
         $(this).addClass('was-validated');
     })
-    
+
     let date = new Date()
     let dd = date.getDate()
     let mm = date.getMonth() + 1
     let yyyy = date.getFullYear()
-    if(dd < 10)
+    if (dd < 10)
         dd = '0' + dd
-    if(mm < 10)
+    if (mm < 10)
         mm = '0' + mm
     $("#dateOfBirth").attr('max', `${yyyy}-${mm}-${dd}`);
 
