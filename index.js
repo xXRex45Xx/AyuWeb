@@ -1,7 +1,6 @@
 const express = require("express")
 const path = require("path")
 const mysql = require("mysql")
-const Joi = require('joi')
 const AppError = require("./utils/AppError")
 const catchAsync = require("./utils/catchAsync")
 const methodOverride = require("method-override")
@@ -30,11 +29,14 @@ app.use(methodOverride('_method'))
 
 const validatePatient = (req, res, next) =>{
     const validation = validationSchemas.patientSchema.validate(req.body)
+    const {gender} = req.body.patient
     if(validation.error)
     {
         const msg = validation.error.details.map(e => e.message).join(', ')
         throw new AppError(400, msg)
     }
+    else if(gender !== 'M' && gender !== 'F')
+        throw new AppError(400, "Invalid Gender")
     else{
         next()
     }
