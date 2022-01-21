@@ -26,14 +26,14 @@ DROP TABLE IF EXISTS `AppUser`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `AppUser` (
   `userNo` int NOT NULL,
-  `userName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `userName` varchar(50) CHARACTER SET utf8mb4  NOT NULL,
+  `password` varchar(50) CHARACTER SET utf8mb4  NOT NULL,
   `role` tinyint unsigned NOT NULL,
   `status` tinyint unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`userNo`),
   UNIQUE KEY `UQ__AppUser__6E2DBEDE90185B9D` (`password`),
   UNIQUE KEY `UQ__AppUser__66DCF95CDD3CB569` (`userName`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,7 +54,7 @@ CREATE TABLE `Appointment` (
   KEY `IX_DoctorNo` (`DoctorNo`),
   CONSTRAINT `FK_dbo.Appointment_dbo.Doctor_DoctorNo` FOREIGN KEY (`DoctorNo`) REFERENCES `Doctor` (`doctorNo`),
   CONSTRAINT `FK_dbo.Appointment_dbo.Patient_PatientNo` FOREIGN KEY (`PatientNo`) REFERENCES `Patient` (`patientNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,7 @@ CREATE TABLE `Card` (
   UNIQUE KEY `UQ__Card__A1702D6D0A40C543` (`patientNo`),
   KEY `IX_PatientNo` (`patientNo`),
   CONSTRAINT `fk_PatientCard` FOREIGN KEY (`patientNo`) REFERENCES `Patient` (`patientNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `Diagnosis` (
   KEY `IX_DoctorNo` (`doctorNo`),
   CONSTRAINT `fk_CardDiagnosis` FOREIGN KEY (`cardNo`) REFERENCES `Card` (`cardNo`),
   CONSTRAINT `fk_DoctorDiagnosis` FOREIGN KEY (`doctorNo`) REFERENCES `Doctor` (`doctorNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +114,7 @@ CREATE TABLE `Doctor` (
   UNIQUE KEY `UQ__Doctor__960F17EFEAF7FD5C` (`phoneNo`),
   KEY `IX_UserNo` (`userNo`),
   CONSTRAINT `fk_DoctorUser` FOREIGN KEY (`userNo`) REFERENCES `AppUser` (`userNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,7 +139,7 @@ CREATE TABLE `DoctorOrder` (
   CONSTRAINT `fk_DoctorOrder` FOREIGN KEY (`doctorNo`) REFERENCES `Doctor` (`doctorNo`),
   CONSTRAINT `fk_NurseOrder` FOREIGN KEY (`nurseNo`) REFERENCES `Nurse` (`nurseNo`),
   CONSTRAINT `fk_PatientOrder` FOREIGN KEY (`patientNo`) REFERENCES `Patient` (`patientNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +156,7 @@ CREATE TABLE `Inventory` (
   `unit` varchar(10) NOT NULL,
   `unitPrice` decimal(19,4) NOT NULL,
   PRIMARY KEY (`itemNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +183,7 @@ CREATE TABLE `InventoryRecieve` (
   CONSTRAINT `fk_ItemSupplier` FOREIGN KEY (`supplierNo`) REFERENCES `Supplier` (`supplierNo`),
   CONSTRAINT `fk_PharmacistReceived` FOREIGN KEY (`pharmacistNo`) REFERENCES `Pharmacist` (`pharmacistNo`),
   CONSTRAINT `fk_ReceivedItemNo` FOREIGN KEY (`itemNo`) REFERENCES `Inventory` (`itemNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +207,7 @@ CREATE TABLE `InventoryTransfer` (
   KEY `IX_PharmacistNo` (`pharmacistNo`),
   CONSTRAINT `fk_itemNoSent` FOREIGN KEY (`itemNo`) REFERENCES `Inventory` (`itemNo`),
   CONSTRAINT `fk_Pharmacist` FOREIGN KEY (`pharmacistNo`) REFERENCES `Pharmacist` (`pharmacistNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +225,7 @@ CREATE TABLE `LabReport` (
   PRIMARY KEY (`RequestNo`,`ReportType`),
   KEY `IX_RequestNo` (`RequestNo`),
   CONSTRAINT `FK_dbo.LabReport_dbo.LabRequest_RequestNo` FOREIGN KEY (`RequestNo`) REFERENCES `LabRequest` (`RequestNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -248,7 +248,7 @@ CREATE TABLE `LabRequest` (
   CONSTRAINT `FK_dbo.LabRequest_dbo.Doctor_DoctorNo` FOREIGN KEY (`DoctorNo`) REFERENCES `Doctor` (`doctorNo`),
   CONSTRAINT `FK_dbo.LabRequest_dbo.LabTechnician_TechnicianNo` FOREIGN KEY (`TechnicianNo`) REFERENCES `LabTechnician` (`technicianNo`),
   CONSTRAINT `FK_dbo.LabRequest_dbo.Patient_PatientNo` FOREIGN KEY (`PatientNo`) REFERENCES `Patient` (`patientNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +270,7 @@ CREATE TABLE `LabTechnician` (
   UNIQUE KEY `UQ__LabTechn__960F17EFBBFDD360` (`phoneNo`),
   KEY `IX_UserNo` (`userNo`),
   CONSTRAINT `fk_TechnicianUser` FOREIGN KEY (`userNo`) REFERENCES `AppUser` (`userNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -292,7 +292,7 @@ CREATE TABLE `Management` (
   UNIQUE KEY `UQ__Manageme__960F17EF4835FF94` (`phoneNo`),
   KEY `IX_UserNo` (`userNo`),
   CONSTRAINT `fk_ManagementUser` FOREIGN KEY (`userNo`) REFERENCES `AppUser` (`userNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -319,7 +319,7 @@ CREATE TABLE `MedicationDetail` (
   CONSTRAINT `fk_MedicationOrder` FOREIGN KEY (`orderNo`) REFERENCES `DoctorOrder` (`orderNo`),
   CONSTRAINT `fk_NurseMedication` FOREIGN KEY (`nurseNo`) REFERENCES `Nurse` (`nurseNo`),
   CONSTRAINT `fk_PatientMedication` FOREIGN KEY (`patientNo`) REFERENCES `Patient` (`patientNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -344,7 +344,7 @@ CREATE TABLE `MonitorDetail` (
   CONSTRAINT `fk_MonitorVitalSign` FOREIGN KEY (`vitalSignNo`) REFERENCES `VitalSign` (`vitalSignNo`),
   CONSTRAINT `fk_NurseMonitor` FOREIGN KEY (`nurseNo`) REFERENCES `Nurse` (`nurseNo`),
   CONSTRAINT `fk_PatientMonitor` FOREIGN KEY (`patientNo`) REFERENCES `Patient` (`patientNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -366,7 +366,7 @@ CREATE TABLE `Nurse` (
   UNIQUE KEY `UQ__Nurse__960F17EFC7E53FF3` (`phoneNo`),
   KEY `IX_UserNo` (`userNo`),
   CONSTRAINT `fk_NurseUser` FOREIGN KEY (`userNo`) REFERENCES `AppUser` (`userNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -387,7 +387,7 @@ CREATE TABLE `Patient` (
   `type` tinyint(1) NOT NULL,
   PRIMARY KEY (`patientNo`),
   KEY `idx_PhoneNo` (`phoneNo`,`firstName`,`fatherName`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -409,7 +409,7 @@ CREATE TABLE `PatientProgress` (
   KEY `IX_DoctorNo` (`doctorNo`),
   CONSTRAINT `fk_DoctorProgress` FOREIGN KEY (`doctorNo`) REFERENCES `Doctor` (`doctorNo`),
   CONSTRAINT `fk_PatientProgress` FOREIGN KEY (`patientNo`) REFERENCES `Patient` (`patientNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -432,7 +432,7 @@ CREATE TABLE `Payment` (
   KEY `IX_PatientNo` (`patientNo`),
   CONSTRAINT `fk_PatientPayment` FOREIGN KEY (`patientNo`) REFERENCES `Patient` (`patientNo`),
   CONSTRAINT `fk_ReceptionPayment` FOREIGN KEY (`receptionNo`) REFERENCES `Reception` (`receptionNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -452,7 +452,7 @@ CREATE TABLE `Pharmacist` (
   PRIMARY KEY (`pharmacistNo`),
   UNIQUE KEY `UQ__Pharmaci__CB9A040D9683112F` (`userNo`),
   UNIQUE KEY `UQ__Pharmaci__960F17EFC8BC1892` (`phoneNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -474,7 +474,7 @@ CREATE TABLE `PharmacyCashier` (
   UNIQUE KEY `UQ__Pharmacy__960F17EF2813C482` (`phoneNo`),
   KEY `IX_UserNo` (`userNo`),
   CONSTRAINT `fk_PharmacyCashier` FOREIGN KEY (`userNo`) REFERENCES `AppUser` (`userNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -497,7 +497,7 @@ CREATE TABLE `Prescription` (
   CONSTRAINT `fk_DoctorPrescription` FOREIGN KEY (`doctorNo`) REFERENCES `Doctor` (`doctorNo`),
   CONSTRAINT `fk_PatientPrescription` FOREIGN KEY (`patientNo`) REFERENCES `Patient` (`patientNo`),
   CONSTRAINT `fk_PharmacistPrescription` FOREIGN KEY (`pharmacistNo`) REFERENCES `Pharmacist` (`pharmacistNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -513,7 +513,7 @@ CREATE TABLE `PrescriptionDetail` (
   KEY `ClusteredIndexPrescriptionNumber` (`prescriptionNo`),
   KEY `IX_PrescriptionNo` (`prescriptionNo`),
   CONSTRAINT `fk_PrescriptionDetail` FOREIGN KEY (`prescriptionNo`) REFERENCES `Prescription` (`prescriptionNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -533,7 +533,7 @@ CREATE TABLE `Radiologist` (
   PRIMARY KEY (`RadiologistNo`),
   KEY `IX_UserNo` (`UserNo`),
   CONSTRAINT `FK_dbo.Radiologist_dbo.AppUser_UserNo` FOREIGN KEY (`UserNo`) REFERENCES `AppUser` (`userNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -560,7 +560,7 @@ CREATE TABLE `RadiologyRequestAndReport` (
   CONSTRAINT `FK_dbo.RadiologyRequestAndReport_dbo.Doctor_DoctorNo` FOREIGN KEY (`DoctorNo`) REFERENCES `Doctor` (`doctorNo`),
   CONSTRAINT `FK_dbo.RadiologyRequestAndReport_dbo.Patient_PatientNo` FOREIGN KEY (`PatientNo`) REFERENCES `Patient` (`patientNo`),
   CONSTRAINT `FK_dbo.RadiologyRequestAndReport_dbo.Radiologist_RadiologistNo` FOREIGN KEY (`RadiologistNo`) REFERENCES `Radiologist` (`RadiologistNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -582,7 +582,7 @@ CREATE TABLE `Reception` (
   UNIQUE KEY `UQ__Receptio__960F17EF1ED88C89` (`phoneNo`),
   KEY `IX_UserNo` (`userNo`),
   CONSTRAINT `fk_ReceptionUser` FOREIGN KEY (`userNo`) REFERENCES `AppUser` (`userNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -649,7 +649,7 @@ CREATE TABLE `Sale` (
   PRIMARY KEY (`FSNo`),
   KEY `IX_PharmacyCashierNo` (`pharmacyCashierNo`),
   CONSTRAINT `fk_CashierSale` FOREIGN KEY (`pharmacyCashierNo`) REFERENCES `PharmacyCashier` (`cashierNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -673,7 +673,7 @@ CREATE TABLE `SaleDetail` (
   KEY `IX_ItemNo` (`itemNo`),
   CONSTRAINT `fk_ItemSale` FOREIGN KEY (`itemNo`) REFERENCES `Inventory` (`itemNo`),
   CONSTRAINT `fk_SaleDetail` FOREIGN KEY (`saleNo`) REFERENCES `Sale` (`FSNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -688,7 +688,7 @@ CREATE TABLE `Supplier` (
   `name` varchar(50) DEFAULT NULL,
   `phoneNo` int NOT NULL,
   PRIMARY KEY (`supplierNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -708,7 +708,7 @@ CREATE TABLE `VitalSign` (
   `SPO2` double NOT NULL,
   `Pain` double NOT NULL,
   PRIMARY KEY (`vitalSignNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -719,12 +719,12 @@ DROP TABLE IF EXISTS `__MigrationHistory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `__MigrationHistory` (
-  `MigrationId` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `ContextKey` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `MigrationId` varchar(150) CHARACTER SET utf8mb4  NOT NULL,
+  `ContextKey` varchar(300) CHARACTER SET utf8mb4  NOT NULL,
   `Model` longblob NOT NULL,
-  `ProductVersion` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ProductVersion` varchar(32) CHARACTER SET utf8mb4  NOT NULL,
   PRIMARY KEY (`MigrationId`,`ContextKey`(255))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -742,7 +742,7 @@ CREATE TABLE `sysdiagrams` (
   `definition` longblob,
   PRIMARY KEY (`diagram_id`),
   UNIQUE KEY `UK_principal_name` (`principal_id`,`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -754,7 +754,7 @@ CREATE TABLE `sysdiagrams` (
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -776,7 +776,7 @@ DELIMITER ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -805,7 +805,7 @@ DELIMITER ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -825,7 +825,7 @@ DELIMITER ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -845,7 +845,7 @@ DELIMITER ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -870,7 +870,7 @@ DELIMITER ;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `ReceptionPatientAppointmentView` AS select `A`.`PatientNo` AS `PatientNumber`,concat((`D`.`firstName` + ' '),`D`.`fatherName`) AS `DoctorName`,date_format(`A`.`DateOfAppointment`,'%a, %b %e, %Y') AS `DateOfAppointment`,`A`.`TimeOfAppointment` AS `TimeOfAppointment` from (`Appointment` `A` join `Doctor` `D` on((`A`.`DoctorNo` = `D`.`doctorNo`))) */;
@@ -888,7 +888,7 @@ DELIMITER ;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `ReceptionPatientInfoView` AS select `P`.`patientNo` AS `PatientNumber`,concat(`P`.`firstName`,' ',`P`.`fatherName`) AS `Name`,((to_days(curdate()) - to_days(`P`.`dateOfBirth`)) / 365) AS `Age`,`P`.`gender` AS `Gender`,`C`.`cardNo` AS `CardNumber`,`P`.`address` AS `Address`,`P`.`phoneNo` AS `PhoneNumber` from (`Patient` `P` join `Card` `C` on((`P`.`patientNo` = `C`.`patientNo`))) */;
@@ -906,7 +906,7 @@ DELIMITER ;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `ReceptionPatientSearchView` AS select `P`.`patientNo` AS `PatientNumber`,`P`.`firstName` AS `FirstName`,`P`.`fatherName` AS `FatherName`,`P`.`phoneNo` AS `PhoneNumber`,`C`.`cardNo` AS `CardNumber` from (`Patient` `P` join `Card` `C` on((`P`.`patientNo` = `C`.`patientNo`))) */;
