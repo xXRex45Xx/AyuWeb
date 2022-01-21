@@ -110,7 +110,6 @@ router.get('/:id/info', async (req, res, next) => {
 
 router.get('/:id/payment', async (req, res, next) => {
     try {
-        return
         const { id } = req.params
         db.getConnection((err, con) => {
             if (err){
@@ -149,8 +148,9 @@ router.get('/new', async (req, res, next) => {
 })
 
 function generateCardNo(lastCardNo) {
-    if (!lastCardNo)
-        return null
+    if (!lastCardNo){
+        return "A0000"
+    }
     let cardNums = lastCardNo.substring(1, lastCardNo.length)
     if (cardNums === "9999") {
         firstLetter = String.fromCharCode(lastCardNo.charCodeAt(0) + 1)
@@ -162,8 +162,6 @@ function generateCardNo(lastCardNo) {
 
 router.post('/', validatePatient, async (req, res, next) => {
     try {
-        if (!req.body.patient)
-            throw new AppError(400, "Invalid Patient Data")
         const { patient } = req.body
         db.getConnection((err, con) => {
             if (err){
