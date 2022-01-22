@@ -1,6 +1,6 @@
 const express = require("express")
 const path = require("path")
-const AppError = require("./utils/AppError")
+const {AppError, wrapAsync} = require("./utils/error")
 const methodOverride = require("method-override")
 const appRoutes = require("./routes")
 const session = require('express-session')
