@@ -15,8 +15,8 @@
             </tbody>
         </table>
     </div>
-    <div class="paymentContainer_pending shadow-lg m-2">
-        <table class="table table-borderless table-hover">
+    <div class="paymentContainer_pending shadow-lg m-2 overflow-auto">
+        <table class="paymentContainer_pendingTable table table-borderless table-hover">
             <caption>Pending Payments</caption>
             <thead>
                 <tr>
@@ -28,15 +28,17 @@
             <tbody>
                 <tr></tr>
                 <% for(let payment of pendingPayments[0]) {%>
-                    <td>
-                        <%= payment.PaymentNumber %>
-                    </td>
-                    <td>
-                        <%= payment.PaymentDetails %>
-                    </td>
-                    <td>
-                        <%= payment.Price %>
-                    </td>
+                    <tr>
+                        <td>
+                            <%= payment.PaymentNumber %>
+                        </td>
+                        <td>
+                            <%= payment.PaymentDetails %>
+                        </td>
+                        <td>
+                            <%= payment.Price %>
+                        </td>
+                    </tr>
                     <% } %>
             </tbody>
         </table>

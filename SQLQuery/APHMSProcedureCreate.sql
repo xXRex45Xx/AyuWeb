@@ -65,3 +65,10 @@ begin
 	insert into Card(patientNo, cardNo) values
     (`@patientNo`, `@cardNo`);
 end &&
+
+delimiter &&
+create procedure spReception_CancelPayment(in `@paymentNo` int)
+begin
+	delete from Payment 
+    where `@paymentNo` = paymentNo and PaymentCompleted = 0;
+end &&

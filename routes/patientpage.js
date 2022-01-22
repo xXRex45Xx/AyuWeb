@@ -6,6 +6,8 @@ const validationSchemas = require("../utils/validationSchemas")
 
 const router = express.Router();
 
+router.use(methodOverride("_method"))
+
 const db = mysql.createPool({
     connectionLimit: 100,
     host: 'localhost',
@@ -114,7 +116,34 @@ router.get('/:id/payment', wrapAsync(async (req, res, next) => {
                     return
                 }
                 res.render("Partials/PatientPage/payment.ejs", { pendingPayments, completedPayments })
+                con.release()
             })
+        })
+    })
+}))
+
+router.delete("/:patientId/payment/:paymentId", wrapAsync(async (req,res,next) =>{
+    const {patientId, paymentId} = req.params
+    const{id} = req.params
+    db.getConnection((err, con) =>{
+        if(err){
+            next(new AppError(500, "Database Error Occured"))
+            return
+        }
+        con.query("call spReception_CancelPayment(?)",paymentId, (error, results, fields) =>{
+            if(error){
+                con.release()
+                next(new AppError(500, "Database error occured!"))
+                return
+            }
+            const {affectedRows} = results
+            if(affectedRows == 0){
+                con.release()
+                next(new AppError(400, "Cannot delete selected payment!"))
+                return
+            }            
+            req.flash("success", "Payment canceled successfuly.")
+            res.render("Partials/PatientPage/successflash.ejs", {success: req.flash("success")})
         })
     })
 }))

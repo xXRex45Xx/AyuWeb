@@ -29,3 +29,7 @@
     color: white;
     margin-left: 20px;
 }
+
+.table tr.selectedPayment{
+    background-color: #2ca0ff;
+}
