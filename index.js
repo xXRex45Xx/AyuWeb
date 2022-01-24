@@ -22,7 +22,11 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use("/", appRoutes.homepage)
+app.get("/", (req, res, next) => {
+    res.render("LoginPage.ejs")
+})
+
+app.use("/hompage", appRoutes.homepage)
 app.use("/patientpage", appRoutes.patientpage)
 
 app.all('*', (req, res, next) => {

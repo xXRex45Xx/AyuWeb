@@ -4,6 +4,7 @@
   "description": "Web based management system built on jquery, ejs, nodejs, express, and mysql.",
   "main": "index.js",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "connect-flash": "^0.1.1",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",

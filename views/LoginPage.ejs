@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("Partials/head.ejs") %>
+        <link rel="stylesheet" href="/css/LoginPage.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="loginContainer d-flex flex-row flex-nowrap shadow-lg">
+            <div class="hospitalInfoBox container p-4">
+                <img src="/Images/APHLogo.png" alt="" class="hospitalInfoBox_logo mb-5">
+                <h1 class="hospitalInfoBox_companyName mt-5">Ayu Primary Hospital</h1>
+            </div>
+            <div class="loginFormBox container p-5">
+                <form class="loginFormBox_form" action="/" method="post" novalidate>
+                    <h3 class="loginFormBox_title mb-5">Login</h3>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username:</label>
+                        <input type="text" id="username" class="form-control" name="user[username]" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" class="form-control" name="user[password]" required>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <input type="submit" class="loginFormBox_loginBtn mt-3" value="Login">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/js/LoginPage.js"></script>
+</body>
+
+</html>
