@@ -3,6 +3,7 @@ const mysql = require("mysql")
 const { AppError, wrapAsync } = require("../utils/error")
 const methodOverride = require("method-override")
 const validationSchemas = require("../utils/validationSchemas")
+const generateCardNo = require("../utils/card-number-generator")
 
 const router = express.Router();
 
@@ -151,19 +152,6 @@ router.delete("/:patientId/payment/:paymentId", wrapAsync(async (req,res,next) =
 router.get('/new', wrapAsync(async (req, res, next) => {
     res.render("Partials/PatientPage/new.ejs")
 }))
-
-function generateCardNo(lastCardNo) {
-    if (!lastCardNo) {
-        return "A0000"
-    }
-    let cardNums = lastCardNo.substring(1, lastCardNo.length)
-    if (cardNums === "9999") {
-        firstLetter = String.fromCharCode(lastCardNo.charCodeAt(0) + 1)
-        return firstLetter + "0000"
-    }
-    else
-        return lastCardNo.charAt(0) + (parseInt(cardNums) + 1).toString()
-}
 
 router.post('/', wrapAsync(validatePatient), wrapAsync(async (req, res, next) => {
     const { patient } = req.body
