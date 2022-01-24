@@ -1,4 +1,5 @@
-const patientpage = require('./patientpage')
-const homepage = require('./homepage')
+const patientPage = require('./patientpage')
+const homePage = require('./homepage')
+const loginPage = require("./loginpage")
 
-module.exports = {patientpage, homepage}
+module.exports = {patientPage, homePage, loginPage}

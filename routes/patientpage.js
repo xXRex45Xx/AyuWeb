@@ -2,12 +2,14 @@ const express = require('express');
 const mysql = require("mysql")
 const { AppError, wrapAsync } = require("../utils/error")
 const methodOverride = require("method-override")
-const validationSchemas = require("../utils/validationSchemas")
+const {patientSchema} = require("../utils/validationSchemas")
 const generateCardNo = require("../utils/card-number-generator")
+const {receptionAuthorization} = require("../utils/authorization")
 
 const router = express.Router();
 
 router.use(methodOverride("_method"))
+router.use(receptionAuthorization)
 
 const db = mysql.createPool({
     connectionLimit: 100,
@@ -23,7 +25,7 @@ router.get('/', wrapAsync(async (req, res, next) => {
 
 const validatePatient = async (req, res, next) => {
     try {
-        const validation = validationSchemas.patientSchema.validate(req.body)
+        const validation = patientSchema.validate(req.body)
         const { gender } = req.body.patient
         if (validation.error) {
             const msg = validation.error.details.map(e => e.message).join(', ')

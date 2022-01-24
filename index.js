@@ -1,6 +1,6 @@
 const express = require("express")
 const path = require("path")
-const {AppError, wrapAsync} = require("./utils/error")
+const { AppError, wrapAsync } = require("./utils/error")
 const methodOverride = require("method-override")
 const appRoutes = require("./routes")
 const session = require('express-session')
@@ -11,10 +11,21 @@ const app = express()
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, '/views'))
 
+const sessionConfig = {
+    secret: 'passdfgpassdfg', 
+    resave: false, 
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 24 * 60 * 60 * 1000,
+        maxAge: 1000 * 60 * 60 * 24 
+    }
+}
+
 app.use(express.static(path.join(__dirname, '/views/Assets')))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
-app.use(session({secret: 'passdfgpassdfg', resave: false, saveUninitialized: false}))
+app.use(session(sessionConfig))
 app.use(flash())
 
 app.use((req, res, next) => {
@@ -22,12 +33,9 @@ app.use((req, res, next) => {
     next()
 })
 
-app.get("/", (req, res, next) => {
-    res.render("LoginPage.ejs")
-})
-
-app.use("/homepage", appRoutes.homepage)
-app.use("/patientpage", appRoutes.patientpage)
+app.use("/", appRoutes.loginPage)
+app.use("/homepage", appRoutes.homePage)
+app.use("/patientpage", appRoutes.patientPage)
 
 app.all('*', (req, res, next) => {
     next(new AppError(404, "Page Not Found!"))

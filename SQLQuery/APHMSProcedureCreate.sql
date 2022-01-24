@@ -72,3 +72,15 @@ begin
 	delete from Payment 
     where `@paymentNo` = paymentNo and PaymentCompleted = 0;
 end &&
+
+delimiter &&
+create procedure spGetUser(in `@username` varchar(50))
+begin
+	select 
+		userNo as UserNumber,
+		userName as UserName,
+        password as Password,
+        role as Role
+	from AppUser
+    where `@username` = userName;
+end &&
