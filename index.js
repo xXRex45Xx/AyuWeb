@@ -26,7 +26,7 @@ app.get("/", (req, res, next) => {
     res.render("LoginPage.ejs")
 })
 
-app.use("/hompage", appRoutes.homepage)
+app.use("/homepage", appRoutes.homepage)
 app.use("/patientpage", appRoutes.patientpage)
 
 app.all('*', (req, res, next) => {
