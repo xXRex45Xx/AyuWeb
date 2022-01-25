@@ -30,7 +30,7 @@ const validateUser = async (req, res, next) =>{
 }
 
 router.get("/", wrapAsync(async (req, res, next) =>{
-    if(!req.session.userId){
+    if(!req.session.user){
         res.render("LoginPage.ejs")
         return
     }
@@ -55,18 +55,17 @@ router.post("/", validateUser, wrapAsync(async (req, res, next) =>{
                 const foundUser = results[0][0]
                 const isValid = await bcrypt.compare(user.password, foundUser.Password)
                 if(isValid){
-                    req.session.userId = foundUser.UserNumber
-                    req.session.username = foundUser.UserName
-                    req.session.role = foundUser.Role
+                    req.session.user ={
+                        userId: foundUser.UserNumber,
+                        username: foundUser.UserName,
+                        role: foundUser.Role
+                    }
                     res.redirect("/homepage")
-                }
-                else{
-                    res.redirect("/")
+                    return
                 }
             }
-            else{
-                res.redirect("/")
-            }
+            req.flash("error", "Incorrect Username or Password!")
+            res.redirect("/")
         })
     })
 }))

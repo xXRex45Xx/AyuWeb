@@ -84,3 +84,26 @@ begin
 	from AppUser
     where `@username` = userName;
 end &&
+
+delimiter &&
+create procedure spGetUserById(in `@userNo` int)
+begin
+	select 
+		userNo as UserNumber,
+		userName as UserName,
+        password as Password,
+        role as Role
+	from AppUser
+    where `@userNo` = userNo;
+end &&
+
+delimiter &&
+create procedure spUpdateUser(
+	in `@userNo` int,
+	`@newPassword` char(60) binary
+    )
+begin
+	update AppUser
+    set password = `@newPassword`
+    where userNo = `@userNo`;
+end && 

@@ -1,7 +1,7 @@
 const UserTypes = require("../usertype")
 
 module.exports = async (req, res, next) => {
-    if(req.session.userId && (req.session.role === UserTypes.receptionist)){
+    if(req.session.user && (req.session.user.role === UserTypes.receptionist)){
         next();
         return
     }

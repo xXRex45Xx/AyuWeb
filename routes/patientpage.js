@@ -146,7 +146,7 @@ router.delete("/:patientId/payment/:paymentId", wrapAsync(async (req,res,next) =
                 return
             }            
             req.flash("success", "Payment canceled successfuly.")
-            res.render("Partials/PatientPage/successflash.ejs", {success: req.flash("success")})
+            res.render("Partials/Flash/successflash.ejs", {success: req.flash("success")})
         })
     })
 }))
