@@ -5,6 +5,7 @@
     flex-flow: column nowrap;
     padding-top: 10px;
     padding-right: 10px;
+    padding-bottom: 10px;
     width: 170px;
 }
 
@@ -74,4 +75,29 @@
     top: 45px;
     border-top-right-radius: 25px;
     box-shadow: 0 -18px 0 white;
+}
+
+.mainNav_user{
+    padding: 0;
+    margin-top: auto;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.mainNav_userControls{
+    padding: 10px 0;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-end;
+}
+
+.mainNav_userControlLink{
+    flex: 0 0 35px;
+    font-size: 0.9em;
+    width: 140px;
+}
+
+.mainNav_userControlLinkImage{
+    width: 23px;
+    height: 23px;
 }
