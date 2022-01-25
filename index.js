@@ -37,6 +37,12 @@ app.use("/", appRoutes.loginPage)
 app.use("/homepage", appRoutes.homePage)
 app.use("/patientpage", appRoutes.patientPage)
 
+app.get("/logout", (req, res, next)=>{
+    if(req.session)
+        req.session.destroy()
+    res.redirect("/")
+})
+
 app.all('*', (req, res, next) => {
     next(new AppError(404, "Page Not Found!"))
 })
