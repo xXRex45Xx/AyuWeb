@@ -36,6 +36,7 @@ app.use((req, res, next) => {
 app.use("/", appRoutes.loginPage)
 app.use("/homepage", appRoutes.homePage)
 app.use("/patientpage", appRoutes.patientPage)
+app.use("/changepass", appRoutes.changePassword)
 
 app.get("/logout", (req, res, next)=>{
     if(req.session)

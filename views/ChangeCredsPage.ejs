@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("Partials/head.ejs") %>
+        <link rel="stylesheet" href="/css/LoginPage.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="loginContainer d-flex flex-row flex-nowrap shadow-lg">
+            <div class="hospitalInfoBox container p-4">
+                <img src="/Images/APHLogo.png" alt="" class="hospitalInfoBox_logo mb-5">
+                <h1 class="hospitalInfoBox_companyName mt-5">Ayu Primary Hospital</h1>
+            </div>
+            <div class="loginFormBox container p-5">
+                <form class="loginFormBox_form" action="/changepass" method="post" novalidate>
+                    <h3 class="loginFormBox_title mb-5">Change Password</h3>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username:</label>
+                        <input class="form-control" type="text" id="username" value="<%= username %>" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Current Password:</label>
+                        <input type="password" id="password" class="form-control" name="user[oldPassword]" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">New Password:</label>
+                        <input type="password" id="password" class="form-control" name="user[oldPassword]" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Confirm Password:</label>
+                        <input type="password" id="password" class="form-control" name="user[oldPassword]" required>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <input type="submit" class="loginFormBox_loginBtn mt-3" value="Change Password">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/js/LoginPage.js"></script>
+</body>
+
+</html>

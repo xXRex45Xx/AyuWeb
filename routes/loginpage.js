@@ -56,6 +56,7 @@ router.post("/", validateUser, wrapAsync(async (req, res, next) =>{
                 const isValid = await bcrypt.compare(user.password, foundUser.Password)
                 if(isValid){
                     req.session.userId = foundUser.UserNumber
+                    req.session.username = foundUser.UserName
                     req.session.role = foundUser.Role
                     res.redirect("/homepage")
                 }
