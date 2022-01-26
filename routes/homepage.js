@@ -6,7 +6,7 @@ const router = express.Router()
 router.use(receptionAuthorization)
 
 router.get('/', wrapAsync(async (req, res, next) => {
-    res.render('HomePage.ejs', { page: "homepage" })
+    res.render('Reception/HomePage.ejs', { page: "homepage" })
 }))
 
 module.exports = router

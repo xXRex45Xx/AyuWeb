@@ -59,4 +59,3 @@ on Pay.patientNo = Pat.patientNo
 where Pay.PaymentCompleted = false;
 
 
-

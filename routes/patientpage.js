@@ -20,7 +20,7 @@ const db = mysql.createPool({
 })
 
 router.get('/', wrapAsync(async (req, res, next) => {
-    res.render("PatientPage.ejs", { page: "patientpage" })
+    res.render("Reception/PatientPage.ejs", { page: "patientpage" })
 }))
 
 const validatePatient = async (req, res, next) => {
@@ -170,7 +170,6 @@ router.post('/', wrapAsync(validatePatient), wrapAsync(async (req, res, next) =>
             const patientArr = [patient.firstName, patient.fatherName, patient.dateOfBirth, patient.gender, patient.address, patient.phoneNo, patient.hospitalized]
             con.query("call spReception_AddPatient(?, ?, ?, ?, ?, ?, ?)", patientArr, (error, results, fields) => {
                 if (error) {
-                    con.release()
                     next(new AppError(500, error.sqlMessage))
                     return
                 }
@@ -180,7 +179,6 @@ router.post('/', wrapAsync(validatePatient), wrapAsync(async (req, res, next) =>
                     const cardNo = generateCardNo(lastCardNo)
                     con.query("call spReception_AddCard(?, ?)", [lastId, cardNo], (error, results, fields) => {
                         if (error) {
-                            con.release()
                             next(new AppError(500, "Database error occured!"))
                             return
                         }
