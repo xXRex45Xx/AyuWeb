@@ -1,104 +1,102 @@
-.mainNav{
-    height: 100%;
-    background-color: #0076d4;
-    display: flex;
-    flex-flow: column nowrap;
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    width: 170px;
+.mainNav {
+  height: 100%;
+  background-color: #0076d4;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 10px, 10px, 10px, 0px;
+  width: 170px;
 }
 
-.mainNav_logo{
-    align-self: center;
-    margin-bottom: 10px;
+.mainNav_logo {
+  align-self: center;
+  margin-bottom: 10px;
 }
 
-.mainNav_link{
-    text-decoration: none;
-    color: white;
-    text-align: center;
-    display: flex;
-    border-radius: 20px;
-    align-items: center;
-    margin-top: 33px;
-    padding-left: 10px;
-    transition: box-shadow 300ms, transform 300ms;
-    cursor: pointer;
-    flex: 0 0 45px;
+.mainNav_link {
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  display: flex;
+  border-radius: 20px;
+  align-items: center;
+  margin-top: 33px;
+  padding-left: 10px;
+  transition: box-shadow 300ms, transform 300ms;
+  cursor: pointer;
+  flex: 0 0 45px;
 }
 
-.mainNav_link:hover{
-    transform: scale(1.01);
-    box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.1);
-    color:white;
+.mainNav_link:hover {
+  transform: scale(1.01);
+  box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.1);
+  color: white;
 }
 
-.mainNav_linkImage{
-    width: 30px;
-    height: 30px;
-    margin-right: 30px;
-    justify-self: flex-start;
+.mainNav_linkImage {
+  width: 30px;
+  height: 30px;
+  margin-right: 30px;
+  justify-self: flex-start;
 }
 
-.mainNav_link--active{
-    background-color: white;
-    position: relative;
-    width: 187px;
-    z-index: 0;
-    color:#0076d4;
+.mainNav_link--active {
+  background-color: white;
+  position: relative;
+  width: 187px;
+  z-index: 0;
+  color: #0076d4;
 }
-.mainNav_link--active:hover{
-    transform: none;
-    box-shadow: none;
-    color: #0076d4;
-}
-
-.mainNav_link--active::before{
-    content: '';
-    display: block;
-    width: 40px;
-    height: 33px;
-    position: absolute;
-    left: 132px;
-    top: -33px;
-    border-bottom-right-radius: 25px;
-    box-shadow: 0 18px 0 white;
+.mainNav_link--active:hover {
+  transform: none;
+  box-shadow: none;
+  color: #0076d4;
 }
 
-.mainNav_link--active::after{
-    content: '';
-    display: block;
-    width: 40px;
-    height: 33px;
-    position: absolute;
-    left: 132px;
-    top: 45px;
-    border-top-right-radius: 25px;
-    box-shadow: 0 -18px 0 white;
+.mainNav_link--active::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 33px;
+  position: absolute;
+  left: 132px;
+  top: -33px;
+  border-bottom-right-radius: 25px;
+  box-shadow: 0 18px 0 white;
 }
 
-.mainNav_user{
-    padding: 0;
-    margin-top: auto;
-    display: flex;
-    flex-flow: column nowrap;
+.mainNav_link--active::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 33px;
+  position: absolute;
+  left: 132px;
+  top: 45px;
+  border-top-right-radius: 25px;
+  box-shadow: 0 -18px 0 white;
 }
 
-.mainNav_userControls{
-    padding: 10px 0;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: flex-end;
+.mainNav_user {
+  padding: 0;
+  margin-top: auto;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
-.mainNav_userControlLink{
-    flex: 0 0 35px;
-    font-size: 0.9em;
-    width: 140px;
+.mainNav_userControls {
+  padding: 10px 0;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-end;
 }
 
-.mainNav_userControlLinkImage{
-    width: 23px;
-    height: 23px;
+.mainNav_userControlLink {
+  flex: 0 0 35px;
+  font-size: 0.9em;
+  width: 140px;
+}
+
+.mainNav_userControlLinkImage {
+  width: 23px;
+  height: 23px;
 }
