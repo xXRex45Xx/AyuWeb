@@ -4,6 +4,7 @@ const mysql = require("mysql")
 const userType = require("../utils/usertype")
 const {userSchema} = require("../utils/validationSchemas")
 const bcrypt = require("bcrypt")
+const { management } = require('../utils/usertype')
 const router = express.Router()
 
 const db = mysql.createPool({
@@ -34,8 +35,19 @@ router.get("/", wrapAsync(async (req, res, next) =>{
         res.render("LoginPage.ejs")
         return
     }
-    else
-        res.redirect("/homepage")
+    else{
+        const {role} = req.session.user
+        switch(role){
+            case userType.receptionist:
+                res.redirect("/reception/homepage")
+                break;
+            case userType.management:
+                res.redirect("/management/homepage")
+                break;
+            default:
+                throw new AppError(400, "Invalid User")
+        }
+    }
 }))
 
 router.post("/", validateUser, wrapAsync(async (req, res, next) =>{
@@ -60,7 +72,7 @@ router.post("/", validateUser, wrapAsync(async (req, res, next) =>{
                         username: foundUser.UserName,
                         role: foundUser.Role
                     }
-                    res.redirect("/homepage")
+                    res.redirect("/")
                     return
                 }
             }

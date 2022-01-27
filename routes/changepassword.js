@@ -61,7 +61,7 @@ router.patch("/", validateUser, wrapAsync(async (req, res, next) => {
                             next(new AppError(500, error.sqlMessage))
                             return
                         }
-                        req.session.user = null
+                        delete req.session.user
                         req.flash("success", "Password Changed Successfully. Please, login with your new password.")
                         res.redirect("/")
                     })

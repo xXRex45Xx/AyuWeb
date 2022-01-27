@@ -5,6 +5,7 @@ const methodOverride = require("method-override")
 const appRoutes = require("./routes")
 const session = require('express-session')
 const flash = require('connect-flash')
+// const cookieParser = require("cookie-parser")
 
 const app = express()
 
@@ -35,8 +36,7 @@ app.use((req, res, next) => {
 })
 
 app.use("/", appRoutes.loginPage)
-app.use("/homepage", appRoutes.homePage)
-app.use("/patientpage", appRoutes.patientPage)
+app.use("/reception", appRoutes.reception)
 app.use("/changepass", appRoutes.changePassword)
 
 app.get("/logout", (req, res, next)=>{
@@ -46,7 +46,7 @@ app.get("/logout", (req, res, next)=>{
 })
 
 app.all('*', (req, res, next) => {
-    next(new AppError(404, "Page Not Found!"))
+    next(new AppError(404, "Page Not Found!", res.locals.type))
 })
 
 app.use((err, req, res, next) => {

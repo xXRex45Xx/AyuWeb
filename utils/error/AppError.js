@@ -1,7 +1,8 @@
 module.exports = class AppError extends Error{
-    constructor(statusCode, message){
+    constructor(statusCode, message, type){
         super();
         this.message = message
         this.statusCode = statusCode
+        this.typ = type // User type
     }
 }
