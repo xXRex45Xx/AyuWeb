@@ -1,27 +1,42 @@
 <aside class="mainNav h-100">
         <img src="/Images/APHLogo.png" alt="" class="mainNav_logo">
-        <a href="/<% if(type){ %><%= type %><% } %>/homepage" class="mainNav_link <% if(page == 'homepage') {%> mainNav_link--active <% } %> "><img
+        <a href="/<% if(type){ %><%= type %><% } %>/homepage"
+                class="mainNav_link <% if(page == 'homepage') {%> mainNav_link--active <% } %> "><img
                         src="<%= page === 'homepage' ? '/Images/NavIconsActive/home_30px.png' : '/Images/NavIconsInactive/home_white_30px.png' %> "
                         alt="" class="mainNav_linkImage">Home
         </a>
-        <a href="/<% if(type){ %><%= type %><% } %>/patientpage" class="mainNav_link <% if(page == 'patientpage') {%> mainNav_link--active <% } %>"><img
+        <a href="/<% if(type){ %><%= type %><% } %>/patientpage"
+                class="mainNav_link <% if(page == 'patientpage') {%> mainNav_link--active <% } %>"><img
                         src="<%= page === 'patientpage' ? '/Images/NavIconsActive/patient_65px.png' : '/Images/NavIconsInactive/patient_white_40px.png' %> "
                         alt="" class="mainNav_linkImage">Patient
         </a>
-        <div class="mainNav_user">
-                <div class="mainNav_userControls">
-                        <a href="/changepass" class="mainNav_link mainNav_userControlLink"><img
-                                        src="/Images/NavIconsInactive/password_reset_white_30px.png" alt=""
-                                        class="mainNav_linkImage mainNav_userControlLinkImage">Credentials
-                        </a>
-                        <a href="/logout" class="mainNav_link mainNav_userControlLink"><img
-                                        src="/Images/NavIconsInactive/logout_white_30px.png" alt=""
-                                        class="mainNav_linkImage mainNav_userControlLinkImage">Logout
-                        </a>
-                </div>
-                <a class="mainNav_link mainNav_userLink"><img src="/Images/NavIconsInactive/user_white_30px.png" alt=""
-                                class="mainNav_linkImage">User
+        <% if(type==='management' ){ %>
+                <a href="/management/employeepage" class="mainNav_link"><img
+                                src="<%= page === 'employeepage' ? '/Images/NavIconsActive/employee_30px.png' : '/Images/NavIconsInactive/employee_white_30px.png' %>"
+                                alt="" class="mainNav_linkImage">Employee
                 </a>
-        </div>
+                <a href="/management/reports" class="mainNav_link"><img
+                                src="<%= page === 'reportpage' ? '/Images/NavIconsActive/report_30px.png' : '/Images/NavIconsInactive/report_white_30px.png' %> "
+                                alt="" class="mainNav_linkImage">Reports
+
+                </a>
+                <% } %>
+                        <div class="mainNav_user">
+                                <div class="mainNav_userControls">
+                                        <a href="/changepass" class="mainNav_link mainNav_userControlLink"><img
+                                                        src="/Images/NavIconsInactive/password_reset_white_30px.png"
+                                                        alt=""
+                                                        class="mainNav_linkImage mainNav_userControlLinkImage">Credentials
+                                        </a>
+                                        <a href="/logout" class="mainNav_link mainNav_userControlLink"><img
+                                                        src="/Images/NavIconsInactive/logout_white_30px.png" alt=""
+                                                        class="mainNav_linkImage mainNav_userControlLinkImage">Logout
+                                        </a>
+                                </div>
+                                <a class="mainNav_link mainNav_userLink"><img
+                                                src="/Images/NavIconsInactive/user_white_30px.png" alt=""
+                                                class="mainNav_linkImage">User
+                                </a>
+                        </div>
 </aside>
 <script src="/js/mainnav.js"></script>

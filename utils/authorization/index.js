@@ -1,3 +1,4 @@
 const receptionAuthorization = require("./receptionAuthorization")
+const managementAuthorization = require("./managementAuthorization")
 
-module.exports = {receptionAuthorization}
+module.exports = {receptionAuthorization, managementAuthorization}
