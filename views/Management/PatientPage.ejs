@@ -5,10 +5,8 @@
     <%- include("../Partials/head.ejs") %>
         <link rel="stylesheet" href="/css/PatientPage/info.css">
         <link rel="stylesheet" href="/css/PatientPage/payment.css">
-        <link rel="stylesheet" href="/css/PatientPage/new.css">
         <link rel="stylesheet" href="/css/PatientPage/PatientPage.css">
         <link rel="stylesheet" href="/css/ContainerNav.css">
-
 </head>
 
 <body>
@@ -25,18 +23,13 @@
                             alt="">Information</button>
                     <button class="containerNav_link containerNav_payment"><img class="containerNav_linkIcon"
                             src="/Images/ContainerNavIcons/payment_20px.png" alt=""> Payment</button>
-                    <div class="containerNav_rightNav">
-                        <button class="containerNav_link containerNav_new"><img class="containerNav_linkIcon"
-                                src="/Images/ContainerNavIcons/add_25px.png" alt="">New Patient</button>
-                    </div>
                 </nav>
                 <main class="container-fluid mainContainer_subContainer p-4">
-                    <%- include('../Partials/Flash/successflash.ejs') %> 
                 </main>
             </div>
     </div>
     <script src="/js/PatientPage.js"></script>
-    <script src="/js/reception/PatientPage.js"></script>
+    <script src="/js/management/PatientPage.js"></script>
 </body>
 
 </html>

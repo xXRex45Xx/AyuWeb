@@ -1,9 +1,20 @@
 <aside class="mainNav h-100">
-    <img src="/Images/APHLogo.png" alt="" class="mainNav_logo">
-    <a href="<% if(err.type){ %><%= err.type %>/homepage<% }else{ %>/<% } %>" class="mainNav_link"><img
-            src="/Images/NavIconsInactive/home_white_30px.png" alt="" class="mainNav_linkImage">Home
-    </a>
-    <a href="<% if(err.type){ %><%= err.type %>/patientpage<% }else{ %>/<% } %>" class="mainNav_link"><img
-            src="/Images/NavIconsInactive/patient_white_40px.png" alt="" class="mainNav_linkImage">Patient
-    </a>
+        <img src="/Images/APHLogo.png" alt="" class="mainNav_logo">
+        <a href="/<% if(err.type){ %><%= err.type %>/homepage<% }else{ %>/<% } %>" class="mainNav_link"><img
+                        src="/Images/NavIconsInactive/home_white_30px.png" alt="" class="mainNav_linkImage">Home
+        </a>
+        <a href="/<% if(err.type){ %><%= err.type %>/patientpage<% }else{ %>/<% } %>" class="mainNav_link"><img
+                        src="/Images/NavIconsInactive/patient_white_40px.png" alt="" class="mainNav_linkImage">Patient
+        </a>
+        <% if(err.type && err.type === 'management') {%>
+                <a href="/management/employeepage" class="mainNav_link"><img
+                                src="/Images/NavIconsInactive/employee_white_30px.png"
+                                alt="" class="mainNav_linkImage">Employee
+                </a>
+                <a href="/management/reports" class="mainNav_link"><img
+                                src="/Images/NavIconsInactive/report_white_30px.png"
+                                alt="" class="mainNav_linkImage">Reports
+
+                </a>
+        <% } %> 
 </aside>
