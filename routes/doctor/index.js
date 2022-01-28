@@ -8,6 +8,6 @@ route.use((req, res, next) => {
   next();
 });
 route.use("/homepage", homePage);
-// route.use("/patientpage", patientPage);
+route.use("/patientpage", patientPage);
 
 module.exports = route;
