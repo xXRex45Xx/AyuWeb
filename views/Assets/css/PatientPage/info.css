@@ -1,24 +1,44 @@
-.infoBox_element{
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    margin: 10px;
+.infoContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+}
+.infoBox_element {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin: 10px;
 }
 
-.infoBox_label{
-    display: inline-block;
-    color: #0076d4;
-    width:max-content;
+.infoBox_label {
+  display: inline-block;
+  color: #0076d4;
+  width: max-content;
 }
-.infoBox_value{
-    display: inline-block;
-    text-align: center;
-    border-bottom: 1px solid #0076d4;
-    width: 150px;
-    margin-left: 10px;
+.infoBox_value {
+  display: inline-block;
+  text-align: center;
+  border-bottom: 1px solid #0076d4;
+  width: 150px;
+  margin-left: 10px;
+}
 
+.appointmentContainer_appointment {
+  border-radius: 10px;
+}
+.previousDiagnostics {
+  height: 50vh;
 }
 
-.appointmentContainer_appointment{
-    border-radius: 10px;
+/* .previousDiagnosticsTable thead th {
+  background-color: white;
+  position: sticky;
+  top: 2em;
+  z-index: 1;
 }
+.previousDiagnosticsTable caption {
+  background-color: white;
+  position: sticky;
+  top: 1em;
+  z-index: 1;
+} */
