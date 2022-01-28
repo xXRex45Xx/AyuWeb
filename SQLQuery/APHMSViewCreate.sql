@@ -150,6 +150,45 @@ select
     phoneNo as PhoneNumber
 from Reception;
 
+create view Management_Doctor_InfoView
+as
+select
+	D.doctorNo as DoctorNumber,
+    CONCAT(D.firstName, ' ', D.fatherName) as DoctorName,
+    DATE_FORMAT(D.dateOfBirth, "%a, %b %e, %Y") as DateOfBirth,
+    D.phoneNo as PhoneNumber,
+    D.speciality as Speciality,
+    U.userName as UserName
+from Doctor as D
+join AppUser as U
+on D.userNo = U.userNo;
+
+create view Management_LabTechnician_InfoView
+as
+select
+	T.technicianNo as TechnicianNumber,
+    CONCAT(T.firstName, ' ', T.fatherName) as TechnicianName,
+    DATE_FORMAT(T.dateOfBirth, "%a, %b %e, %Y") as DateOfBirth,
+    T.phoneNo as PhoneNumber,
+    U.userName as UserName
+from LabTechnician as T
+join AppUser as U
+on T.userNo = U.userNo;
+
+create view Management_Reception_InfoView
+as
+select
+	R.receptionNo as ReceptionNumber,
+    CONCAT(R.firstName, ' ', R.fatherName) as ReceptionName,
+    DATE_FORMAT(R.dateOfBirth, "%a, %b %e, %Y") as DateOfBirth,
+    R.phoneNo as PhoneNumber,
+    U.userName as UserName
+from Reception as R
+join AppUser as U
+on R.userNo = U.userNo;
+
+
+
 
 
 

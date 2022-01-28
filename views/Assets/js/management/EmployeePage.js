@@ -1,13 +1,16 @@
 let selectedEmployee = null
+let selectedEmployeeRole = null
 
 $(".containerNav_search").on("click", async function () {
     if (isNaN(parseInt($(".containerNav_searchPhone").val()))) {
         selectedEmployee = null
+        selectedEmployeeRole = null
         alert("Please enter a valid phone number!")
         return
     }
     if ($(".containerNav_searchPhone").val() !== "") {
         selectedEmployee = null
+        selectedEmployeeRole = null
         await $.ajax({
             type: "GET",
             url: "/management/employeepage/search",
@@ -22,6 +25,7 @@ $(".containerNav_search").on("click", async function () {
                     $(".searchTable tbody tr").removeClass("selected");
                     $(this).toggleClass("selected");
                     selectedEmployee = parseInt($(".selected > td")[0].innerHTML)
+                    selectedEmployeeRole = $(".selected > td")[3].innerHTML
                 });
             },
             error: function (error) {
@@ -37,6 +41,9 @@ $(".containerNav_info").on("click", async function () {
         $.ajax({
             type: "GET",
             url: `/management/employeepage/${selectedEmployee}/info`,
+            data:{
+                role: selectedEmployeeRole
+            },
             dataType: "html",
             success: function (response) {
                 $(".mainContainer_subContainer").html(response);

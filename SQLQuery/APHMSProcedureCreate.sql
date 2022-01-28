@@ -126,6 +126,28 @@ begin
     where PhoneNumber = `@phoneNo`;    
 end &&
 
+delimiter &&
+create procedure spManagement_GetDoctorInfo(in `@doctorNo` int)
+begin
+	select * from Management_Doctor_InfoView
+    where DoctorNumber = `@doctorNo`;
+end &&
+
+delimiter &&
+create procedure spManagement_GetLabTechnicianInfo(in `@labTechNo` int)
+begin
+	select * from Management_LabTechnician_InfoView
+    where TechnicianNumber = `@labTechNo`;
+end &&
+
+delimiter &&
+create procedure spManagement_GetReceptionInfo(in `@receptionNo` int)
+begin
+	select * from Management_Reception_InfoView
+    where ReceptionNumber = `@receptionNo`;
+end &&
+
+
 insert into Doctor (doctorNo, firstName, fatherName, dateOfBirth, phoneNo, speciality, userNo) values
 (1, "Test", "Test", "1998-01-01", 111, "ENT",  5)
 

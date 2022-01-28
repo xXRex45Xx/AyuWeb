@@ -38,32 +38,47 @@ router.get('/search', wrapAsync(async (req, res, next) => {
 
 router.get('/:id/info', wrapAsync(async (req, res, next) => {
     const { id } = req.params
+    const { role } = req.query
+    if(!role || !id)
+        throw new AppError(400, "Invalid Parameters!")
     db.getConnection((err, con) => {
         if (err) {
             next(new AppError(500, "Database error occured!",res.locals.type))
             return
         }
-        con.query(`call spManagement_GetEmployeeInfo(?)`, id, (error, info, fields) => {
+        let query;
+        if(role === "Doctor")
+            query = "call spManagement_GetDoctorInfo(?)"
+        else if(role === "Lab Technician")
+            query = "call spManagement_GetLabTechnicianInfo(?)"
+        else if(role === "Receptionist")
+            query = "call spManagement_GetReceptionInfo(?)"
+        else{
+            next(new AppError(400, "Invalid Role"))
+            return
+        }
+        con.query(query, id, (error, info, fields) => {
             if (error) {
                 next(new AppError(500, "Database error occured!",res.locals.type))
                 return
             }
             else {
-                con.query(`call spManagement_GetPatientAppointments(?)`, id, (error, appointments, fields) => {
-                    if (error) {
-                        next(new AppError(500, "Database error occured!",res.locals.type))
-                        return
-                    }
-                    else {
-                        if (!info[0][0]) {
-                            con.release()
-                            next(new AppError(404, "Employee Not Found",res.locals.type))
-                            return
-                        }
-                        res.render('Partials/EmployeePage/info.ejs', { info, appointments })
-                    }
-                    con.release()
-                })
+                // con.query(`call spManagement_GetPatientAppointments(?)`, id, (error, appointments, fields) => {
+                //     if (error) {
+                //         next(new AppError(500, "Database error occured!",res.locals.type))
+                //         return
+                //     }
+                //     else {
+                //         if (!info[0][0]) {
+                //             con.release()
+                //             next(new AppError(404, "Employee Not Found",res.locals.type))
+                //             return
+                //         }
+                //         res.render('Partials/EmployeePage/info.ejs', { info, appointments })
+                //     }
+                //     con.release()
+                // })
+                res.render("Partials/EmployeePage/info.ejs", {info: info[0], role})
             }
         })
 
