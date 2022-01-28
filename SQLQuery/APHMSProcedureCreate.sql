@@ -115,6 +115,26 @@ begin
     where PatientNumber = `@patientNo`;
 end &&
 
+delimiter &&
+create procedure spManagement_SearchEmployee(in `@phoneNo` int)
+begin
+	select * from Management_Doctor_SearchView
+    where PhoneNumber = `@phoneNo`;
+    select * from Management_LabTechnician_SearchView
+    where PhoneNumber = `@phoneNo`;
+    select * from Management_Reception_SearchView
+    where PhoneNumber = `@phoneNo`;    
+end &&
+
+insert into Doctor (doctorNo, firstName, fatherName, dateOfBirth, phoneNo, speciality, userNo) values
+(1, "Test", "Test", "1998-01-01", 111, "ENT",  5)
+
+insert into LabTechnician (technicianNo, firstName, fatherName, dateOfBirth, phoneNo, userNo) values
+(2, "Test", "Test", "1998-01-01", 111,  6)
+
+insert into Reception (receptionNo, firstName, fatherName, dateOfBirth, phoneNo, userNo) values
+(1, "Test", "Test", "1998-01-01", 111,  7)
+call spManagement_SearchEmployee(111)
 
 /* User Procedures */
 delimiter &&

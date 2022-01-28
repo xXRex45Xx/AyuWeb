@@ -123,3 +123,34 @@ join Patient as Pat
 on Pay.patientNo = Pat.patientNo
 where Pay.PaymentCompleted = false;
 
+create view Management_Doctor_SearchView
+as
+select 
+	doctorNo as DoctorNumber,
+    firstName as FirstName,
+    fatherName as FatherName,
+    phoneNo as PhoneNumber
+from Doctor;
+
+create view Management_LabTechnician_SearchView
+as
+select
+	technicianNo as TechnicianNumber,
+    firstName as FirstName,
+    fatherName as FatherName,
+    phoneNo as PhoneNumber
+from LabTechnician;
+
+create view Management_Reception_SearchView
+as
+select
+	receptionNo as ReceptionNumber,
+    firstName as FirstName,
+    fatherName as FatherName,
+    phoneNo as PhoneNumber
+from Reception;
+
+
+
+
+

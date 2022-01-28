@@ -64,6 +64,7 @@
     top: -33px;
     border-bottom-right-radius: 25px;
     box-shadow: 0 18px 0 white;
+    z-index: -1;
 }
 
 .mainNav_link--active::after{
@@ -76,6 +77,7 @@
     top: 45px;
     border-top-right-radius: 25px;
     box-shadow: 0 -18px 0 white;
+    z-index: -1;
 }
 
 .mainNav_user{

@@ -1,5 +1,4 @@
 let selectedPatient = null
-let selectedPayment = null
 
 $(".containerNav_search").on("click", async function () {
     if (isNaN(parseInt($(".containerNav_searchPhone").val()))) {

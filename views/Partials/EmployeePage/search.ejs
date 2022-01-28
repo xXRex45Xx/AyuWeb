@@ -1,0 +1,36 @@
+<table class="table table-borderless table-hover searchTable">
+    <thead>
+        <tr>
+            <th>Employee Number</th>
+            <th>First Name</th>
+            <th>Father Name</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(let doctor of doctors) { %> 
+            <tr>
+                <td><%= doctor.DoctorNumber %></td>
+                <td><%= doctor.FirstName %></td>
+                <td><%= doctor.FatherName %></td>
+                <td>Doctor</td>
+            </tr>
+        <% } %>
+        <% for(let labTech of labTechnicians) { %> 
+            <tr>
+                <td><%= labTech.TechnicianNumber %></td>
+                <td><%= labTech.FirstName %></td>
+                <td><%= labTech.FatherName %></td>
+                <td>Lab Technician</td>
+            </tr>
+        <% } %> 
+        <% for(let reception of receptionists) { %> 
+            <tr>
+                <td><%= reception.ReceptionNumber %></td>
+                <td><%= reception.FirstName %></td>
+                <td><%= reception.FatherName %></td>
+                <td>Receptionist</td>
+            </tr>
+        <% } %>          
+    </tbody>
+</table>
