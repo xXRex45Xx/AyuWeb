@@ -1,0 +1,21 @@
+<table class="table table-borderless table-hover searchTable">
+    <thead>
+        <tr>
+            <th>Patient Number</th>
+            <th>First Name</th>
+            <th>Father Name</th>
+            <th>Card Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(let patient of patients[0]) { %> 
+            <tr>
+                <td><%= patient.PatientNumber %></td>
+                <td><%= patient.FirstName %></td>
+                <td><%= patient.FatherName %></td>
+                <td><%= patient.CardNumber %></td>
+            </tr>
+        <% } %>         
+    </tbody>
+
+</table>
