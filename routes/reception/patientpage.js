@@ -4,12 +4,10 @@ const { AppError, wrapAsync } = require("../../utils/error")
 const methodOverride = require("method-override")
 const {patientSchema} = require("../../utils/validationSchemas")
 const generateCardNo = require("../../utils/card-number-generator")
-const {receptionAuthorization} = require("../../utils/authorization")
 
 const router = express.Router();
 
 router.use(methodOverride("_method"))
-router.use(receptionAuthorization)
 
 const db = mysql.createPool({
     connectionLimit: 100,
@@ -72,14 +70,12 @@ router.get('/:id/info', wrapAsync(async (req, res, next) => {
         }
         con.query(`call spReception_GetPatientInfo(?)`, id, (error, info, fields) => {
             if (error) {
-                con.release()
                 next(new AppError(500, "Database error occured! Please contact your system administrator.",res.locals.type))
                 return
             }
             else {
                 con.query(`call spReception_GetPatientAppointments(?)`, id, (error, appointments, fields) => {
                     if (error) {
-                        con.release()
                         next(new AppError(500, "Database error occured! Please contact your system administrator.",res.locals.type))
                         return
                     }
@@ -108,13 +104,11 @@ router.get('/:id/payment', wrapAsync(async (req, res, next) => {
         }
         con.query("call spReception_GetPatientPendingPayments(?)", id, (error, pendingPayments, fields) => {
             if (error) {
-                con.release()
                 next(new AppError(500, "Database error occured!",res.locals.type))
                 return
             }
             con.query("call spReception_GetPatientCompletedPayments(?)", id, (error, completedPayments, fields) => {
                 if (error) {
-                    con.release()
                     next(new AppError(500, "Database error occured!",res.locals.type))
                     return
                 }
@@ -135,7 +129,6 @@ router.delete("/:patientId/payment/:paymentId", wrapAsync(async (req,res,next) =
         }
         con.query("call spReception_CancelPayment(?)",paymentId, (error, results, fields) =>{
             if(error){
-                con.release()
                 next(new AppError(500, "Database error occured!",res.locals.type))
                 return
             }
