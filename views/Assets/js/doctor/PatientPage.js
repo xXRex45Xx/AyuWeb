@@ -35,6 +35,7 @@ $(".containerNav_search").on("click", async function () {
       dataType: "html",
       success: function (response) {
         $(".mainContainer_subContainer").html(response);
+        console.log(response)
 
         $(".searchTable tbody tr").on("click", function () {
           $(".searchTable tbody tr").removeClass("selected");
@@ -53,7 +54,7 @@ $(".containerNav_info").on("click", async function () {
   if (selectedPatient) {
     $.ajax({
       type: "GET",
-      url: `/reception/patientpage/${selectedPatient}/info`,
+      url: `/doctor/patientpage/${selectedPatient}/info`,
       dataType: "html",
       success: function (response) {
         $(".mainContainer_subContainer").html(response);

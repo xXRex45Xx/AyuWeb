@@ -20,11 +20,10 @@ const db = mysql.createPool({
   database: 'APHMSDB'
 })
 
-router.use("/", (req, res, next) => {
+router.get("/", (req, res, next) => {
   res.render("Doctor/PatientPage.ejs", { page: "patientpage" });
 });
-router.get("/searchhh", wrapAsync(async (req, res, next) => {
-  alert("alo")
+router.get("/search", wrapAsync(async (req, res, next) => {
   const { q } = req.query;
   if (!q || isNaN(q)) {
     throw new appError(400, "Please enter a valid query", res.locals.type);
@@ -44,7 +43,7 @@ router.get("/searchhh", wrapAsync(async (req, res, next) => {
           return;
         }
         else {
-          res.render('Partials/DoctorPage/search.ejs', { patients: results })
+          res.render('Partials/PatientPage/search.ejs', { patients: results })
         }
         con.release()
       }
