@@ -3,6 +3,6 @@ module.exports = class AppError extends Error{
         super();
         this.message = message
         this.statusCode = statusCode
-        this.typ = type // User type
+        this.type = type // User type
     }
 }

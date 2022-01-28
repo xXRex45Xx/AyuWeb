@@ -1,4 +1,6 @@
 use APHMSDB;
+
+/* Reception Procedures */
 delimiter &&
 create procedure spReception_SearchPatient(in `@phoneNo` int)
 begin
@@ -73,6 +75,48 @@ begin
     where `@paymentNo` = paymentNo and PaymentCompleted = 0;
 end &&
 
+
+
+/* Management Procedures */
+delimiter &&
+create procedure spManagement_SearchPatient(in `@phoneNo` int)
+begin
+	select * from Management_Patient_SearchView
+	where PhoneNumber = `@phoneNo`;
+end &&
+    
+delimiter &&
+create procedure spManagement_GetPatientInfo(in `@patientNo` int)
+begin
+	select * from Management_Patient_InfoView
+	where PatientNumber = `@patientNo`;
+end &&
+
+delimiter &&
+create procedure spManagement_GetPatientAppointments(in `@patientNo` int)
+begin
+	select * from Management_Patient_AppointmentView
+	where PatientNumber = `@patientNo`;
+end &&
+
+delimiter &&
+create procedure spManagement_GetPatientCompletedPayments(in `@patientNo` int)
+begin
+	select PaymentNumber, PaymentDetails, DateOfPayment, Price 
+    from Management_Patient_CompletedPaymentView
+    where  PatientNumber = `@patientNo`;
+end &&
+
+delimiter &&
+create procedure spManagement_GetPatientPendingPayments(in `@patientNo` int)
+begin
+	select PaymentNumber, PaymentDetails, Price
+    from Management_Patient_PendingPaymentView
+    where PatientNumber = `@patientNo`;
+end &&
+
+
+/* User Procedures */
 delimiter &&
 create procedure spGetUser(in `@username` varchar(50))
 begin
@@ -107,3 +151,5 @@ begin
     set password = `@newPassword`
     where userNo = `@userNo`;
 end && 
+
+
