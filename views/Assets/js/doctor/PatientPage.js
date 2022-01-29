@@ -70,11 +70,11 @@ $(".containerNav_info").on("click", async function () {
   }
 });
 
-$(".containerNav_vitalSign").on("click", async function () {
+$(".containerNav_labReport").on("click", async function () {
   if (selectedPatient) {
     $.ajax({
       type: "GET",
-      url: `/doctor/patientpage/${selectedPatient}/vitalsign`,
+      url: `/doctor/patientpage/${selectedPatient}/labReport`,
       dataType: "html",
       success: function (response) {
         $(".mainContainer_subContainer").html(response);
@@ -85,7 +85,26 @@ $(".containerNav_vitalSign").on("click", async function () {
     });
   } else {
     alert("Please, select a patient.");
-    $(".containerNav_vitalSign").toggleClass("containerNav_link--active");
+    $(".containerNav_labReport").toggleClass("containerNav_link--active");
+  }
+});
+
+$(".containerNav_labRequest").on("click", async function () {
+  if (selectedPatient) {
+    $.ajax({
+      type: "GET",
+      url: `/doctor/patientpage/${selectedPatient}/labRequest`,
+      dataType: "html",
+      success: function (response) {
+        $(".mainContainer_subContainer").html(response);
+      },
+      error: function (error) {
+        $(".mainContainer_subContainer").html(error.responseText);
+      },
+    });
+  } else {
+    alert("Please, select a patient.");
+    $(".containerNav_labReport").toggleClass("containerNav_link--active");
   }
 });
 

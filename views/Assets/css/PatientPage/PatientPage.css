@@ -53,3 +53,6 @@ body {
 .table tr.selected {
   background-color: #2ca0ff;
 }
+.card {
+  padding: 0px;
+}
