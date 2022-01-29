@@ -57,8 +57,50 @@ $(".containerNav_info").on("click", async function () {
         alert("Please, select an employee.")
         $(".containerNav_info").toggleClass("containerNav_link--active")
     }
-
 })
+
+$(".containerNav_new").on("click", async function () {
+    await $.ajax({
+        type: "GET",
+        url: "/management/employeepage/new",
+        dataType: "html",
+        success: function (response) {
+            $(".mainContainer_subContainer").html(response);
+
+            let eighteen = new Date()
+            eighteen.setFullYear(eighteen.getFullYear() - 18)
+            eighteen = eighteen.toISOString().slice(0,10)
+            console.log(eighteen)
+            $(".newEmployeeForm_speciality").hide();
+            $("#dateOfBirth").attr("max", eighteen);
+            
+            $("#type").on('change', function () {
+                if($(this).val() === "2")
+                    $(".newEmployeeForm_speciality").show();
+                else
+                    $(".newEmployeeForm_speciality").hide();
+            });
+
+            $(".newEmployeeForm").on("submit", function (e) {
+                if (!this.checkValidity()) {
+                    e.preventDefault()
+                    e.stopPropagation()
+                }
+                else if (isNaN($("#phoneNo").val())) {
+                    $("#phoneNoValidationFeedback").html(`${$('#phoneNo').val()} is not a valid phone number.`)
+                    $('#phoneNo').addClass("is-invalid")
+                    $('#phoneNo').val("");
+                    e.preventDefault()
+                    e.stopPropagation()
+                }
+                $(this).addClass('was-validated');
+            })
+        },
+        error: function (error) {
+            $(".mainContainer_subContainer").html(error.responseText);
+        }
+    })
+});
 
 // $(".containerNav_payment").on("click", async function () {
 //     if (selectedPatient) {

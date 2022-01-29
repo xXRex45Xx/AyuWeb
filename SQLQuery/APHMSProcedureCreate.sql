@@ -42,7 +42,6 @@ end &&
 insert into Payment (paymentNo, patientNo, paymentDetails, price) value
 (1,1, "This is a test", 50.00)
 
-select * from Payment
 delimiter &&
 create procedure spReception_AddPatient(
 	in `@firstName` varchar(25),
@@ -74,8 +73,6 @@ begin
 	delete from Payment 
     where `@paymentNo` = paymentNo and PaymentCompleted = 0;
 end &&
-
-
 
 /* Management Procedures */
 delimiter &&
@@ -147,6 +144,28 @@ begin
     where ReceptionNumber = `@receptionNo`;
 end &&
 
+delimiter &&
+create procedure spManagement_AddUser(
+	in `@username` varchar(50),
+    `@password` char(60) binary,
+    `@role` tinyint)
+begin
+	insert into AppUser (userName, password, role) values
+    (`@username`, `@password`, `@role`);
+    select last_insert_id() as lastUserNo;
+end &&
+
+delimiter &&
+create procedure spManagement_AddReception(
+	in `@firstName` varchar(25),
+    `@fatherName` varchar(25),
+    `@dateOfBirth` date,
+    `@phoneNo` int,
+    `@userNo` int)
+begin
+	insert into reception (firstName, fatherName, dateOfBirth, phoneNo, userNo) values
+    (`@firstName`, `@fatherName`, `@dateOfBirth`, `@phoneNo`, `@userNo`);
+end &&
 
 insert into Doctor (doctorNo, firstName, fatherName, dateOfBirth, phoneNo, speciality, userNo) values
 (1, "Test", "Test", "1998-01-01", 111, "ENT",  5)
@@ -193,5 +212,8 @@ begin
     set password = `@newPassword`
     where userNo = `@userNo`;
 end && 
+
+select * from AppUser
+
 
 

@@ -187,9 +187,6 @@ from Reception as R
 join AppUser as U
 on R.userNo = U.userNo;
 
-
-
-
-
-
+insert into Payment(paymentNo, patientNo, paymentDetails, price) values
+(58, 29, "TESt", 50.00)
 
