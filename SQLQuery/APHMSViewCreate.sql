@@ -187,6 +187,21 @@ from Reception as R
 join AppUser as U
 on R.userNo = U.userNo;
 
+create view Management_Reception_TransactionsView
+as
+select
+	Pay.paymentNo as PaymentNumber,
+    Pay.receptionNo as ReceptionNumber,
+    CONCAT(Pat.firstName, ' ', Pat.fatherName) as PatientName,
+    Pay.paymentDetails as PaymentDetails,
+    DATE_FORMAT(Pay.dateOfPayment, "%a, %b %e, %Y") as DateOfPayment,
+    Pay.price as Price
+from Payment as Pay
+join Reception as R
+	on Pay.receptionNo = R.receptionNo
+join Patient as Pat
+	on Pay.patientNo = Pat.patientNo;
+
 insert into Payment(paymentNo, patientNo, paymentDetails, price) values
 (58, 29, "TESt", 50.00)
 

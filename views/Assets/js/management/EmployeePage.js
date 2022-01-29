@@ -1,6 +1,8 @@
 let selectedEmployee = null
 let selectedEmployeeRole = null
 
+$(".containerNav_transactions").hide();
+
 $(".containerNav_search").on("click", async function () {
     if (isNaN(parseInt($(".containerNav_searchPhone").val()))) {
         selectedEmployee = null
@@ -11,6 +13,7 @@ $(".containerNav_search").on("click", async function () {
     if ($(".containerNav_searchPhone").val() !== "") {
         selectedEmployee = null
         selectedEmployeeRole = null
+        $(".containerNav_transactions").hide();
         await $.ajax({
             type: "GET",
             url: "/management/employeepage/search",
@@ -26,6 +29,10 @@ $(".containerNav_search").on("click", async function () {
                     $(this).toggleClass("selected");
                     selectedEmployee = parseInt($(".selected > td")[0].innerHTML)
                     selectedEmployeeRole = $(".selected > td")[3].innerHTML
+                    if(selectedEmployeeRole === "Receptionist")
+                        $(".containerNav_transactions").show();
+                    else
+                        $(".containerNav_transactions").hide();
                 });
             },
             error: function (error) {
@@ -102,45 +109,22 @@ $(".containerNav_new").on("click", async function () {
     })
 });
 
-// $(".containerNav_payment").on("click", async function () {
-//     if (selectedPatient) {
-//         selectedPayment = null;
-//         $.ajax({
-//             type: "GET",
-//             url: `/management/patientpage/${selectedEmployee}/payment`,
-//             dataType: "html",
-//             success: function (response) {
-//                 $(".mainContainer_subContainer").html(response)
-
-//                 $(".paymentContainer_pendingTable tbody tr").on("click", function () {
-//                     $(".paymentContainer_pendingTable tbody tr").removeClass("selectedPayment");
-//                     $(this).toggleClass("selectedPayment");
-//                     selectedPayment = parseInt($(".selectedPayment > td")[0].innerHTML)
-//                 });
-//                 $(".paymentContainer_cancel").on("click", function () {
-//                     if(selectedPayment){
-//                     $.ajax({
-//                         type: "POST",
-//                         url: `/management/patientpage/${selectedPatient}/payment/${selectedPayment}?_method=DELETE`,
-//                         dataType: "html",
-//                         success: function (response) {
-//                             $(".mainContainer_subContainer").html(response)
-//                         },
-//                         error: function (error) {
-//                             $(".mainContainer_subContainer").html(error.responseText);
-//                         }
-//                     });}
-//                     else
-//                         alert("Please, select a pending payment.")
-//                 });
-//             },
-//             error: function (error) {
-//                 $(".mainContainer_subContainer").html(error.responseText);
-//             }
-//         })
-//     }
-//     else {
-//         alert("Please, select a patient.")
-//         $(".containerNav_payment").toggleClass("containerNav_link--active")
-//     }
-// });
+$(".containerNav_transactions").on("click", async function () {
+    if (selectedEmployee) {
+        $.ajax({
+            type: "GET",
+            url: `/management/employeepage/${selectedEmployee}/transactions`,
+            dataType: "html",
+            success: function (response) {
+                $(".mainContainer_subContainer").html(response)
+            },
+            error: function (error) {
+                $(".mainContainer_subContainer").html(error.responseText);
+            }
+        })
+    }
+    else {
+        alert("Please, select a receptionist.")
+        $(".containerNav_payment").toggleClass("containerNav_link--active")
+    }
+});

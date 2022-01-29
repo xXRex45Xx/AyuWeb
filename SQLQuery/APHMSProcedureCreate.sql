@@ -167,6 +167,13 @@ begin
     (`@firstName`, `@fatherName`, `@dateOfBirth`, `@phoneNo`, `@userNo`);
 end &&
 
+delimiter &&
+create procedure spManagement_GetReceptionTransactions(in `@receptionNo` int)
+begin
+	select * from Management_Reception_TransactionsView
+    where ReceptionNumber = `@receptionNo`;
+end &&
+
 insert into Doctor (doctorNo, firstName, fatherName, dateOfBirth, phoneNo, speciality, userNo) values
 (1, "Test", "Test", "1998-01-01", 111, "ENT",  5)
 

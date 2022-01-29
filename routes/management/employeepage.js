@@ -4,7 +4,6 @@ const { employeeSchema } = require("../../utils/validationSchemas")
 const userType = require("../../utils/usertype")
 const mysql = require("mysql")
 const bcrypt = require("bcrypt")
-const { query } = require('express')
 const router = express.Router()
 
 const db = mysql.createPool({
@@ -124,6 +123,26 @@ router.get('/:id/info', wrapAsync(async (req, res, next) => {
     })
 }))
 
+router.get("/:id/transactions", wrapAsync(async (req, res, next) =>{
+    const{id} = req.params
+    if(!id)
+        throw new AppError(400, "Invalid Paramaters")
+    db.getConnection((err, con) =>{
+        if(err){
+            next(new AppError(500, "Database Error Occured!", res.locals.type))
+            return
+        }
+        con.query("call spManagement_GetReceptionTransactions(?)", id, (error, results, fields) => {
+            if(error){
+                next(new AppError(500, error.sqlMessage, res.locals.type))
+                return
+            }
+            console.log(results)
+            res.render("Partials/EmployeePage/transactions.ejs", {transactions: results[0]})
+        })
+    })
+}))
+
 router.get('/new', wrapAsync(async (req, res, next) => {
     res.render("Partials/EmployeePage/new.ejs")
 }))
@@ -140,7 +159,7 @@ router.post("/", wrapAsync(validateEmployee), wrapAsync(async (req, res, next) =
             let password = await bcrypt.hash(username, 12)
             con.query("call spManagement_AddUser(?,?,?)", [username, password, employee.type], async (error, results, fields) => {
                 if (error) {
-                    next(new AppError(500, "Database Error Occured!"))
+                    next(new AppError(500, "Database Error Occured!", res.locals.type))
                     return
                 }
                 const {lastUserNo} = results[0][0]
@@ -161,7 +180,7 @@ router.post("/", wrapAsync(validateEmployee), wrapAsync(async (req, res, next) =
                 }
                 con.query(q, queryParams, (error, results, fields) =>{
                     if(error){
-                        next(new AppError(500, "Database Error Occured!"))
+                        next(new AppError(500, "Database Error Occured!", res.locals.type))
                         return;
                     }
                     con.release()
