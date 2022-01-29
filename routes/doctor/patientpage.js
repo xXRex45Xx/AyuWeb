@@ -60,6 +60,10 @@ router.get("/search", wrapAsync(async (req, res, next) => {
 })
 );
 
+router.get('/:id/vitalsign', (req, res, next) => {
+  res.render("Partials/DoctorPage/vital_sign.ejs")
+})
+
 router.get('/:id/info', wrapAsync(async (req, res, next) => {
   const { id } = req.params
   db.getConnection((err, con) => {

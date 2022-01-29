@@ -22,6 +22,10 @@
   width: 150px;
   margin-left: 10px;
 }
+.infoBox_value_pain {
+  border-bottom: 1px solid #0076d4;
+  margin-left: 10px;
+}
 
 .appointmentContainer_appointment {
   border-radius: 10px;
