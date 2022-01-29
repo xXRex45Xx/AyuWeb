@@ -90,6 +90,13 @@ begin
 end &&
 
 delimiter &&
+create procedure spManagement_GetFullPatientInfo(in `@patientNo` int)
+begin
+	select * from Management_Patient_UpdateView
+    where PatientNumber = `@patientNo`;
+end &&
+
+delimiter &&
 create procedure spManagement_GetPatientAppointments(in `@patientNo` int)
 begin
 	select * from Management_Patient_AppointmentView
@@ -142,6 +149,28 @@ create procedure spManagement_GetReceptionInfo(in `@receptionNo` int)
 begin
 	select * from Management_Reception_InfoView
     where ReceptionNumber = `@receptionNo`;
+end &&
+
+delimiter &&
+create procedure spManagement_UpdateUser(
+	in `@patientNo` int,
+    `@firstName` varchar(25),
+    `@fatherName` varchar(25),
+    `@dateOfBirth` date,
+    `@gender` char,
+    `@address` varchar(100),
+    `@phoneNo` int,
+    `@hospitalized` tinyint)
+begin
+	update Patient
+	set firstName = `@firstName`,
+		fatherName = `@fatherName`,
+		dateOfBirth = `@dateOfBirth`,
+		gender = `@gender`,
+		address = `@address`,
+		phoneNo = `@phoneNo`,
+		type = `@hospitalized`
+	where patientNo = `@patientNo`;
 end &&
 
 delimiter &&

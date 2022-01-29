@@ -88,6 +88,18 @@ from Patient as P
 join Card as C
 on P.patientNo = C.patientNo;
 
+create view Management_Patient_UpdateView
+as
+select	patientNo as PatientNumber,
+		firstName as FirstName, 
+        fatherName as FatherName,
+		DATE_FORMAT(dateOfBirth, '%Y-%m-%d') as DateOfBirth,
+		gender as Gender,
+		address as Address,
+		phoneNo as PhoneNumber,
+        type as Hospitalized
+from Patient;
+
 create view Management_Patient_AppointmentView
 as
 select	A.PatientNo as PatientNumber,

@@ -77,7 +77,6 @@ $(".containerNav_new").on("click", async function () {
             let eighteen = new Date()
             eighteen.setFullYear(eighteen.getFullYear() - 18)
             eighteen = eighteen.toISOString().slice(0,10)
-            console.log(eighteen)
             $(".newEmployeeForm_speciality").hide();
             $("#dateOfBirth").attr("max", eighteen);
             

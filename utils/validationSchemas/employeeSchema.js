@@ -12,5 +12,5 @@ module.exports = Joi.object({
         phoneNo: Joi.number().positive().integer().required(),
         type: Joi.number().min(0).max(6).required(),
         speciality: Joi.string()
-    })
+    }).required()
 })

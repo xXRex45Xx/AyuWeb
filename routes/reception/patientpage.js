@@ -1,13 +1,10 @@
 const express = require('express');
 const mysql = require("mysql")
 const { AppError, wrapAsync } = require("../../utils/error")
-const methodOverride = require("method-override")
 const { patientSchema } = require("../../utils/validationSchemas")
 const generateCardNo = require("../../utils/card-number-generator")
 
 const router = express.Router();
-
-router.use(methodOverride("_method"))
 
 const db = mysql.createPool({
     connectionLimit: 100,
@@ -16,10 +13,6 @@ const db = mysql.createPool({
     password: 'ayu.123',
     database: 'APHMSDB'
 })
-
-router.get('/', wrapAsync(async (req, res, next) => {
-    res.render("Reception/PatientPage.ejs", { page: "patientpage" })
-}))
 
 const validatePatient = async (req, res, next) => {
     try {
@@ -38,6 +31,10 @@ const validatePatient = async (req, res, next) => {
         next(e)
     }
 }
+
+router.get('/', wrapAsync(async (req, res, next) => {
+    res.render("Reception/PatientPage.ejs", { page: "patientpage" })
+}))
 
 router.get('/search', wrapAsync(async (req, res, next) => {
     const { q } = req.query;
@@ -178,7 +175,6 @@ router.post('/', wrapAsync(validatePatient), wrapAsync(async (req, res, next) =>
                     })
                 }
                 con.release()
-
                 req.flash("success", "Patient added successfully.")
                 res.redirect("/reception/patientpage")
             })
