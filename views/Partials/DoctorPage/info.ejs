@@ -1,0 +1,97 @@
+<div class="container-fluid infoContainer">
+    <div class="row gy-2 align-items-center infoBox">
+        <div class="infoBox_element col-auto">
+            <span class="infoBox_label">Patient Number: </span>
+            <p class="infoBox_value">
+                <%= info[0][0].PatientNumber %>
+            </p>
+        </div>
+
+        <div class="infoBox_element col-auto">
+            <span class="infoBox_label">Name: </span>
+            <span class="infoBox_value">
+                <%= info[0][0].Name %>
+            </span>
+        </div>
+
+        <div class="infoBox_element col-auto">
+            <span class="infoBox_label">Age: </span>
+            <span class="infoBox_value">
+                <%= parseInt(info[0][0].Age) %>
+            </span>
+        </div>
+
+        <div class="infoBox_element col-auto">
+            <span class="infoBox_label">Gender: </span>
+            <span class="infoBox_value">
+                <%= info[0][0].Gender.toUpperCase() %>
+            </span>
+        </div>
+
+        <div class="infoBox_element col-auto">
+            <span class="infoBox_label">Card Number: </span>
+            <span class="infoBox_value">
+                <%= info[0][0].CardNumber %>
+            </span>
+        </div>
+
+        <div class="infoBox_element col-auto">
+            <span class="infoBox_label">Address: </span>
+            <span class="infoBox_value">
+                <%= info[0][0].Address %>
+            </span>
+        </div>
+
+        <div class="infoBox_element col-auto">
+            <span class="infoBox_label">Phone Number: </span>
+            <span class="infoBox_value">
+                <%= info[0][0].PhoneNumber %>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid row appointmentContainer mt-4 h-75">
+    <div class="shadow-lg appointmentContainer_appointment">
+        <table class="table table-borderless">
+            <caption>Appointments</caption>
+            <thead>
+                <tr>
+                    <th>Doctor Name</th>
+                    <th>Date Of Appointment</th>
+                    <th>Time Of Appointment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr></tr>
+                <% for(let appointment of appointments[0]){ %>
+                    <tr>
+                        <td>
+                            <%= appointment.DoctorName %>
+                        </td>
+                        <td>
+                            <%= appointment.DateOfAppointment %>
+                        </td>
+                        <td>
+                            <%= appointment.TimeOfAppointment %>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<%# for(let entry of info[0]) { %>
+    <%#= entry.Name %>
+        <%# } %>
+            <%# for(let entry of appointments[0]) { %>
+                <%#= entry.DateOfAppointment%>
+                    <%# } %>
