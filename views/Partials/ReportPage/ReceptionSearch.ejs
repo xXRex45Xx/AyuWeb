@@ -1,0 +1,23 @@
+<style>
+    .table  th{
+        color: #0076d4;
+    }
+</style>
+<table class="table table-borderless table-hover searchTable">
+    <thead>
+        <tr>
+            <th>Receptionist Number</th>
+            <th>First Name</th>
+            <th>Father Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(let reception of receptionists) { %> 
+            <tr>
+                <td><%= reception.ReceptionNumber %></td>
+                <td><%= reception.FirstName %></td>
+                <td><%= reception.FatherName %></td>
+            </tr>
+        <% } %>          
+    </tbody>
+</table>

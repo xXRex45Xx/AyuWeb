@@ -133,6 +133,13 @@ begin
 end &&
 
 delimiter &&
+create procedure spManagement_SearchReception(in `@phoneNo` int)
+begin
+	select * from Management_Reception_SearchView
+    where PhoneNumber = `@phoneNo`;   
+end &&
+
+delimiter &&
 create procedure spManagement_GetDoctorInfo(in `@doctorNo` int)
 begin
 	select * from Management_Doctor_InfoView
@@ -203,6 +210,14 @@ create procedure spManagement_GetReceptionTransactions(in `@receptionNo` int)
 begin
 	select * from Management_Reception_TransactionsView
     where ReceptionNumber = `@receptionNo`;
+end &&
+
+delimiter && 
+create procedure spManagement_GetDailyTransactions(in `@dateOfPayment` date)
+begin
+	select PaymentNumber, ReceptionName, PatientName, PaymentDetails, DATE_FORMAT(DateOfPayment, "%a, %b %e, %Y") as DateOfPayment, Price 
+    from Management_CompletedPaymentsView
+    where DateOfPayment = `@dateOfPayment`;
 end &&
 
 insert into Doctor (doctorNo, firstName, fatherName, dateOfBirth, phoneNo, speciality, userNo) values

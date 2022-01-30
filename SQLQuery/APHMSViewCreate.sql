@@ -213,6 +213,22 @@ join Reception as R
 	on Pay.receptionNo = R.receptionNo
 join Patient as Pat
 	on Pay.patientNo = Pat.patientNo;
+    
+create view Management_CompletedPaymentsView
+as
+select
+	Pay.paymentNo as PaymentNumber,
+    CONCAT(R.firstName, ' ', R.fatherName) as ReceptionName,
+    CONCAT(Pat.firstName, ' ', Pat.fatherName) as PatientName,
+	Pay.paymentDetails as PaymentDetails,
+	Pay.dateOfPayment as DateOfPayment,
+    Pay.price as Price
+from Payment as Pay
+join Reception as R
+	on Pay.receptionNo = R.receptionNO
+join Patient as Pat
+	on Pay.patientNo = Pat.patientNo
+where Pay.PaymentCompleted = true;
 
 insert into Payment(paymentNo, patientNo, paymentDetails, price) values
 (58, 29, "TESt", 50.00)
