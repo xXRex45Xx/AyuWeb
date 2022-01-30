@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("ReportHead.ejs") %>
+        <title>Patient Payment Report</title>
+        <style>
+            p {
+                font-size: 10pt;
+            }
+
+            td {
+                font-size: 12pt;
+            }
+
+            .info th {
+                width: 180px;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="p-4">
+        <header>
+            <h2 class="title">AYU PRIMARY HOSPITAL P.L.C</h2>
+            <p class="mb-4">TIN: 0001823298 <br>
+                A.A S/C YEKA W.13 H.NO NEW <br>
+                AROUND YEKA ABADO <br>
+                TEL 0930071329/0911895942</p>
+        </header>
+        <h3 class="text-center">Receptionist Transaction Report</h3>
+        <table class="info mt-5 mb-5 table table-bordered">
+            <tbody>
+                <tr>
+                    <th scope="row">Receptionist Number</th>
+                    <td>
+                        <%= info.ReceptionNumber %>
+                    </td>
+                </tr>
+                <tr scope="row">
+                    <th>Receptionist Name</th>
+                    <td>
+                        <%= info.ReceptionName %>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Payment Number</th>
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Payment Details</th>
+                    <th scope="col">Date Of Payment</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let transaction of transactions) { %>
+                    <tr>
+                        <td>
+                            <%= transaction.PaymentNumber %>
+                        </td>
+                        <td>
+                            <%= transaction.PatientName %>
+                        </td>
+                        <td>
+                            <%= transaction.PaymentDetails %>
+                        </td>
+                        <td>
+                            <%= transaction.DateOfPayment %>
+                        </td>
+                        <td>
+                            <%= transaction.Price %>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+            <tfoot class="justify-right">
+                <th class="text-end" colspan="4">Total</th>
+                <td>
+                    <%= total %>
+                </td>
+            </tfoot>
+        </table>
+    </div>
+</body>
+
+</html>
