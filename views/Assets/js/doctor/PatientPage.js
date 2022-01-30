@@ -108,3 +108,22 @@ $(".containerNav_labRequest").on("click", async function () {
   }
 });
 
+$(".containerNav_newDiagnostics").on("click", async function () {
+  if (selectedPatient) {
+    $.ajax({
+      type: "GET",
+      url: `/doctor/patientpage/${selectedPatient}/diagnostics`,
+      dataType: "html",
+      success: function (response) {
+        $(".mainContainer_subContainer").html(response);
+      },
+      error: function (error) {
+        $(".mainContainer_subContainer").html(error.responseText);
+      },
+    });
+  } else {
+    alert("Please, select a patient.");
+    $(".containerNav_newDiagnostics").toggleClass("containerNav_link--active");
+  }
+});
+

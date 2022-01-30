@@ -56,3 +56,12 @@ body {
 .card {
   padding: 0px;
 }
+
+.shadow_roundedCorner {
+  box-shadow: 0px 7px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.roundedCorner {
+  border-radius: 10px;
+  border: none;
+}
