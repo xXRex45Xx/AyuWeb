@@ -217,6 +217,7 @@ insert into Reception (receptionNo, firstName, fatherName, dateOfBirth, phoneNo,
 select * from Payment
 
 insert into Payment (receptionNo, patientNo, paymentDetails, price, dateOfPayment, PaymentCompleted) values
+(3, 29, "Test", 50.99, "2022-01-30", 1),
 (3, 29, "Test", 50.00, "2022-01-30", 1),
 (3, 29, "Test", 50.00, "2022-01-30", 1),
 (3, 29, "Test", 50.00, "2022-01-30", 1),
@@ -232,7 +233,7 @@ insert into Payment (receptionNo, patientNo, paymentDetails, price, dateOfPaymen
 (3, 29, "Test", 50.00, "2022-01-30", 1),
 (3, 29, "Test", 50.00, "2022-01-30", 1),
 (3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1)
+(3, 29, "Test", 50.99, "2022-01-30", 1)
 
 /* User Procedures */
 delimiter &&

@@ -12,6 +12,22 @@
             </thead>
             <tbody>
                 <tr></tr>
+                <% for(let payment of completedPayments[0]){ %> 
+                    <tr>
+                        <td>
+                            <%= payment.PaymentNumber %>
+                        </td>
+                        <td>
+                            <%= payment.PaymentDetails %>
+                        </td>
+                        <td>
+                            <%= payment.DateOfPayment %>
+                        </td>
+                        <td>
+                            <%= payment.Price %> 
+                        </td>
+                    </tr>
+                    <% } %> 
             </tbody>
         </table>
     </div>
