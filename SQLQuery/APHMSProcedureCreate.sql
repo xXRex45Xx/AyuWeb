@@ -111,6 +111,8 @@ begin
     where  PatientNumber = `@patientNo`;
 end &&
 
+call spManagement_GetPatientCompletedPayments(29)
+
 delimiter &&
 create procedure spManagement_GetPatientPendingPayments(in `@patientNo` int)
 begin
@@ -211,7 +213,26 @@ insert into LabTechnician (technicianNo, firstName, fatherName, dateOfBirth, pho
 
 insert into Reception (receptionNo, firstName, fatherName, dateOfBirth, phoneNo, userNo) values
 (1, "Test", "Test", "1998-01-01", 111,  7)
-call spManagement_SearchEmployee(111)
+
+select * from Payment
+
+insert into Payment (receptionNo, patientNo, paymentDetails, price, dateOfPayment, PaymentCompleted) values
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1),
+(3, 29, "Test", 50.00, "2022-01-30", 1)
 
 /* User Procedures */
 delimiter &&

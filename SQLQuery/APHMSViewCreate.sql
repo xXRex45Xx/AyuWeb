@@ -116,7 +116,7 @@ select
 	Pay.patientNo as PatientNumber,
 	Pay.paymentNo as PaymentNumber,
 	Pay.paymentDetails as PaymentDetails,
-	Pay.dateOfPayment as DateOfPayment,
+	DATE_FORMAT(Pay.dateOfPayment, "%a, %b %e, %Y") as DateOfPayment,
     Pay.price as Price
 from Payment as Pay
 join Patient as Pat

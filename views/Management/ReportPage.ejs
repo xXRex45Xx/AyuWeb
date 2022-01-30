@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("../Partials/head.ejs") %>
+        <link rel="stylesheet" href="/css/ReportPage/ReportPage.css">
+        <link rel="stylesheet" href="/css/ContainerNav.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <%- include("../Partials/mainnav.ejs") %>
+            <div class="mainContainer h-100">
+                <nav class="containerNav">
+                    <button class="containerNav_link containerNav_patientPayment">
+                        <img class="containerNav_linkIcon" src="/Images/ContainerNavIcons/payment_20px.png"
+                            alt="">Patient Payment</button>
+                    <button class="containerNav_link containerNav_receptionistTransaction"><img
+                            class="containerNav_linkIcon" src="/Images/ContainerNavIcons/reception_30px.png"
+                            alt="">Receptionist Transaction</button>
+                    <button class="containerNav_link containerNav_dailyIncome">
+                        <img class="containerNav_linkIcon" src="/Images/ContainerNavIcons/daily_30px.png" alt="">Daily
+                        Income</button>
+                    <div class="containerNav_rightNav">
+                        <button class="containerNav_link containerNav_print">
+                            <img src="/Images/ContainerNavIcons/print_30px.png" alt="" class="containerNav_linkIcon">
+                            Print Report
+                        </button>
+                    </div>
+                </nav>
+                <main class="container-fluid mainContainer_subContainer p-4">
+                </main>
+            </div>
+    </div>
+    <script src="/js/containernav.js"></script>
+    <script src="/js/Management/ReportPage.js"></script>
+</body>
+
+</html>
