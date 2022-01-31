@@ -18,6 +18,7 @@ async function clearSelection() {
   });
 }
 
+
 $(".containerNav_search").on("click", async function () {
   if (isNaN(parseInt($(".containerNav_searchPhone").val()))) {
     selectedPatient = null;
@@ -69,38 +70,14 @@ $(".containerNav_info").on("click", async function () {
   }
 });
 
-$(".containerNav_payment").on("click", async function () {
+$(".containerNav_labReport").on("click", async function () {
   if (selectedPatient) {
-    selectedPayment = null;
     $.ajax({
       type: "GET",
-      url: `/reception/patientpage/${selectedPatient}/payment`,
+      url: `/doctor/patientpage/${selectedPatient}/labReport`,
       dataType: "html",
       success: function (response) {
         $(".mainContainer_subContainer").html(response);
-
-        $(".paymentContainer_pendingTable tbody tr").on("click", function () {
-          $(".paymentContainer_pendingTable tbody tr").removeClass(
-            "selectedPayment"
-          );
-          $(this).toggleClass("selectedPayment");
-          selectedPayment = parseInt($(".selectedPayment > td")[0].innerHTML);
-        });
-        $(".paymentContainer_cancel").on("click", function () {
-          if (selectedPayment) {
-            $.ajax({
-              type: "POST",
-              url: `/reception/patientpage/${selectedPatient}/payment/${selectedPayment}?_method=DELETE`,
-              dataType: "html",
-              success: function (response) {
-                $(".mainContainer_subContainer").html(response);
-              },
-              error: function (error) {
-                $(".mainContainer_subContainer").html(error.responseText);
-              },
-            });
-          } else alert("Please, select a pending payment.");
-        });
       },
       error: function (error) {
         $(".mainContainer_subContainer").html(error.responseText);
@@ -108,44 +85,45 @@ $(".containerNav_payment").on("click", async function () {
     });
   } else {
     alert("Please, select a patient.");
-    $(".containerNav_payment").toggleClass("containerNav_link--active");
+    $(".containerNav_labReport").toggleClass("containerNav_link--active");
   }
 });
 
-$(".containerNav_new").on("click", async function () {
-  await $.ajax({
-    type: "GET",
-    url: "/reception/patientpage/new",
-    dataType: "html",
-    success: function (response) {
-      $(".mainContainer_subContainer").html(response);
-
-      $(".newPatientForm").on("submit", function (e) {
-        if (!this.checkValidity()) {
-          e.preventDefault();
-          e.stopPropagation();
-        } else if (isNaN($("#phoneNo").val())) {
-          $("#phoneNoValidationFeedback").html(
-            `${$("#phoneNo").val()} is not a valid phone number.`
-          );
-          $("#phoneNo").addClass("is-invalid");
-          $("#phoneNo").val("");
-          e.preventDefault();
-          e.stopPropagation();
-        }
-        $(this).addClass("was-validated");
-      });
-
-      let date = new Date();
-      let dd = date.getDate();
-      let mm = date.getMonth() + 1;
-      let yyyy = date.getFullYear();
-      if (dd < 10) dd = "0" + dd;
-      if (mm < 10) mm = "0" + mm;
-      $("#dateOfBirth").attr("max", `${yyyy}-${mm}-${dd}`);
-    },
-    error: function (error) {
-      $(".mainContainer_subContainer").html(error.responseText);
-    },
-  });
+$(".containerNav_labRequest").on("click", async function () {
+  if (selectedPatient) {
+    $.ajax({
+      type: "GET",
+      url: `/doctor/patientpage/${selectedPatient}/labRequest`,
+      dataType: "html",
+      success: function (response) {
+        $(".mainContainer_subContainer").html(response);
+      },
+      error: function (error) {
+        $(".mainContainer_subContainer").html(error.responseText);
+      },
+    });
+  } else {
+    alert("Please, select a patient.");
+    $(".containerNav_labReport").toggleClass("containerNav_link--active");
+  }
 });
+
+$(".containerNav_newDiagnostics").on("click", async function () {
+  if (selectedPatient) {
+    $.ajax({
+      type: "GET",
+      url: `/doctor/patientpage/${selectedPatient}/diagnostics`,
+      dataType: "html",
+      success: function (response) {
+        $(".mainContainer_subContainer").html(response);
+      },
+      error: function (error) {
+        $(".mainContainer_subContainer").html(error.responseText);
+      },
+    });
+  } else {
+    alert("Please, select a patient.");
+    $(".containerNav_newDiagnostics").toggleClass("containerNav_link--active");
+  }
+});
+
