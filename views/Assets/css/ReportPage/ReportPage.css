@@ -1,0 +1,32 @@
+*{
+    font-family: Segoe UI, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,body{
+    height: 100vh;
+}
+
+.wrapper{
+    height: 100vh;
+    display: flex;
+    flex-flow: row nowrap;
+    background-color: #0076d4;
+    padding-left: 10px;
+}
+
+.mainContainer{
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    overflow: scroll;
+    display: flex;
+    flex-flow: column;
+}
+
+.mainContainer_subContainer{
+    flex: 1;
+}

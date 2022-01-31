@@ -1,0 +1,73 @@
+<div class="container newFormContainer">
+    <div class="row">
+        <form class="newEmployeeForm col col-lg-8 offset-lg-2" action="/management/employeepage" method="post"
+            novalidate>
+            <div class="row">
+                <div class="col-12 col-md mb-3">
+                    <label class="form-label" for="firstname">First Name:</label>
+                    <input class="form-control" type="text" id="firstname" name="employee[firstName]" required>
+                </div>
+                <div class="col-12 col-md mb-3">
+                    <label class="form-label" for="fathername">Father Name:</label>
+                    <input class="form-control" id="fathername" type="text" name="employee[fatherName]" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="dateOfBirth">Date Of Birth:</label>
+                <input class="form-control" id="dateOfBirth" type="date" name="employee[dateOfBirth]" min="1900-1-1"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="phoneNo" class="form-label">Phone Number:</label>
+                <input class="form-control" id="phoneNo" type="tel" name="employee[phoneNo]"
+                    aria-describedby="phoneNoValidationFeedback" required>
+                <div id="phoneNoValidationFeedback" class="invalid-feedback">
+
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="type" class="form-label">Employee Type:</label>
+                    <select name="employee[type]" id="type" class="form-select" required>
+                        <option value="1" selected>Receptionist</option>
+                        <option value="2">Doctor</option>
+                        <option value="6">Lab Technician</option>
+                    </select>
+                </div>
+                <div class="col newEmployeeForm_speciality">
+                    <label for="speciality" class="form-label">Speciality</label>
+                    <select name="employee[speciality]" id="speciality" class="form-select col">
+                        <option value="gynecologist" selected>Gynecologist</option>
+                        <option value="gp">General Practitioner</option>
+                        <option value="surgeon">Surgeon</option>
+                        <option value="skin">Skin</option>
+                        <option value="skeletal">Skeletal</option>
+                        <option value="eye">Eye</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- <fieldset class="row mb-3">
+                <legend class="col-form-label col-12 col-sm-2 pt-0">Gender:</legend>
+                <div class="col-12 col-sm-10">
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" id="male" name="patient[gender]" value="M" checked>
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" id="female" name="patient[gender]" value="F">
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="mb-3">
+                <input type="checkbox" id="hospitalized" name="patient[hospitalized]" value="true">
+                <label for="hospitalized">Hospitalized</label>
+            </div> -->
+            <div class="d-flex flex-wrap justify-content-evenly mt-5">
+                <input class="newEmployeeForm_button mb-3" type="submit" value="Add Employee">
+                <input class="newEmployeeForm_button mb-3" type="reset" value="Clear">
+            </div>
+        </form>
+    </div>
+</div>

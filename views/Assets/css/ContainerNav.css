@@ -26,6 +26,14 @@
     padding: 0.25em 0.7em;
 }
 
+.containerNav_selectDate{
+    border: 3px solid #008cff;
+    outline-color: #0076d4;
+    border-radius: 20px;
+    font-size: 12pt;
+    padding: 0.25em 0.7em;
+}
+
 .containerNav_link{
     text-decoration: none;
     margin-left: 15px;

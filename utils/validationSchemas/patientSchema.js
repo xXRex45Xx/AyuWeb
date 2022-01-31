@@ -7,6 +7,7 @@ module.exports = Joi.object({
         dateOfBirth: Joi.date().max('now').greater('1-1-1900').required(),
         gender: Joi.string().max(1).uppercase().required(),
         address: Joi.string().max(100),
-        phoneNo: Joi.number().positive().integer().required()
+        phoneNo: Joi.number().positive().integer().required(),
+        hospitalized: Joi.boolean()
     }).required()
 })

@@ -1,0 +1,34 @@
+<table class="table table-borderless">
+    <!-- <caption>Payment History</caption> -->
+    <thead>
+        <tr>
+            <th>Payment Number</th>
+            <th>Patient Name</th>
+            <th>Payment Details</th>
+            <th>Date Of Payment</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr></tr>
+        <% for(let transaction of transactions) {%>
+            <tr>
+                <td>
+                    <%= transaction.PaymentNumber %>
+                </td>
+                <td>
+                    <%= transaction.PatientName %> 
+                </td>
+                <td>
+                    <%= transaction.PaymentDetails %>
+                </td>
+                <td>
+                    <%= transaction.DateOfPayment %> 
+                </td>
+                <td>
+                    <%= transaction.Price %>
+                </td>
+            </tr>
+            <% } %>
+    </tbody>
+</table>

@@ -1,0 +1,53 @@
+<div class="container updateFormContainer">
+    <div class="row">
+        <form class="updatePatientForm col col-lg-8 offset-lg-2" action="/management/patientpage/<%= patient.PatientNumber %>?_method=PUT" method="post" novalidate>
+            <div class="row">
+                <div class="col-12 col-md mb-3">
+                    <label class="form-label" for="firstname">First Name:</label>
+                    <input class="form-control" type="text" id="firstname" name="patient[firstName]" value="<%= patient.FirstName %>" required>
+                </div>
+                <div class="col-12 col-md mb-3">
+                    <label class="form-label" for="fathername">Father Name:</label>
+                    <input class="form-control" id="fathername" type="text" name="patient[fatherName]" value="<%= patient.FatherName %>" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="dateOfBirth">Date Of Birth:</label>
+                <input class="form-control" id="dateOfBirth" type="date" name="patient[dateOfBirth]" min="1900-1-1" value="<%= patient.DateOfBirth %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address:</label>
+                <input class="form-control" id="address" type="text" name="patient[address]" value="<%= patient.Address %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="phoneNo" class="form-label">Phone Number:</label>
+                <input class="form-control" id="phoneNo" type="tel" name="patient[phoneNo]" aria-describedby="phoneNoValidationFeedback" value="<%= patient.PhoneNumber %>" required>
+                <div id="phoneNoValidationFeedback" class="invalid-feedback">
+                    
+                </div>
+            </div>
+
+            <fieldset class="row mb-3">
+                <legend class="col-form-label col-12 col-sm-2 pt-0">Gender:</legend>
+                <div class="col-12 col-sm-10">
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" id="male" name="patient[gender]" value="M" <% if(patient.Gender === 'M') {%>checked<% } %>>
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" id="female" name="patient[gender]" value="F" <% if(patient.Gender === 'F') {%>checked<% } %>>
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="mb-3">
+                <input type="checkbox" id="hospitalized" name="patient[hospitalized]" value="true"<% if(patient.Hospitalized) {%>checked<% } %>>
+                <label for="hospitalized">Hospitalized</label>
+            </div>
+            <div class="d-flex flex-wrap justify-content-evenly mt-5">
+                <input class="updatePatientForm_button mb-3" type="submit" value="Update Patient">
+                <input class="updatePatientForm_button mb-3" type="reset" value="Clear">
+            </div>
+        </form>
+    </div>
+</div>
