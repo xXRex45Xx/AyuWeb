@@ -40,6 +40,7 @@ app.use("/reception", appRoutes.reception);
 app.use("/management", appRoutes.management);
 app.use("/changepass", appRoutes.changePassword);
 app.use("/doctor", appRoutes.doctor);
+app.use("/laboratorist", appRoutes.laboratorist);
 
 app.get("/logout", (req, res, next) => {
   if (req.session) req.session.destroy();
