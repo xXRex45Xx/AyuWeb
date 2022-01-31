@@ -3,7 +3,7 @@ Use AyuDBMSStructure.sql to create the whole database schema
 
 -Remove not null constraint from receptionNo from paymnent table
 -Convert password table in appuser table to char(60) binary type
-Reception Patient Print Receipt not implemented
+-Reception Patient Print Receipt not implemented
 Reception Patient Replace Cancel Payment with Finalize Payment
 Increase Name Size in Patient Information
 Remove ReportPage copy Front-end js 

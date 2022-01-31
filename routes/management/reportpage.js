@@ -107,7 +107,6 @@ router.get("/patientpayment/:id", wrapAsync(async (req, res, next) => {
                     next(new AppError(500, "Database Error Occured!", res.locals.type))
                     return
                 }
-                // console.log(info[0][0], payments[0])
                 let total = 0
                 for (let payment of payments[0]) {
                     total += payment.Price

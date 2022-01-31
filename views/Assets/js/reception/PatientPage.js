@@ -78,7 +78,7 @@ $(".containerNav_payment").on("click", async function () {
                     if (selectedPayment && selectedPayment.length && selectedPayment.length > 0) {
                         $.ajax({
                             type: "GET",
-                            url: "/reception/patientpage/paymentreciept",
+                            url: "/reception/patientpage/payment/reciept",
                             data: {
                                 selectedPayment
                             },
@@ -101,14 +101,19 @@ $(".containerNav_payment").on("click", async function () {
                     }
                 });
 
-                $(".paymentContainer_cancel").on("click", function () {
+                $(".paymentContainer_register").on("click", function () {
                     if (selectedPayment) {
                         $.ajax({
-                            type: "POST",
-                            url: `/reception/patientpage/${selectedPatient}/payment/${selectedPayment}?_method=DELETE`,
+                            type: "GET",
+                            url: `/reception/patientpage/payment/register`,
+                            data: {
+                                selectedPayment
+                            },
                             dataType: "html",
                             success: function (response) {
-                                $(".mainContainer_subContainer").html(response)
+                                if(response === "success"){
+                                    $(".containerNav_payment").click();
+                                }
                             },
                             error: function (error) {
                                 $(".mainContainer_subContainer").html(error.responseText);
