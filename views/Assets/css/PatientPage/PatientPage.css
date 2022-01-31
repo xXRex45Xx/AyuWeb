@@ -65,3 +65,13 @@ body {
   border-radius: 10px;
   border: none;
 }
+.inputLabreport {
+  border: 0;
+  outline: 0;
+  border-bottom: 2px solid #0076d4;
+  border-radius: 0;
+  width: 100px;
+}
+.laboratoristLabreport td {
+  vertical-align: middle;
+}
