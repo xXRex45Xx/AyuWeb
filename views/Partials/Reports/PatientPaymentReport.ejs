@@ -34,13 +34,21 @@
                 <tr>
                     <th scope="row">Patient Number</th>
                     <td>
-                        <%= info.PatientNumber %>
+                        <% if(attachment) { %>
+                            <%= payments[0].PatientNumber %>
+                                <% }else { %>
+                                    <%= info.PatientNumber %>
+                                        <% } %>
                     </td>
                 </tr>
                 <tr scope="row">
                     <th>Patient Name</th>
                     <td>
-                        <%= info.Name %>
+                        <% if(attachment) { %>
+                            <%= payments[0].PatientName %>
+                                <% }else { %>
+                                    <%= info.Name %>
+                                        <% } %>
                     </td>
                 </tr>
             </tbody>

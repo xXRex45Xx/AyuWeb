@@ -28,7 +28,7 @@ on P.patientNo = C.patientNo;
 create view ReceptionPatientAppointmentView
 as
 select	A.PatientNo as PatientNumber,
-		CONCAT(D.firstName + ' ', D.fatherName) as DoctorName,
+		CONCAT(D.firstName, ' ', D.fatherName) as DoctorName,
 		DATE_FORMAT(A.DateOfAppointment, '%a, %b %e, %Y') as DateOfAppointment,
 		A.TimeOfAppointment
 from Appointment as A
@@ -38,7 +38,8 @@ on A.DoctorNo = D.doctorNo;
 create view Reception_Patient_CompletedPaymentView
 as
 select
-	Pay.patientNo as PatientNumber,
+	Pat.patientNo as PatientNumber,
+    CONCAT(Pat.firstName, ' ', Pat.fatherName) as PatientName,
 	Pay.paymentNo as PaymentNumber,
 	Pay.paymentDetails as PaymentDetails,
 	Pay.dateOfPayment as DateOfPayment,

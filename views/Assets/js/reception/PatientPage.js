@@ -29,7 +29,7 @@ $(".containerNav_search").on("click", async function () {
                 $(".mainContainer_subContainer").html(error.responseText)
             }
         })
-        
+
     }
 })
 
@@ -64,24 +64,57 @@ $(".containerNav_payment").on("click", async function () {
             success: function (response) {
                 $(".mainContainer_subContainer").html(response)
 
-                $(".paymentContainer_pendingTable tbody tr").on("click", function () {
-                    $(".paymentContainer_pendingTable tbody tr").removeClass("selectedPayment");
+                $(".paymentContainer_pendingTable tbody tr").on("click", function (e) {
+                    if (!e.ctrlKey)
+                        $(".paymentContainer_pendingTable tbody tr").removeClass("selectedPayment");
                     $(this).toggleClass("selectedPayment");
-                    selectedPayment = parseInt($(".selectedPayment > td")[0].innerHTML)
+                    selectedPayment = new Array()
+                    $(".selectedPayment").each(function (index, element) {
+                        selectedPayment.push(element.firstElementChild.innerText)
+                    });
                 });
+
+                $(".paymentContainer_print").on("click", function () {
+                    if (selectedPayment && selectedPayment.length && selectedPayment.length > 0) {
+                        $.ajax({
+                            type: "GET",
+                            url: "/reception/patientpage/paymentreciept",
+                            data: {
+                                selectedPayment
+                            },
+                            dataType: "html",
+                            success: function (response) {
+                                let winPrint = window.open("", "", `left=0, top=0, width=${screen.width}, height=${screen.height}`);
+                                winPrint.document.write(response)
+                                winPrint.document.close()
+                                winPrint.addEventListener("load", async function () {
+                                    this.focus()
+                                    this.print()
+                                    this.close()
+                                })
+                                $(".containerNav_payment").click();
+                            },
+                            error: function (error) {
+                                $(".mainContainer_subContainer").html(error.responseText);
+                            }
+                        });
+                    }
+                });
+
                 $(".paymentContainer_cancel").on("click", function () {
-                    if(selectedPayment){
-                    $.ajax({
-                        type: "POST",
-                        url: `/reception/patientpage/${selectedPatient}/payment/${selectedPayment}?_method=DELETE`,
-                        dataType: "html",
-                        success: function (response) {
-                            $(".mainContainer_subContainer").html(response)
-                        },
-                        error: function (error) {
-                            $(".mainContainer_subContainer").html(error.responseText);
-                        }
-                    });}
+                    if (selectedPayment) {
+                        $.ajax({
+                            type: "POST",
+                            url: `/reception/patientpage/${selectedPatient}/payment/${selectedPayment}?_method=DELETE`,
+                            dataType: "html",
+                            success: function (response) {
+                                $(".mainContainer_subContainer").html(response)
+                            },
+                            error: function (error) {
+                                $(".mainContainer_subContainer").html(error.responseText);
+                            }
+                        });
+                    }
                     else
                         alert("Please, select a pending payment.")
                 });
@@ -120,7 +153,7 @@ $(".containerNav_new").on("click", async function () {
                 $(this).addClass('was-validated');
             })
 
-            let date = new Date().toISOString().slice(0,10)
+            let date = new Date().toISOString().slice(0, 10)
             $("#dateOfBirth").attr('max', date);
         },
         error: function (error) {

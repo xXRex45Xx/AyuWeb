@@ -112,7 +112,7 @@ router.get("/patientpayment/:id", wrapAsync(async (req, res, next) => {
                 for (let payment of payments[0]) {
                     total += payment.Price
                 }
-                res.render("Partials/Reports/PatientPaymentReport.ejs", { info: info[0][0], payments: payments[0], total })
+                res.render("Partials/Reports/PatientPaymentReport.ejs", { info: info[0][0], payments: payments[0], total, attachment: false})
             })
         })
     })

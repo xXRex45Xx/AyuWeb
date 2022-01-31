@@ -74,6 +74,27 @@ begin
     where `@paymentNo` = paymentNo and PaymentCompleted = 0;
 end &&
 
+delimiter && 
+create procedure spReception_FinalizePayment( 
+	in `@paymentNo` int,
+    in `@dateOfPayment` date,
+    `@userNo` int)
+begin
+	declare `@receptionNo` int;
+    set `@receptionNo` = 
+		(select receptionNo from reception
+			where userNo = `@userNo`);
+	update Payment
+    set receptionNo = `@receptionNo`,
+		dateOfPayment = `@dateOfPayment`,
+		PaymentCompleted = true
+	where paymentNo = `@paymentNo`;
+	
+    select PatientNumber, PatientName, PaymentNumber, PaymentDetails, DateOfPayment, Price 
+    from Reception_Patient_CompletedPaymentView
+    where PaymentNumber = `@paymentNo`;
+end &&
+
 /* Management Procedures */
 delimiter &&
 create procedure spManagement_SearchPatient(in `@phoneNo` int)
@@ -231,24 +252,24 @@ insert into Reception (receptionNo, firstName, fatherName, dateOfBirth, phoneNo,
 
 select * from Payment
 
-insert into Payment (receptionNo, patientNo, paymentDetails, price, dateOfPayment, PaymentCompleted) values
-(3, 29, "Test", 50.99, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.00, "2022-01-30", 1),
-(3, 29, "Test", 50.99, "2022-01-30", 1)
+insert into Payment (patientNo, paymentDetails, price) values
+(29, "Test", 50.99),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.00),
+(29, "Test", 50.99)
 
 /* User Procedures */
 delimiter &&
