@@ -1,0 +1,260 @@
+<div class="container-fluid infoContainer h-100 ">
+    <div class="accordion" id="accordionInformation">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-information">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseInformation" aria-expanded="true"
+                    aria-controls="panelsStayOpen-collapseInformation">
+                    Gnegeral Information
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseInformation" class="accordion-collapse collapse show"
+                aria-labelledby="panelsStayOpen-information">
+                <div class="accordion-body">
+                    <div class="row gy-2 align-items-center infoBox">
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">Patient Number: </span>
+                            <p class="infoBox_value">
+                                <%= info[0][0].PatientNumber %>
+                            </p>
+                        </div>
+
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">Name: </span>
+                            <span class="infoBox_value">
+                                <%= info[0][0].Name %>
+                            </span>
+                        </div>
+
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">Age: </span>
+                            <span class="infoBox_value">
+                                <%= parseInt(info[0][0].Age) %>
+                            </span>
+                        </div>
+
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">Gender: </span>
+                            <span class="infoBox_value">
+                                <%= info[0][0].Gender.toUpperCase() %>
+                            </span>
+                        </div>
+
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">Card Number: </span>
+                            <span class="infoBox_value">
+                                <%= info[0][0].CardNumber %>
+                            </span>
+                        </div>
+
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">Address: </span>
+                            <span class="infoBox_value">
+                                <%= info[0][0].Address %>
+                            </span>
+                        </div>
+
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">Phone Number: </span>
+                            <span class="infoBox_value">
+                                <%= info[0][0].PhoneNumber %>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="infoBox_element col-auto">
+                        <span class="infoBox_label me-2">Appointment: </span>
+                        <div class="col-3">
+                            <input class="form-control" id="appointment" type="date" name="patient[dateOfBirth]"
+                                min="<%= `${year}-${month}-${day}` %> " required="">
+                        </div>
+                        <div class="col-2 ms-2">
+                            <button type="button" class="btn btn-primary btn-sm">Save Appointment</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-vitalSign">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseVitalSign" aria-expanded="false"
+                    aria-controls="panelsStayOpen-collapseVitalSign">
+                    Vital Signs
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseVitalSign" class="accordion-collapse collapse show"
+                aria-labelledby="panelsStayOpen-vitalSign">
+                <div class="accordion-body">
+                    <div class="row gy-2 align-items-center infoBox">
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">Vital Sign Number: </span>
+                            <p class="infoBox_value">
+                                <%= info[0][0].PatientNumber %>
+                            </p>
+                        </div>
+
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">BP High: </span>
+                            <span class="infoBox_value">
+                                <%= info[0][0].Name %>
+                            </span>
+                        </div>
+
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">BP Low: </span>
+                            <span class="infoBox_value">
+                                <%= parseInt(info[0][0].Age) %>
+                            </span>
+                        </div>
+
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">PR: </span>
+                            <span class="infoBox_value">
+                                <%= info[0][0].Gender.toUpperCase() %>
+                            </span>
+                        </div>
+
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">RR: </span>
+                            <span class="infoBox_value">
+                                <%= info[0][0].CardNumber %>
+                            </span>
+                        </div>
+
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">Temprature: </span>
+                            <span class="infoBox_value">
+                                <%= info[0][0].Address %>
+                            </span>
+                        </div>
+
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label">SPO2: </span>
+                            <span class="infoBox_value">
+                                <%= info[0][0].PhoneNumber %>
+                            </span>
+                        </div>
+                        <div class="infoBox_element col-auto">
+                            <span class="infoBox_label me-2">Pain: </span><br>
+                            <span class="infoBox_value_pain col-9">
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta, est? Tenetur quidem
+                                consequuntur reprehenderit quae corporis aperiam dolorem illo ad deleniti vitae, autem
+                                labore sapiente velit a in quos debitis?Lorem ipsum dolor, sit amet consectetur
+                                adipisicing elit. Eius neque, nobis minima minus esse commodi
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-previousDiagnostics">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-PreviousDiagnostics" aria-expanded="false"
+                    aria-controls="panelsStayOpen-PreviousDiagnostics">
+                    Previous Diagnostics
+                </button>
+            </h2>
+            <div id="panelsStayOpen-PreviousDiagnostics" class="accordion-collapse collapse"
+                aria-labelledby="panelsStayOpen-previousDiagnostics">
+                <div class="previousDiagnostics shadow-lg  m-2 overflow-auto">
+                    <table class="previousDiagnosticsTable table table-borderless table-hover">
+                        <caption>Previous Diagnostics</caption>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Discription</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th> 12-2-2019</th>
+                                <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis molestiae
+                                    adipisci excepturi
+                                    nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
+                                    Doloribus incidunt
+                                    rem sapiente cum sit.</th>
+                            </tr>
+                            <tr>
+                                <th>12-2-2019</th>
+                                <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis molestiae
+                                    adipisci excepturi
+                                    nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
+                                    Doloribus incidunt
+                                    rem sapiente cum sit.</th>
+                            </tr>
+                            <tr>
+                                <th>12-2-2019</th>
+                                <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis molestiae
+                                    adipisci excepturi
+                                    nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
+                                    Doloribus incidunt
+                                    rem sapiente cum sit.</th>
+                            </tr>
+                            <tr>
+                                <th>12-2-2019</th>
+                                <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis molestiae
+                                    adipisci excepturi
+                                    nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
+                                    Doloribus incidunt
+                                    rem sapiente cum sit.</th>
+                            </tr>
+                            <tr>
+                                <th>12-2-2019</th>
+                                <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis molestiae
+                                    adipisci excepturi
+                                    nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
+                                    Doloribus incidunt
+                                    rem sapiente cum sit.</th>
+                            </tr>
+                            <tr>
+                                <th>12-2-2019</th>
+                                <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis molestiae
+                                    adipisci excepturi
+                                    nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
+                                    Doloribus incidunt
+                                    rem sapiente cum sit.</th>
+                            </tr>
+                            <tr>
+                                <th>12-2-2019</th>
+                                <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis molestiae
+                                    adipisci excepturi
+                                    nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
+                                    Doloribus incidunt
+                                    rem sapiente cum sit.</th>
+                            </tr>
+                            <tr>
+                                <th>12-2-2019</th>
+                                <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis molestiae
+                                    adipisci excepturi
+                                    nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
+                                    Doloribus incidunt
+                                    rem sapiente cum sit.</th>
+                            </tr>
+                            <tr>
+                                <th>12-2-2019</th>
+                                <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis molestiae
+                                    adipisci excepturi
+                                    nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
+                                    Doloribus incidunt
+                                    rem sapiente cum sit.</th>
+                            </tr>
+                            <tr>
+                                <th>12-2-2019</th>
+                                <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis molestiae
+                                    adipisci excepturi
+                                    nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
+                                    Doloribus incidunt
+                                    rem sapiente cum sit.</th>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
