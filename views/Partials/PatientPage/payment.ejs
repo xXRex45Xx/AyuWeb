@@ -1,68 +1,93 @@
 <div class="container-fluid paymentContainer h-100 paymentContainer">
-    <div class="paymentContainer_history shadow-lg m-2 mb-3">
-        <table class="table table-borderless">
-            <caption>Payment History</caption>
-            <thead>
-                <tr>
-                    <th>Payment Number</th>
-                    <th>Payment Details</th>
-                    <th>Date Of Payment</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr></tr>
-                <% for(let payment of completedPayments[0]){ %> 
-                    <tr>
-                        <td>
-                            <%= payment.PaymentNumber %>
-                        </td>
-                        <td>
-                            <%= payment.PaymentDetails %>
-                        </td>
-                        <td>
-                            <%= payment.DateOfPayment %>
-                        </td>
-                        <td>
-                            <%= payment.Price %> 
-                        </td>
-                    </tr>
-                    <% } %> 
-            </tbody>
-        </table>
-    </div>
-    <div class="paymentContainer_pending shadow-lg m-2 overflow-auto">
-        <table class="paymentContainer_pendingTable table table-borderless table-hover">
-            <caption>Pending Payments</caption>
-            <thead>
-                <tr>
-                    <th>Payment Number</th>
-                    <th>Payment Details</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr></tr>
-                <% for(let payment of pendingPayments[0]) {%>
-                    <tr>
-                        <td>
-                            <%= payment.PaymentNumber %>
-                        </td>
-                        <td>
-                            <%= payment.PaymentDetails %>
-                        </td>
-                        <td>
-                            <%= payment.Price %>
-                        </td>
-                    </tr>
+    <div class="accordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-paymentHistoryHeader">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-paymentHistory" aria-expanded="false"
+                    aria-controls="panelsStayOpen-paymentHistory">Payment History</button>
+            </h2>
+            <div class="accordion-collapse collapse" id="panelsStayOpen-paymentHistory"
+                aria-labelledby="panelsStayOpen-paymentHistoryHeader">
+                <div class="paymentContainer_history m-2 mb-3">
+                    <table class="table table-borderless">
+                        <caption>Payment History</caption>
+                        <thead>
+                            <tr>
+                                <th>Payment Number</th>
+                                <th>Payment Details</th>
+                                <th>Date Of Payment</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr></tr>
+                            <% for(let payment of completedPayments[0]){ %>
+                                <tr>
+                                    <td>
+                                        <%= payment.PaymentNumber %>
+                                    </td>
+                                    <td>
+                                        <%= payment.PaymentDetails %>
+                                    </td>
+                                    <td>
+                                        <%= payment.DateOfPayment %>
+                                    </td>
+                                    <td>
+                                        <%= payment.Price %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-pendingPaymentHeader">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-pendingPayment" aria-expanded="false"
+                    aria-controls="panelsStayOpen-pendingPayment">
+                    Pening Payments
+                </button>
+            </h2>
+            <div class="accordion-collapse collapse show" id="panelsStayOpen-pendingPayment"
+                aria-labelledby="panelsStayOpen-pendingPaymentHeader">
+                <div class="paymentContainer_pending m-2 overflow-auto">
+                    <table class="paymentContainer_pendingTable table table-borderless table-hover">
+                        <caption>Pending Payments</caption>
+                        <thead>
+                            <tr>
+                                <th>Payment Number</th>
+                                <th>Payment Details</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr></tr>
+                            <% for(let payment of pendingPayments[0]) {%>
+                                <tr>
+                                    <td>
+                                        <%= payment.PaymentNumber %>
+                                    </td>
+                                    <td>
+                                        <%= payment.PaymentDetails %>
+                                    </td>
+                                    <td>
+                                        <%= payment.Price %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                        </tbody>
+                    </table>
+                </div>
+
+                <% if(type && type==="reception" ) { %>
+                    <div class="paymentContainer_handlers m-2">
+                        <button class="paymentContainer_button paymentContainer_register">Register Payment</button>
+                        <button class="paymentContainer_button paymentContainer_print">Print Reciept</button>
+                    </div>
                     <% } %>
-            </tbody>
-        </table>
+            </div>
+        </div>
     </div>
-    <% if(type && type === "reception") { %>
-    <div class="paymentContainer_handlers m-2">
-        <button class="paymentContainer_button paymentContainer_register">Register Payment</button>
-        <button class="paymentContainer_button paymentContainer_print">Print Reciept</button>
-    </div>
-    <% } %> 
 </div>
