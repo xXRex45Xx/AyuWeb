@@ -127,3 +127,5 @@ $(".containerNav_newDiagnostics").on("click", async function () {
   }
 });
 
+
+
