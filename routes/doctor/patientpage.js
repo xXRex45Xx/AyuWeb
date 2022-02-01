@@ -4,14 +4,10 @@ const { AppError, wrapAsync } = require("../../utils/error")
 const methodOverride = require("method-override")
 const { patientSchema } = require("../../utils/validationSchemas")
 const generateCardNo = require("../../utils/card-number-generator")
-const { receptionAuthorization } = require("../../utils/authorization")
 
 const router = express.Router();
 
 router.use(methodOverride("_method"))
-// router.use(receptionAuthorization)
-// create a new authorization for the doctor
-
 
 date = new Date();
 day = date.getDate();
@@ -197,7 +193,7 @@ router.get('/:id/diagnostics', wrapAsync(async (req, res, next) => {
               next(new AppError(404, "Can't make request", res.locals.type))
               return
             }
-            res.render('Partials/DoctorPage/diagonstics.ejs', { info, appointments, day, month, year })
+            res.render('Partials/DoctorPage/diagonstics.ejs', { info, appointments, id, day, month, year })
           }
           con.release()
         })
@@ -207,43 +203,28 @@ router.get('/:id/diagnostics', wrapAsync(async (req, res, next) => {
   })
 }))
 
-router.post("/newDiagnosis", (req, res, next) => {
-  const { content } = req.body
+router.post("/:id/newDiagnosis", (req, res, next) => {
+  const { diagnosis } = req.body
+  const { id } = req.params
   const { userId } = req.session.user
-  const diagnosisData = [now, userID, content,]
-  console.log(diagnosisData)
-
-  // db.getConnection((err, con) => {
-  //   if (err) {
-  //     next(new AppError(500, "Database error occured! Please, contact your system administrator.", res.locals.type))
-  //     return
-  //   }
-  //   else {
-  //     const { userId } = req.session.user
-  //     const diagnosisData = [now,userID,content,]
-  //     console.log(diagnosisData)
-  //     con.query("spDoctor_AddDiagnosis (?,?,?,?)", patientArr, (error, results, fields) => {
-  //       if (error) {
-  //         next(new AppError(500, error.sqlMessage, res.locals.type))
-  //         return
-  //       }
-  //       else {
-  //         const { lastId } = results[0][0]
-  //         const { lastCardNo } = results[1][0]
-  //         const cardNo = generateCardNo(lastCardNo)
-  //         con.query("call spReception_AddCard(?, ?)", [lastId, cardNo], (error, results, fields) => {
-  //           if (error) {
-  //             next(new AppError(500, "Database error occured!", res.locals.type))
-  //             return
-  //           }
-  //         })
-  //       }
-  //       con.release()
-  //     })
-  //   }
-  // })
-  // req.flash("success", "Patient added successfully.")
-  // res.redirect("/reception/patientpage")
+  const diagnosisData = [id, now, userId, diagnosis.content]
+  db.getConnection((err, con) => {
+    if (err) {
+      next(new AppError(500, "Database error occured! Please, contact your system administrator.", res.locals.type))
+      return
+    }
+    else {
+      con.query("call spDoctor_AddDiagnosis(?,?,?,?)", diagnosisData, (error, results, fields) => {
+        if (error) {
+          next(new AppError(500, error.sqlMessage, res.locals.type))
+          return
+        }
+        con.release()
+      })
+    }
+  })
+  req.flash("success", "Diagnosis added successfully.")
+  res.redirect("/doctor/patientpage")
 })
 
 module.exports = router;
