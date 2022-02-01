@@ -28,6 +28,7 @@
     border: none;
     color: white;
     margin-left: 20px;
+    width: max-content;
 }
 
 .table tr.selectedPayment{

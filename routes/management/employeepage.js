@@ -180,7 +180,7 @@ router.post("/", wrapAsync(validateEmployee), wrapAsync(async (req, res, next) =
                 }
                 con.query(q, queryParams, (error, results, fields) =>{
                     if(error){
-                        next(new AppError(500, "Database Error Occured!", res.locals.type))
+                        next(new AppError(500, error.sqlMessage, res.locals.type))
                         return;
                     }
                     con.release()

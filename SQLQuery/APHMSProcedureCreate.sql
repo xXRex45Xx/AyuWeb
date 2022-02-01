@@ -227,6 +227,33 @@ begin
 	insert into reception (firstName, fatherName, dateOfBirth, phoneNo, userNo) values
     (`@firstName`, `@fatherName`, `@dateOfBirth`, `@phoneNo`, `@userNo`);
 end &&
+	
+delimiter &&
+create procedure spManagement_AddDoctor(
+	in `@firstName` varchar(25),
+    `@fatherName` varchar(25),
+    `@dateOfBirth` date,
+    `@phoneNo` int,
+    `@speciality` varchar(50),
+    `@userNo` int
+)
+begin
+	insert into Doctor (firstName, fatherName, dateOfBirth, phoneNo, speciality, userNo) values
+    (`@firstName`, `@fatherName`, `@dateOfBirth`, `@phoneNo`, `@speciality`, `@userNo`);
+end &&
+
+delimiter &&
+create procedure spManagement_AddLabTechnician(
+	in `@firstName` varchar(25),
+    `@fatherName` varchar(25),
+    `@dateOfBirth` date,
+    `@phoneNo` int,
+    `@userNo` int
+)
+begin
+	insert into LabTechnician (firstName, fatherName, dateOfBirth, phoneNo, userNo) values
+    (`@firstName`, `@fatherName`, `@dateOfBirth`, `@phoneNo`, `@userNo`);
+end &&
 
 delimiter &&
 create procedure spManagement_GetReceptionTransactions(in `@receptionNo` int)

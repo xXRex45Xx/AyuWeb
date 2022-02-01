@@ -10,6 +10,6 @@ Use AyuDBMSStructure.sql to create the whole database schema
 -Setup Registeration Fee
 -Reception Patient Payment History not implemented
 
-Reception Payment UI Redesign
-Add Doctor Assignment 
+-PatientPage UI Redesign
+Reception Add Doctor Assignment 
 Management Employee Schedule
