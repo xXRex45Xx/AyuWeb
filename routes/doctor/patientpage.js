@@ -108,29 +108,38 @@ router.get('/:id/labReport', wrapAsync(async (req, res, next) => {
       next(new AppError(500, "Database error occured! Please contact your system administrator.", res.locals.type))
       return
     }
-    con.query(`call spReception_GetPatientInfo(?)`, id, (error, info, fields) => {
+    con.query(`call spDoctor_GetLabReport(?)`, id, (error, labreport, fields) => {
       if (error) {
         next(new AppError(500, "Database error occured! Please contact your system administrator.", res.locals.type))
         return
       }
       else {
-        con.query(`call spReception_GetPatientAppointments(?)`, id, (error, appointments, fields) => {
-          if (error) {
-            next(new AppError(500, "Database error occured! Please contact your system administrator.", res.locals.type))
-            return
-          }
-          else {
-            if (!info[0][0]) {
-              con.release()
-              next(new AppError(404, "Patient Not Found", res.locals.type))
-              return
-            }
-            res.render('Partials/DoctorPage/labReport.ejs', { info, appointments, day, month, year })
-          }
-          con.release()
-        })
+        if (labreport[0].length > 0) {
+          let today = new Date()
+          const recent = labreport[0].filter(labreport => (today.getTime() - labreport.DateTimeOfRequest.getTime()) < 604800000)
+          const previous = labreport[0].filter(labreport => (today.getTime() - labreport.DateTimeOfRequest.getTime()) > 604800000)
+          if (previous.length > 0)
+            res.render('Partials/DoctorPage/labReport.ejs', { recent, previous })
+          else
+            res.render('Partials/DoctorPage/labReport.ejs', { recent })
+        }
+        else
+          res.render('Partials/DoctorPage/labReport.ejs')
+        con.release()
       }
     })
+    /** */
+    //   <%if (!previous && !recent) {%>
+
+    //   <%} else {%>
+    //     <% if (!previous) {
+
+    //       <% } else {
+
+    //         <% }
+    // }
+
+    /* --------------------------------*/
 
   })
 }))
