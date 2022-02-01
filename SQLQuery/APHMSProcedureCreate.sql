@@ -59,12 +59,14 @@ begin
 end && 
 
 delimiter &&
-create procedure spReception_AddCard(
+create procedure spReception_AddCardandRegFee(
 	in `@patientNo` int,
     in `@cardNo` varchar(10))
 begin
 	insert into Card(patientNo, cardNo) values
     (`@patientNo`, `@cardNo`);
+    insert into Payment (patientNo, paymentDetails, price) values
+    (`@patientNo`, "Registeration", 80);
 end &&
 
 delimiter &&

@@ -230,7 +230,7 @@ router.post('/', wrapAsync(validatePatient), wrapAsync(async (req, res, next) =>
                     const { lastId } = results[0][0]
                     const { lastCardNo } = results[1][0]
                     const cardNo = generateCardNo(lastCardNo)
-                    con.query("call spReception_AddCard(?, ?)", [lastId, cardNo], (error, results, fields) => {
+                    con.query("call spReception_AddCardandRegFee(?, ?)", [lastId, cardNo], (error, results, fields) => {
                         if (error) {
                             next(new AppError(500, "Database error occured!", res.locals.type))
                             return
