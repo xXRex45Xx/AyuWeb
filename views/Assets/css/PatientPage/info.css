@@ -19,7 +19,7 @@
   display: inline-block;
   text-align: center;
   border-bottom: 1px solid #0076d4;
-  width: 150px;
+  width: 200px;
   margin-left: 10px;
 }
 .infoBox_value_pain {
@@ -33,16 +33,3 @@
 .previousDiagnostics {
   height: 50vh;
 }
-
-/* .previousDiagnosticsTable thead th {
-  background-color: white;
-  position: sticky;
-  top: 2em;
-  z-index: 1;
-}
-.previousDiagnosticsTable caption {
-  background-color: white;
-  position: sticky;
-  top: 1em;
-  z-index: 1;
-} */
