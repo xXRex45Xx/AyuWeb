@@ -313,3 +313,11 @@ select * from AppUser
 
 
 
+/* Doctor Procedures */
+delimiter &&
+create procedure spDoctor_GetVitalSign(	in `@vitalSignNo` int)
+begin
+	select * from vitalsign 
+    where vitalSignNo = `@vitalSignNo`;
+end &&
+delimiter &&

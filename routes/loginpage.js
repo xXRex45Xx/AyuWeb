@@ -1,8 +1,8 @@
 const express = require('express')
-const {AppError, wrapAsync} = require("../utils/error")
+const { AppError, wrapAsync } = require("../utils/error")
 const mysql = require("mysql")
 const userType = require("../utils/usertype")
-const {userSchema} = require("../utils/validationSchemas")
+const { userSchema } = require("../utils/validationSchemas")
 const bcrypt = require("bcrypt")
 const { management } = require('../utils/usertype')
 const router = express.Router()
@@ -15,7 +15,7 @@ const db = mysql.createPool({
     database: 'APHMSDB'
 })
 
-const validateUser = async (req, res, next) =>{
+const validateUser = async (req, res, next) => {
     try {
         const validation = userSchema.login.validate(req.body)
         if (validation.error) {
@@ -30,19 +30,22 @@ const validateUser = async (req, res, next) =>{
     }
 }
 
-router.get("/", wrapAsync(async (req, res, next) =>{
-    if(!req.session.user){
+router.get("/", wrapAsync(async (req, res, next) => {
+    if (!req.session.user) {
         res.render("LoginPage.ejs")
         return
     }
-    else{
-        const {role} = req.session.user
-        switch(role){
+    else {
+        const { role } = req.session.user
+        switch (role) {
             case userType.receptionist:
                 res.redirect("/reception/homepage")
                 break;
             case userType.management:
                 res.redirect("/management/homepage")
+                break;
+            case userType.doctor:
+                res.redirect("/doctor/homepage")
                 break;
             default:
                 throw new AppError(400, "Invalid User")
@@ -50,24 +53,23 @@ router.get("/", wrapAsync(async (req, res, next) =>{
     }
 }))
 
-router.post("/", validateUser, wrapAsync(async (req, res, next) =>{
+router.post("/", validateUser, wrapAsync(async (req, res, next) => {
     const { user } = req.body;
-    db.getConnection((err, con) =>{
-        if(err)
-        {
+    db.getConnection((err, con) => {
+        if (err) {
             next(new AppError(500, "Database Error Occured!"))
             return
         }
-        con.query("call spGetUser(?)", user.username, async (err, results, fields) =>{
-            if(err){
+        con.query("call spGetUser(?)", user.username, async (err, results, fields) => {
+            if (err) {
                 console.log(err)
                 return
             }
-            if(results[0][0]){
+            if (results[0][0]) {
                 const foundUser = results[0][0]
                 const isValid = await bcrypt.compare(user.password, foundUser.Password)
-                if(isValid){
-                    req.session.user ={
+                if (isValid) {
+                    req.session.user = {
                         userId: foundUser.UserNumber,
                         username: foundUser.UserName,
                         role: foundUser.Role

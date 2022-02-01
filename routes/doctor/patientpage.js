@@ -15,10 +15,11 @@ router.use(methodOverride("_method"))
 
 date = new Date();
 day = date.getDate();
-day = parseInt(day) - 1;
 month = date.getMonth();
 month = parseInt(month) + 1;
 year = date.getFullYear();
+var now = `${year}-${month}-${day}`
+
 
 const db = mysql.createPool({
   connectionLimit: 100,
@@ -79,14 +80,24 @@ router.get('/:id/info', wrapAsync(async (req, res, next) => {
             return
           }
           else {
-            if (!info[0][0]) {
+            con.query(`call spDoctor_GetVitalSign(?)`, id, (error, vitalSign, fields) => {
+              if (error) {
+                next(new AppError(500, "Database error occured! Please contact your system administrator.", res.locals.type))
+                return
+              }
+              else {
+                if (!info[0][0]) {
+                  con.release()
+                  next(new AppError(404, "Patient Not Found", res.locals.type))
+                  return
+                }
+                console.log(vitalSign)
+                res.render('Partials/DoctorPage/info.ejs', { info, appointments, vitalSign, day, month, year })
+              }
               con.release()
-              next(new AppError(404, "Patient Not Found", res.locals.type))
-              return
-            }
-            res.render('Partials/DoctorPage/info.ejs', { info, appointments, day, month, year })
+            })
           }
-          con.release()
+
         })
       }
     })
@@ -195,5 +206,44 @@ router.get('/:id/diagnostics', wrapAsync(async (req, res, next) => {
 
   })
 }))
+
+router.post("/newDiagnosis", (req, res, next) => {
+  const { content } = req.body
+  const { userId } = req.session.user
+  const diagnosisData = [now, userID, content,]
+  console.log(diagnosisData)
+
+  // db.getConnection((err, con) => {
+  //   if (err) {
+  //     next(new AppError(500, "Database error occured! Please, contact your system administrator.", res.locals.type))
+  //     return
+  //   }
+  //   else {
+  //     const { userId } = req.session.user
+  //     const diagnosisData = [now,userID,content,]
+  //     console.log(diagnosisData)
+  //     con.query("spDoctor_AddDiagnosis (?,?,?,?)", patientArr, (error, results, fields) => {
+  //       if (error) {
+  //         next(new AppError(500, error.sqlMessage, res.locals.type))
+  //         return
+  //       }
+  //       else {
+  //         const { lastId } = results[0][0]
+  //         const { lastCardNo } = results[1][0]
+  //         const cardNo = generateCardNo(lastCardNo)
+  //         con.query("call spReception_AddCard(?, ?)", [lastId, cardNo], (error, results, fields) => {
+  //           if (error) {
+  //             next(new AppError(500, "Database error occured!", res.locals.type))
+  //             return
+  //           }
+  //         })
+  //       }
+  //       con.release()
+  //     })
+  //   }
+  // })
+  // req.flash("success", "Patient added successfully.")
+  // res.redirect("/reception/patientpage")
+})
 
 module.exports = router;
