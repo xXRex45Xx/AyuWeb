@@ -24,15 +24,18 @@
                             alt="">Information</button>
                     <button class="containerNav_link containerNav_labReport"><img class="containerNav_linkIcon"
                             src="/Images/ContainerNavIcons/laboratory_25px.png" alt="">Lab Report</button>
-                    <div class="containerNav_rightNav containerNav_labRequest">
-                        <button class="containerNav_link containerNav_new"><img class="containerNav_linkIcon"
-                                src="/Images/ContainerNavIcons/audit_25px.png" alt="">New Lab Request</button>
+                    <div class="containerNav_rightNav d-flex nowrap">
+                        <div class="containerNav_labRequest">
+                            <button class="containerNav_link containerNav_new"><img class="containerNav_linkIcon"
+                                    src="/Images/ContainerNavIcons/audit_25px.png" alt="">New Lab Request</button>
+                        </div>
+                        <div class="containerNav_newDiagnostics">
+                            <button class="containerNav_link containerNav_new"><img class="containerNav_linkIcon"
+                                    src="/Images/ContainerNavIcons/hand_with_pen_50px.png" alt="">New
+                                Diagnosis</button>
+                        </div>
                     </div>
-                    <div class="containerNav_rightNav containerNav_newDiagnostics">
-                        <button class="containerNav_link containerNav_new"><img class="containerNav_linkIcon"
-                                src="/Images/ContainerNavIcons/hand_with_pen_50px.png" alt="">New
-                            Diagnostics</button>
-                    </div>
+
                 </nav>
                 <main class="container-fluid mainContainer_subContainer p-4">
                     <%- include('../Partials/Flash/successflash.ejs') %>

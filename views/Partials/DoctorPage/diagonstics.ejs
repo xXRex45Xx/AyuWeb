@@ -1,12 +1,12 @@
-<form class="container col-8">
+<form class="container col-8" action="/doctor/patientPage/<%=id%>/newDiagnosis" method="post">
     <div class="form-group mt-3">
-        <label for="exampleFormControlTextarea1">
-            <h4>New Diagnostics</h4>
+        <label for="newDiagnosis">
+            <h4>New Diagnosis</h4>
         </label>
-        <textarea class="form-control border-0 shadow_roundedCorner" id="exampleFormControlTextarea1" rows="15"
-            placeholder="Write New Diagnostics Here"></textarea>
+        <textarea class="form-control border-0 shadow_roundedCorner" id="newDiagnosis" rows="15"
+            placeholder="Write New Diagnosis Here" name="diagnosis[content]" required></textarea>
     </div>
-    <div class="d-flex justify-content-end mt-3">
-        <button type="button" class="btn btn-primary btn-sm">Save Diagnostics</button>
+    <div class="d-flex justify-content-end mt-3 btnSaveDiagnosis">
+        <button type="submit" value="Add Diagnosis" class="btn btn-primary btn-sm">Save Diagnosis</button>
     </div>
 </form>
