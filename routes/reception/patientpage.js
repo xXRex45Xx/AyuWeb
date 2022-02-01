@@ -169,7 +169,7 @@ router.get("/payment/reciept", wrapAsync(async (req, res, next) => {
                     for(let payment of finalizedPayments){
                         total += payment.Price
                     }
-                    res.render("Partials/Reports/PatientPaymentReport.ejs", {payments: finalizedPayments, total, attachment: true})
+                    res.render("Partials/Reports/PatientPaymentReport.ejs", {payments: finalizedPayments, total: total.toFixed(2), attachment: true})
                 }
             })
         }

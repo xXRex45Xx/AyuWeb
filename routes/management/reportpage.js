@@ -59,7 +59,7 @@ router.get("/receptiontransaction/:id", wrapAsync(async (req, res, next) => {
                 for (let transaction of transactions[0]) {
                     total += transaction.Price
                 }
-                res.render("Partials/Reports/ReceptionTransactionReport.ejs", { info: info[0][0], transactions: transactions[0], total })
+                res.render("Partials/Reports/ReceptionTransactionReport.ejs", { info: info[0][0], transactions: transactions[0], total: total.toFixed(2) })
             })
         })
     })
@@ -83,7 +83,7 @@ router.get("/dailyreport/:reportdate", wrapAsync(async (req, res, next) => {
             for(let transaction of transactions[0]){
                 total += transaction.Price
             }
-            res.render("Partials/Reports/DailyIncomeReport.ejs", {transactions: transactions[0], total})
+            res.render("Partials/Reports/DailyIncomeReport.ejs", {transactions: transactions[0], total: total.toFixed(2)})
         })
     })
 }))
@@ -111,7 +111,7 @@ router.get("/patientpayment/:id", wrapAsync(async (req, res, next) => {
                 for (let payment of payments[0]) {
                     total += payment.Price
                 }
-                res.render("Partials/Reports/PatientPaymentReport.ejs", { info: info[0][0], payments: payments[0], total, attachment: false})
+                res.render("Partials/Reports/PatientPaymentReport.ejs", { info: info[0][0], payments: payments[0], total: total.toFixed(2) , attachment: false})
             })
         })
     })

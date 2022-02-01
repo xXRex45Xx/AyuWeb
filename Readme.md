@@ -12,4 +12,4 @@ Use AyuDBMSStructure.sql to create the whole database schema
 
 -PatientPage UI Redesign
 Reception Add Doctor Assignment 
-Management Employee Schedule
+Management Employee Schedule//
