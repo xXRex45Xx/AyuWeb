@@ -1,180 +1,209 @@
-<div class="container-fluid infoContainer h-100 ">
-    <div class="accordion" id="accordionLabReport">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="panelsStayOpen-recentLabReport">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+<%if (previous.length<1 && recent.length<1) {%>
+    <div class="container-fluid infoContainer h-100 ">
+        <div class="accordion" id="accordionLabReport">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-recentLabReport">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseRecentLabReport" aria-expanded="true"
+                    aria-controls="panelsStayOpen-collapseRecentLabReport">
+                    Recent Lab Report
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseRecentLabReport" class="accordion-collapse collapse "
+            data-bs-parent="#accordionLabReport" aria-labelledby="panelsStayOpen-recentLabReport">
+            <div class="previousDiagnostics shadow-lg  m-2 overflow-auto">
+                <table class="previousDiagnosticsTable table table-borderless table-hover">
+                    <caption>Recent Lab Reports</caption>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Request Type</th>
+                            <th>Normal Value</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-labReport">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-LabReport" aria-expanded="false"
+            aria-controls="panelsStayOpen-LabReport">
+            Previous Diagnostics
+        </button>
+    </h2>
+    <div id="panelsStayOpen-LabReport" class="accordion-collapse collapse"
+    data-bs-parent="#accordionLabReport" aria-labelledby="panelsStayOpen-labReport">
+    <div class="previousDiagnostics shadow-lg  m-2 overflow-auto">
+        <table class="previousDiagnosticsTable table table-borderless table-hover">
+            <caption>Previous Lab Reports</caption>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Request Type</th>
+                    <th>Normal Value</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+</div>
+</div>
+
+</div>
+<%}%>
+<%if (previous.length<1 && recent.length>0) {%>       
+    <div class="container-fluid infoContainer h-100 ">
+        <div class="accordion" id="accordionLabReport">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-recentLabReport">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#panelsStayOpen-collapseRecentLabReport" aria-expanded="true"
                     aria-controls="panelsStayOpen-collapseRecentLabReport">
                     Recent Lab Report
                 </button>
             </h2>
             <div id="panelsStayOpen-collapseRecentLabReport" class="accordion-collapse collapse show"
-                data-bs-parent="#accordionLabReport" aria-labelledby="panelsStayOpen-recentLabReport">
-                <div class="previousDiagnostics shadow-lg  m-2 overflow-auto">
-                    <table class="previousDiagnosticsTable table table-borderless table-hover">
-                        <caption>Recent Lab Reports</caption>
-                        <thead>
+            data-bs-parent="#accordionLabReport" aria-labelledby="panelsStayOpen-recentLabReport">
+            <div class="previousDiagnostics shadow-lg  m-2 overflow-auto">
+                <table class="previousDiagnosticsTable table table-borderless table-hover">
+                    <caption>Recent Lab Reports</caption>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Request Type</th>
+                            <th>Normal Value</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% recent.forEach(labreport => { %>
                             <tr>
-                                <th>Date</th>
-                                <th>Request Type</th>
-                                <th>Normal Value</th>
-                                <th>Result</th>
+                                <th><%= (labreport.DateTimeOfRequest).toString().slice(0,15) %></th>
+                                <th><%= labreport.ReportType%></th>
+                                <th><%= labreport.NormalValue%></th>
+                                <th><%= labreport.Result%></th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
+                            <%})%>
+                            
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
+        
         <div class="accordion-item">
             <h2 class="accordion-header" id="panelsStayOpen-labReport">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#panelsStayOpen-LabReport" aria-expanded="false"
-                    aria-controls="panelsStayOpen-LabReport">
-                    Previous Diagnostics
+                data-bs-target="#panelsStayOpen-LabReport" aria-expanded="false"
+                aria-controls="panelsStayOpen-LabReport">
+                Previous Diagnostics
+            </button>
+        </h2>
+        <div id="panelsStayOpen-LabReport" class="accordion-collapse collapse" data-bs-parent="#accordionLabReport"
+        aria-labelledby="panelsStayOpen-labReport">
+        <div class="previousDiagnostics shadow-lg  m-2 overflow-auto">
+            <table class="previousDiagnosticsTable table table-borderless table-hover">
+                <caption>Previous Lab Reports</caption>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Request Type</th>
+                        <th>Normal Value</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+</div>
+<%}%>
+<% if (previous.length>0 && recent.length>0 ){%>
+    <div class="container-fluid infoContainer h-100 ">
+        <div class="accordion" id="accordionLabReport">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-recentLabReport">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseRecentLabReport" aria-expanded="true"
+                    aria-controls="panelsStayOpen-collapseRecentLabReport">
+                    Recent Lab Report
                 </button>
             </h2>
-            <div id="panelsStayOpen-LabReport" class="accordion-collapse collapse" data-bs-parent="#accordionLabReport"
-                aria-labelledby="panelsStayOpen-labReport">
-                <div class="previousDiagnostics shadow-lg  m-2 overflow-auto">
-                    <table class="previousDiagnosticsTable table table-borderless table-hover">
-                        <caption>Previous Lab Reports</caption>
-                        <thead>
+            <div id="panelsStayOpen-collapseRecentLabReport" class="accordion-collapse collapse show"
+            data-bs-parent="#accordionLabReport" aria-labelledby="panelsStayOpen-recentLabReport">
+            <div class="previousDiagnostics shadow-lg  m-2 overflow-auto">
+                <table class="previousDiagnosticsTable table table-borderless table-hover">
+                    <caption>Recent Lab Reports</caption>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Request Type</th>
+                            <th>Normal Value</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% recent.forEach(labreport => { %>
                             <tr>
-                                <th>Date</th>
-                                <th>Request Type</th>
-                                <th>Normal Value</th>
-                                <th>Result</th>
+                                <th><%= (labreport.DateTimeOfRequest).toString().slice(0,15) %></th>
+                                <th><%= labreport.ReportType%></th>
+                                <th><%= labreport.NormalValue%></th>
+                                <th><%= labreport.Result%></th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
-                            <tr>
-                                <th>02-09-2021</th>
-                                <th>BH & RH</th>
-                                <th>23</th>
-                                <th>22</th>
-                            </tr>
+                            <%})%>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+        
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-labReport">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-LabReport" aria-expanded="false"
+                aria-controls="panelsStayOpen-LabReport">
+                Previous Diagnostics
+            </button>
+        </h2>
+        <div id="panelsStayOpen-LabReport" class="accordion-collapse collapse" data-bs-parent="#accordionLabReport"
+        aria-labelledby="panelsStayOpen-labReport">
+        <div class="previousDiagnostics shadow-lg  m-2 overflow-auto">
+            <table class="previousDiagnosticsTable table table-borderless table-hover">
+                <caption>Previous Lab Reports</caption>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Request Type</th>
+                        <th>Normal Value</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% previous.forEach(labreport => { %>
+                        <tr>
+                            <th><%= (labreport.DateTimeOfRequest).toString().slice(0,15) %></th>
+                            <th><%= labreport.ReportType%></th>
+                            <th><%= labreport.NormalValue%></th>
+                            <th><%= labreport.Result%></th>
+                        </tr>
+                        <%})%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+</div>
 
 </div>
+<%}%>
+
