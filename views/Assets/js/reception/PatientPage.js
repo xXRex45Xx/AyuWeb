@@ -41,6 +41,25 @@ $(".containerNav_info").on("click", async function () {
             dataType: "html",
             success: function (response) {
                 $(".mainContainer_subContainer").html(response);
+
+                $(".infoBox_addQueue").on("click", function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/reception/patientpage/queue",
+                        data: {
+                            doctorType: $(".doctorType").val(),
+                            patientId: selectedPatient
+                        },
+                        proccessData: false,
+                        dataType: "html",
+                        success: function (response) {
+                            $(".mainContainer_subContainer").prepend(response);
+                        },
+                        error: function(error){
+                            $(".mainContainer_subContainer").html(error.responseText);
+                        }
+                    });                    
+                });
             },
             error: function (error) {
                 $(".mainContainer_subContainer").html(error.responseText);

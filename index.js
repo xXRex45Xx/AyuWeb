@@ -11,6 +11,7 @@ const app = express();
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
+app.set("queue", new Array());
 
 const sessionConfig = {
   secret: "passdfgpassdfg",
@@ -35,6 +36,9 @@ app.use((req, res, next) => {
   next();
 });
 
+appRoutes.reception.locals = app.locals;
+appRoutes.doctor.locals = app.locals;
+
 app.use("/", appRoutes.loginPage);
 app.use("/reception", appRoutes.reception);
 app.use("/management", appRoutes.management);
@@ -48,6 +52,7 @@ app.get("/logout", (req, res, next) => {
 });
 
 app.all("*", (req, res, next) => {
+  console.log(app.get("queue"))
   next(new AppError(404, "Page Not Found!", res.locals.type));
 });
 

@@ -338,8 +338,6 @@ end &&
 
 select * from AppUser
 
-
-
 /* Doctor Procedures */
 delimiter &&
 create procedure spDoctor_GetVitalSign(	in `@vitalSignNo` int)
