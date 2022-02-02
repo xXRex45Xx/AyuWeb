@@ -114,33 +114,20 @@ router.get('/:id/labReport', wrapAsync(async (req, res, next) => {
         return
       }
       else {
+        var recent = []
+        var previous = []
         if (labreport[0].length > 0) {
           let today = new Date()
-          const recent = labreport[0].filter(labreport => (today.getTime() - labreport.DateTimeOfRequest.getTime()) < 604800000)
-          const previous = labreport[0].filter(labreport => (today.getTime() - labreport.DateTimeOfRequest.getTime()) > 604800000)
-          if (previous.length > 0)
-            res.render('Partials/DoctorPage/labReport.ejs', { recent, previous })
-          else
-            res.render('Partials/DoctorPage/labReport.ejs', { recent })
+          recent = labreport[0].filter(labreport => (today.getTime() - labreport.DateTimeOfRequest.getTime()) < 604800000)
+          previous = labreport[0].filter(labreport => (today.getTime() - labreport.DateTimeOfRequest.getTime()) > 604800000)
+          res.render('Partials/DoctorPage/labReport.ejs', { recent, previous })
         }
         else
-          res.render('Partials/DoctorPage/labReport.ejs')
+          res.render('Partials/DoctorPage/labReport.ejs', { recent, previous })
         con.release()
+
       }
     })
-    /** */
-    //   <%if (!previous && !recent) {%>
-
-    //   <%} else {%>
-    //     <% if (!previous) {
-
-    //       <% } else {
-
-    //         <% }
-    // }
-
-    /* --------------------------------*/
-
   })
 }))
 
