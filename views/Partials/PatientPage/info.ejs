@@ -1,3 +1,4 @@
+<%- include("../Flash/successflash.ejs") %> 
 <div class="container-fluid infoContainer">
     <div class="row gy-2 align-items-center infoBox">
         <div class="infoBox_element col-auto">
@@ -47,6 +48,22 @@
             <span class="infoBox_value">
                 <%= info[0][0].PhoneNumber %>
             </span>
+        </div>
+    </div>
+    <div class="ps-2 infBox_element align-items-center row mt-4 col-auto">
+        <span class="infoBox_label me-2">Doctor Assignment: </span>
+        <div class="col-6 col-md-5 col-lg-4 col-xl-3">
+            <select name="doctorType" class="doctorType form-select">
+                <option value="gynecologist">Gynecologist</option>
+                <option value="gp" selected>General Practitioner</option>
+                <option value="surgeon">Surgeon</option>
+                <option value="skin">Skin</option>
+                <option value="skeletal">Skeletal</option>
+                <option value="eye">Eye</option>
+            </select>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-primary infoBox_addQueue">Queue</button>
         </div>
     </div>
 </div>

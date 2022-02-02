@@ -157,19 +157,19 @@ router.get("/payment/reciept", wrapAsync(async (req, res, next) => {
         }
         let finalizedPayments = new Array()
         today = new Date().toISOString().slice(0, 10)
-        for(let i = 0; i < selectedPayment.length; i++) {
+        for (let i = 0; i < selectedPayment.length; i++) {
             con.query("call spReception_FinalizePayment(?,?,?)", [selectedPayment[i], today, userId], (error, results, fields) => {
                 if (error) {
                     next(new AppError(500, "Database Error Occured!", res.locals.type))
                     return
                 }
-                finalizedPayments.push({...results[0][0]}) 
-                if(i === selectedPayment.length - 1){
+                finalizedPayments.push({ ...results[0][0] })
+                if (i === selectedPayment.length - 1) {
                     let total = 0
-                    for(let payment of finalizedPayments){
+                    for (let payment of finalizedPayments) {
                         total += payment.Price
                     }
-                    res.render("Partials/Reports/PatientPaymentReport.ejs", {payments: finalizedPayments, total: total.toFixed(2), attachment: true})
+                    res.render("Partials/Reports/PatientPaymentReport.ejs", { payments: finalizedPayments, total: total.toFixed(2), attachment: true })
                 }
             })
         }
@@ -191,13 +191,13 @@ router.get("/payment/register", wrapAsync(async (req, res, next) => {
             return
         }
         today = new Date().toISOString().slice(0, 10)
-        for(let i = 0; i < selectedPayment.length; i++) {
+        for (let i = 0; i < selectedPayment.length; i++) {
             con.query("call spReception_FinalizePayment(?,?,?)", [selectedPayment[i], today, userId], (error, results, fields) => {
                 if (error) {
                     next(new AppError(500, "Database Error Occured!", res.locals.type))
                     return
                 }
-                
+
             })
         }
         res.send("success")
@@ -243,6 +243,12 @@ router.post('/', wrapAsync(validatePatient), wrapAsync(async (req, res, next) =>
             })
         }
     })
+}))
+
+router.post("/queue", wrapAsync(async (req, res, next) => {
+    const { doctorType, patientId } = req.body
+    router.locals.settings.queue.push({ doctorType, patientId })
+    res.render("Partials/Flash/successflash.ejs", {success: "Patient Queued Successfully."})
 }))
 
 module.exports = router
