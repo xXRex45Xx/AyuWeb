@@ -75,3 +75,6 @@ body {
 .laboratoristLabreport td {
   vertical-align: middle;
 }
+.bg_LabRequest-info {
+  background-color: #0076d4;
+}
