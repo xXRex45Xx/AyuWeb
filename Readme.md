@@ -11,5 +11,10 @@ Use AyuDBMSStructure.sql to create the whole database schema
 -Reception Patient Payment History not implemented
 
 -PatientPage UI Redesign
-Reception Add Doctor Assignment 
+-Reception Dashboard
+Management Dashboard
+Doctor Dashboard
+Reception Add Doctor Assignment
+Management All Employee
+Mangement Employee Accordion
 Management Employee Schedule//

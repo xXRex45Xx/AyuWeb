@@ -62,7 +62,7 @@ router.post("/", validateUser, wrapAsync(async (req, res, next) => {
         }
         con.query("call spGetUser(?)", user.username, async (err, results, fields) => {
             if (err) {
-                console.log(err)
+                next(new AppError(500, "Database Error Occured!"))
                 return
             }
             if (results[0][0]) {

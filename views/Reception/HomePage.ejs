@@ -3,7 +3,7 @@
 
 <head>
     <%- include('../Partials/head.ejs') %>
-    <link rel="stylesheet" href="/css/HomePage/HomePage.css">
+        <link rel="stylesheet" href="/css/HomePage/HomePage.css">
 </head>
 
 <body>
@@ -13,28 +13,38 @@
                 <div class="infoBoxContainer">
                     <div class="infoBox">
                         <div class="infoBox_text">
-                            <h2 class="infoBox_value">0</h2>
+                            <h2 class="infoBox_value infoBox_hospitalizedPatients">
+                                <%= HospitalizedPatients %>
+                            </h2>
                             <h3 class="infoBox_tag">Hospitalized Patients</h3>
                         </div>
                         <img src="/Images/HomePageIcons/hospital_bed_80px.png" class="infoBox_image">
                     </div>
                     <div class="infoBox">
                         <div class="infoBox_text">
-                            <h2 class="infoBox_value">0</h2>
+                            <h2 class="infoBox_value infoBox_todaysAppointments">
+                                <%= TodaysAppointments %>
+                            </h2>
                             <h3 class="infoBox_tag">Today's Appointments</h3>
                         </div>
                         <img src="/Images/HomePageIcons/today_80px.png" class="infoBox_image">
                     </div>
                     <div class="infoBox">
                         <div class="infoBox_text">
-                            <h2 class="infoBox_value">0</h2>
+                            <h2 class="infoBox_value infoBox_todaysPatients">
+                                <%= TodaysPatients %>
+                            </h2>
                             <h3 class="infoBox_tag">Today's Patients</h3>
                         </div>
                         <img src="/Images/HomePageIcons/patient_65px.png" class="infoBox_image">
                     </div>
                     <div class="infoBox">
                         <div class="infoBox_text">
-                            <h2 class="infoBox_value">0.00</h2>
+                            <h2 class="infoBox_value infoBox_totalIncome">
+                                <% if(TotalIncome===null){ %>0.00<% }else{ %>
+                                        <%= TotalIncome %>
+                                            <% } %>
+                            </h2>
                             <h3 class="infoBox_tag">Total Income</h3>
                         </div>
                         <img src="/Images/HomePageIcons/income_80px.png" class="infoBox_image">
@@ -42,101 +52,198 @@
                 </div>
                 <div class="container-fluid mt-5">
                     <div class="row justify-content-center align-items-center">
-                        <div class="col-12 col-xl-6">                           
-                                <table class="table table-borderless">
-                                    <caption>This Week's Appointments</caption>
-                                    <thead>
-                                        <tr>
-                                            <th>Mon</th>
-                                            <th>Tue</th>
-                                            <th>Wed</th>
-                                            <th>Thu</th>
-                                            <th>Fri</th>
-                                            <th>Sat</th>
-                                            <th>Sun</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                        </tr>
-                                    </tbody>
-                                </table>                                
+                        <div class="col-12 col-xl-6">
+                            <table class="table table-borderless">
+                                <caption>This Week's Appointments</caption>
+                                <thead>
+                                    <tr>
+                                        <th>Sun</th>
+                                        <th>Mon</th>
+                                        <th>Tue</th>
+                                        <th>Wed</th>
+                                        <th>Thu</th>
+                                        <th>Fri</th>
+                                        <th>Sat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>                                        
+                                        <td>
+                                            <% let appointmentFound=WeekAppointments.find((appointment)=>
+                                                appointment.DayOfWeek === 6) %>
+                                                <% if(appointmentFound){ %>
+                                                    <%= appointmentFound.NumberOfAppointments %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
+                                        <td>
+                                            <% appointmentFound=WeekAppointments.find((appointment)=>
+                                                appointment.DayOfWeek === 0) %>
+                                                <% if(appointmentFound){ %>
+                                                    <%= appointmentFound.NumberOfAppointments %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
+                                        <td>
+                                            <% appointmentFound=WeekAppointments.find((appointment)=>
+                                                appointment.DayOfWeek === 1) %>
+                                                <% if(appointmentFound){ %>
+                                                    <%= appointmentFound.NumberOfAppointments %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
+                                        <td>
+                                            <% appointmentFound=WeekAppointments.find((appointment)=>
+                                                appointment.DayOfWeek === 2) %>
+                                                <% if(appointmentFound){ %>
+                                                    <%= appointmentFound.NumberOfAppointments %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
+                                        <td>
+                                            <% appointmentFound=WeekAppointments.find((appointment)=>
+                                                appointment.DayOfWeek === 3) %>
+                                                <% if(appointmentFound){ %>
+                                                    <%= appointmentFound.NumberOfAppointments %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
+                                        <td>
+                                            <% appointmentFound=WeekAppointments.find((appointment)=>
+                                                appointment.DayOfWeek === 4) %>
+                                                <% if(appointmentFound){ %>
+                                                    <%= appointmentFound.NumberOfAppointments %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
+                                        <td>
+                                            <% appointmentFound=WeekAppointments.find((appointment)=>
+                                                appointment.DayOfWeek === 5) %>
+                                                <% if(appointmentFound){ %>
+                                                    <%= appointmentFound.NumberOfAppointments %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <div class="col-12 col-xl-6">
                             <table class="table table-borderless">
                                 <caption>This Week's Incomes</caption>
                                 <thead>
+                                    <th>Sun</th>
                                     <th>Mon</th>
                                     <th>Tue</th>
                                     <th>Wed</th>
                                     <th>Thu</th>
                                     <th>Fri</th>
                                     <th>Sat</th>
-                                    <th>Sun</th>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
+                                        <td>
+                                            <% let incomeFound=WeekIncomes.find((income)=>
+                                                income.DayOfWeek === 6) %>
+                                                <% if(incomeFound){ %>
+                                                    <%= incomeFound.TotalIncome %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
+                                        <td>
+                                            <% incomeFound=WeekIncomes.find((income)=>
+                                                income.DayOfWeek === 0) %>
+                                                <% if(incomeFound){ %>
+                                                    <%= incomeFound.TotalIncome %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
+                                        <td>
+                                            <% incomeFound=WeekIncomes.find((income)=>
+                                                income.DayOfWeek === 1) %>
+                                                <% if(incomeFound){ %>
+                                                    <%= incomeFound.TotalIncome %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
+                                        <td>
+                                            <% incomeFound=WeekIncomes.find((income)=>
+                                                income.DayOfWeek === 2) %>
+                                                <% if(incomeFound){ %>
+                                                    <%= incomeFound.TotalIncome %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
+                                        <td>
+                                            <% incomeFound=WeekIncomes.find((income)=>
+                                                income.DayOfWeek === 3) %>
+                                                <% if(incomeFound){ %>
+                                                    <%= incomeFound.TotalIncome %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
+                                        <td>
+                                            <% incomeFound=WeekIncomes.find((income)=>
+                                                income.DayOfWeek === 4) %>
+                                                <% if(incomeFound){ %>
+                                                    <%= incomeFound.TotalIncome %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
+                                        <td>
+                                            <% incomeFound=WeekIncomes.find((income)=>
+                                                income.DayOfWeek === 5) %>
+                                                <% if(incomeFound){ %>
+                                                    <%= incomeFound.TotalIncome %>
+                                                        <% }else{ %>
+                                                            <%= 0 %>
+                                                                <% } %>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        </div>
                     </div>
-                    <div class="row justify-content-center align-items-center mt-3">
-                        <div class="col">
-                            <div class="tableContainer">
-                                <table class="table table-borderless table-hover">
-                                    <caption>Pending Payments</caption>
-                                    <thead>
+                </div>
+                <div class="row justify-content-center align-items-center mt-3">
+                    <div class="col">
+                        <div class="tableContainer">
+                            <table class="table table-borderless">
+                                <caption>Pending Payments</caption>
+                                <thead>
+                                    <tr>
+                                        <th>Patient Name</th>
+                                        <th>Details</th>
+                                        <th>Price</th>
+                                        <th>Phone Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr></tr>
+                                    <% for(let payment of PendingPayments){ %>
                                         <tr>
-                                            <th>Patient Number</th>
-                                            <th>Patient Name</th>
-                                            <th>Details</th>
-                                            <th>Price</th>
+                                            <td><%= payment.PatientName %></td>
+                                            <td><%= payment.PaymentDetails %></td>
+                                            <td><%= payment.Price %></td>
+                                            <td><%= payment.PhoneNumber %></td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                        </tr>
-                                        <tr>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                        </tr>
-                                        <tr>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                        </tr>
-                                        <tr>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </main>

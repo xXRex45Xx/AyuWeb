@@ -137,7 +137,6 @@ router.get("/:id/transactions", wrapAsync(async (req, res, next) =>{
                 next(new AppError(500, error.sqlMessage, res.locals.type))
                 return
             }
-            console.log(results)
             res.render("Partials/EmployeePage/transactions.ejs", {transactions: results[0]})
         })
     })
