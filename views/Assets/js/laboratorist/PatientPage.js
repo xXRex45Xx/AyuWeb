@@ -36,8 +36,6 @@ $(".containerNav_search").on("click", async function () {
       dataType: "html",
       success: function (response) {
         $(".mainContainer_subContainer").html(response);
-        console.log(response)
-
         $(".searchTable tbody tr").on("click", function () {
           $(".searchTable tbody tr").removeClass("selected");
           $(this).toggleClass("selected");
@@ -88,3 +86,9 @@ $(".containerNav_labReport").on("click", async function () {
     $(".containerNav_labReport").toggleClass("containerNav_link--active");
   }
 });
+
+
+
+
+
+
