@@ -85,7 +85,7 @@ begin
 	declare `@receptionNo` int;
     set `@receptionNo` = 
 		(select receptionNo from reception
-			where userNo = `@userNo`);
+			where userNo = `@userNo`);           
 	update Payment
     set receptionNo = `@receptionNo`,
 		dateOfPayment = `@dateOfPayment`,
@@ -95,6 +95,42 @@ begin
     select PatientNumber, PatientName, PaymentNumber, PaymentDetails, DateOfPayment, Price 
     from Reception_Patient_CompletedPaymentView
     where PaymentNumber = `@paymentNo`;
+end &&
+
+delimiter &&
+create procedure spReception_LoadDashboardData()
+begin
+	select COUNT(*) as HospitalizedPatients from Patient
+    where type = true;
+    
+    select COUNT(*) TodaysAppointments from Appointment
+    where DateOfAppointment = CURDATE();
+    
+    select COUNT(distinct cardNo) as TodaysPatients from diagnosis
+    where dateOfDiagnosis = CURDATE();
+    
+    select SUM(price) as TotalIncome from payment
+    where dateOfPayment = CURDATE() and PaymentCompleted = true;
+    
+    select weekday(dateOfAppointment) as DayOfWeek, count(patientNo) as NumberOfAppointments from Appointment
+	where week(dateOfAppointment) = week(now())
+	group by weekday(dateOfAppointment);
+    
+    select weekday(dateOfPayment) as DayOfWeek, sum(price) as TotalIncome from Payment
+	where week(dateOfPayment) = week(now()) and PaymentCompleted = true
+	group by weekday(dateOfPayment);
+    
+    select
+		CONCAT(Pat.firstName, ' ', Pat.fatherName) as PatientName,
+		Pay.paymentDetails as PaymentDetails,
+		Pay.price as Price,
+		Pat.phoneNo as PhoneNumber
+	from payment as Pay
+	join patient as Pat
+		on Pay.patientNo = Pat.patientNo
+	where PaymentCompleted = false
+	order by paymentNo desc;
+	-- limit 5;
 end &&
 
 /* Management Procedures */
