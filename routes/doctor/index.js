@@ -4,7 +4,7 @@ const patientPage = require("./patientpage");
 const { doctorAuthorization } = require("../../utils/authorization")
 const route = express.Router();
 
-// route.use(doctorAuthorization) Enable this for doctor's authorization
+route.use(doctorAuthorization)
 
 route.use((req, res, next) => {
   res.locals.type = "doctor";

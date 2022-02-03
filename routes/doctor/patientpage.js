@@ -3,7 +3,8 @@ const mysql = require("mysql")
 const { AppError, wrapAsync } = require("../../utils/error")
 const methodOverride = require("method-override")
 const { patientSchema } = require("../../utils/validationSchemas")
-const generateCardNo = require("../../utils/card-number-generator")
+const generateCardNo = require("../../utils/card-number-generator");
+const { object } = require('joi');
 
 const router = express.Router();
 
@@ -87,7 +88,6 @@ router.get('/:id/info', wrapAsync(async (req, res, next) => {
                   next(new AppError(404, "Patient Not Found", res.locals.type))
                   return
                 }
-                console.log(vitalSign)
                 res.render('Partials/DoctorPage/info.ejs', { info, appointments, vitalSign, day, month, year })
               }
               con.release()
@@ -133,38 +133,48 @@ router.get('/:id/labReport', wrapAsync(async (req, res, next) => {
 
 router.get('/:id/labRequest', wrapAsync(async (req, res, next) => {
   const { id } = req.params
-  db.getConnection((err, con) => {
-    if (err) {
-      next(new AppError(500, "Database error occured! Please contact your system administrator.", res.locals.type))
-      return
-    }
-    con.query(`call spReception_GetPatientInfo(?)`, id, (error, info, fields) => {
-      if (error) {
-        next(new AppError(500, "Database error occured! Please contact your system administrator.", res.locals.type))
-        return
-      }
-      else {
-        con.query(`call spReception_GetPatientAppointments(?)`, id, (error, appointments, fields) => {
-          if (error) {
-            next(new AppError(500, "Database error occured! Please contact your system administrator.", res.locals.type))
-            return
-          }
-          else {
-            if (!info[0][0]) {
-              con.release()
-              next(new AppError(404, "Can't make request", res.locals.type))
-              return
-            }
-            res.render('Partials/DoctorPage/labRequest.ejs', { info, appointments, day, month, year })
-          }
-          con.release()
-        })
-      }
-    })
-
-  })
+  res.render('Partials/DoctorPage/labRequest.ejs', { id })
 }))
 
+router.post("/:id/newlabRequest", (req, res, next) => {
+  const { labRequest } = req.body
+  const { id } = req.params
+  const { userId } = req.session.user
+  var requestId;
+  db.getConnection((err, con) => {
+    if (err) {
+      next(new AppError(500, "Database error occured! Please, contact your system administrator.", res.locals.type))
+      return
+    }
+    else {
+      con.query("call spDoctor_AddLabRequest(?,?,?)", [userId, id, now], (error, results, fields) => {
+        if (error) {
+          next(new AppError(500, error.sqlMessage, res.locals.type))
+          return
+        }
+        // con.release()
+        req.flash("success", "Lab Request added successfully.")
+        res.redirect("/doctor/patientpage")
+      })
+      con.query("call spDoctor_GetLastLabRequestId()", (error, results, fields) => {
+        if (error) {
+          next(new AppError(500, error.sqlMessage, res.locals.type))
+          return
+        }
+        requestId = results[0][0].RequestNo
+        for (const type of Object.keys(labRequest)) {
+          con.query("call spDoctor_AddLabRequestDetail(?,?)", [requestId, type], (error, results, fields) => {
+            if (error) {
+              next(new AppError(500, error.sqlMessage, res.locals.type))
+              return
+            }
+          })
+        }
+        con.release()
+      })
+    }
+  })
+})
 router.get('/:id/diagnostics', wrapAsync(async (req, res, next) => {
   const { id } = req.params
   db.getConnection((err, con) => {
