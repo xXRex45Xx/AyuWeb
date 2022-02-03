@@ -14,7 +14,7 @@ Use AyuDBMSStructure.sql to create the whole database schema
 -Reception Dashboard
 Management Dashboard
 Doctor Dashboard
-Reception Add Doctor Assignment
+-Reception Add Doctor Assignment
 Management All Employee
 Mangement Employee Accordion
 Management Employee Schedule//

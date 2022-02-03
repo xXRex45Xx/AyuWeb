@@ -3,44 +3,44 @@
         <div class="infoBox_element col-auto">
             <% if(role === 'Doctor') { %> 
             <span class="infoBox_label">Doctor Number: </span>
-            <p class="infoBox_value">
+            <span class="infoBox_value">
                 <%= info[0].DoctorNumber %>
-            </p>
+            </span>
             <% }else if(role === 'Lab Technician') { %> 
                 <div class="infoBox_element col-auto">
                     <span class="infoBox_label">Lab Technician Number: </span>
-                    <p class="infoBox_value">
+                    <span class="infoBox_value">
                         <%= info[0].TechnicianNumber %>
-                    </p>
+                    </span>
                 </div>
             <% }else if(role === 'Receptionist'){ %> 
                 <div class="infoBox_element col-auto">
                     <span class="infoBox_label">Receptionist Number: </span>
-                    <p class="infoBox_value">
+                    <span class="infoBox_value">
                         <%= info[0].ReceptionNumber %>
-                    </p>
+                    </span>
                 </div>
             <% } %> 
         </div>
 
         <% if(role === 'Doctor') { %> 
             <span class="infoBox_label">Doctor's Name: </span>
-            <p class="infoBox_value">
+            <span class="infoBox_value">
                 <%= info[0].DoctorName %>
-            </p>
+            </span>
             <% }else if(role === 'Lab Technician') { %> 
                 <div class="infoBox_element col-auto">
                     <span class="infoBox_label">Lab Technician Name: </span>
-                    <p class="infoBox_value">
+                    <span class="infoBox_value">
                         <%= info[0].TechnicianName %>
-                    </p>
+                    </span>
                 </div>
             <% }else if(role === 'Receptionist'){ %> 
                 <div class="infoBox_element col-auto">
                     <span class="infoBox_label">Receptionist Name: </span>
-                    <p class="infoBox_value">
+                    <span class="infoBox_value">
                         <%= info[0].ReceptionName %>
-                    </p>
+                    </span>
                 </div>
             <% } %>
 

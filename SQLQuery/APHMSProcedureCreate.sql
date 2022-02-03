@@ -192,6 +192,14 @@ begin
 end &&
 
 delimiter &&
+create procedure spManagement_GetAllEmployee()
+begin
+	select * from Management_Doctor_InfoView;
+    select * from Management_Reception_InfoView;
+    select * from Management_LabTechnician_InfoView;
+end &&
+
+delimiter &&
 create procedure spManagement_SearchReception(in `@phoneNo` int)
 begin
 	select * from Management_Reception_SearchView
