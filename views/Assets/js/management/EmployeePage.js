@@ -1,18 +1,22 @@
-let selectedEmployee = null
-let selectedEmployeeRole = null
+let selectedReception = null
+
+attachReceptionEvents()
 
 $(".containerNav_transactions").hide();
 
 $(".containerNav_search").on("click", async function () {
-    if (isNaN(parseInt($(".containerNav_searchPhone").val()))) {
-        selectedEmployee = null
-        selectedEmployeeRole = null
+    if($(".containerNav_searchPhone").val() === ""){
+        location.reload()
+    }
+    else if ($(".containerNav_searchPhone").val().length > 10 || isNaN(parseInt($(".containerNav_searchPhone").val()))) {
+        selectedReception = null
+        
         alert("Please enter a valid phone number!")
         return
     }
     if ($(".containerNav_searchPhone").val() !== "") {
-        selectedEmployee = null
-        selectedEmployeeRole = null
+        selectedReception = null
+        
         $(".containerNav_transactions").hide();
         await $.ajax({
             type: "GET",
@@ -23,46 +27,13 @@ $(".containerNav_search").on("click", async function () {
             dataType: "html",
             success: function (response) {
                 $(".mainContainer_subContainer").html(response);
-
-                $(".searchTable tbody tr").on("click", function () {
-                    $(".searchTable tbody tr").removeClass("selected");
-                    $(this).toggleClass("selected");
-                    selectedEmployee = parseInt($(".selected > td")[0].innerHTML)
-                    selectedEmployeeRole = $(".selected > td")[3].innerHTML
-                    if(selectedEmployeeRole === "Receptionist")
-                        $(".containerNav_transactions").show();
-                    else
-                        $(".containerNav_transactions").hide();
-                });
+                attachReceptionEvents()
             },
             error: function (error) {
                 $(".mainContainer_subContainer").html(error.responseText)
             }
         })
         
-    }
-})
-
-$(".containerNav_info").on("click", async function () {
-    if (selectedEmployee) {
-        $.ajax({
-            type: "GET",
-            url: `/management/employeepage/${selectedEmployee}/info`,
-            data:{
-                role: selectedEmployeeRole
-            },
-            dataType: "html",
-            success: function (response) {
-                $(".mainContainer_subContainer").html(response);
-            },
-            error: function (error) {
-                $(".mainContainer_subContainer").html(error.responseText);
-            }
-        })
-    }
-    else {
-        alert("Please, select an employee.")
-        $(".containerNav_info").toggleClass("containerNav_link--active")
     }
 })
 
@@ -92,7 +63,7 @@ $(".containerNav_new").on("click", async function () {
                     e.preventDefault()
                     e.stopPropagation()
                 }
-                else if (isNaN($("#phoneNo").val())) {
+                else if ($("#phoneNo").val().length > 10 || isNaN($("#phoneNo").val())) {
                     $("#phoneNoValidationFeedback").html(`${$('#phoneNo').val()} is not a valid phone number.`)
                     $('#phoneNo').addClass("is-invalid")
                     $('#phoneNo').val("");
@@ -109,10 +80,10 @@ $(".containerNav_new").on("click", async function () {
 });
 
 $(".containerNav_transactions").on("click", async function () {
-    if (selectedEmployee) {
+    if (selectedReception) {
         $.ajax({
             type: "GET",
-            url: `/management/employeepage/${selectedEmployee}/transactions`,
+            url: `/management/employeepage/${selectedReception}/transactions`,
             dataType: "html",
             success: function (response) {
                 $(".mainContainer_subContainer").html(response)
@@ -127,3 +98,20 @@ $(".containerNav_transactions").on("click", async function () {
         $(".containerNav_payment").toggleClass("containerNav_link--active")
     }
 });
+
+function attachReceptionEvents(){
+    $(".showReception").on("click", function () {
+        let receptionData = $(this).attr("data-bs-target");
+        if(receptionData){
+            console.log(receptionData)
+            if(selectedReception !== null){
+                selectedReception = null
+                $(".containerNav_transactions").hide();
+            }
+            else{
+                selectedReception = $(`${receptionData} .infoBox_receptionNumber`)[0].innerText
+                $(".containerNav_transactions").show();
+            }
+        }
+    });
+}

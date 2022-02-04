@@ -5,7 +5,6 @@ const methodOverride = require("method-override");
 const appRoutes = require("./routes");
 const session = require("express-session");
 const flash = require("connect-flash");
-// const cookieParser = require("cookie-parser")
 
 const app = express();
 
