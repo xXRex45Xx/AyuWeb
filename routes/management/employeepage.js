@@ -84,43 +84,9 @@ router.get('/search', wrapAsync(async (req, res, next) => {
                 return
             }
             else
-                res.render('Partials/EmployeePage/search.ejs', { doctors: results[0], labTechnicians: results[1], receptionists: results[2] })
+                res.render('Partials/EmployeePage/search.ejs', { Doctors: results[0], LabTechnicians: results[1], Receptions: results[2] })
         })
         con.release()
-    })
-}))
-
-router.get('/:id/info', wrapAsync(async (req, res, next) => {
-    const { id } = req.params
-    const { role } = req.query
-    if (!role || !id)
-        throw new AppError(400, "Invalid Parameters!")
-    db.getConnection((err, con) => {
-        if (err) {
-            next(new AppError(500, "Database error occured!", res.locals.type))
-            return
-        }
-        let query;
-        if (role === "Doctor")
-            query = "call spManagement_GetDoctorInfo(?)"
-        else if (role === "Lab Technician")
-            query = "call spManagement_GetLabTechnicianInfo(?)"
-        else if (role === "Receptionist")
-            query = "call spManagement_GetReceptionInfo(?)"
-        else {
-            next(new AppError(400, "Invalid Role"))
-            return
-        }
-        con.query(query, id, (error, info, fields) => {
-            if (error) {
-                next(new AppError(500, "Database error occured!", res.locals.type))
-                return
-            }
-            else {
-                res.render("Partials/EmployeePage/info.ejs", { info: info[0], role })
-            }
-        })
-
     })
 }))
 

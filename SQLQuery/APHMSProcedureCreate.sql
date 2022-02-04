@@ -183,11 +183,11 @@ end &&
 delimiter &&
 create procedure spManagement_SearchEmployee(in `@phoneNo` int)
 begin
-	select * from Management_Doctor_SearchView
+	select * from Management_Doctor_InfoView
     where PhoneNumber = `@phoneNo`;
-    select * from Management_LabTechnician_SearchView
+    select * from Management_LabTechnician_InfoView
     where PhoneNumber = `@phoneNo`;
-    select * from Management_Reception_SearchView
+    select * from Management_Reception_InfoView
     where PhoneNumber = `@phoneNo`;    
 end &&
 

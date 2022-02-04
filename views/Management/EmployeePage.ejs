@@ -18,9 +18,6 @@
                         <img class="containerNav_searchIcon" src="/Images/ContainerNavIcons/search_35px.png"
                             alt=""></button>
                     <input type="tel" class="containerNav_searchPhone" name="searchPhone" placeholder="Phone Number">
-                    <button class="containerNav_link containerNav_info">
-                        <img class="containerNav_linkIcon" src="/Images/ContainerNavIcons/general_information_25px.png"
-                            alt="">Information</button>
                     <button class="containerNav_link containerNav_transactions"><img class="containerNav_linkIcon"
                             src="/Images/ContainerNavIcons/payment_20px.png" alt="">Transaction</button>
                     <div class="containerNav_rightNav">
@@ -30,92 +27,7 @@
                 </nav>
                 <main class="container-fluid mainContainer_subContainer p-4">
                     <%- include('../Partials/Flash/successflash.ejs') %>
-                        <div class="accordion">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-doctorListHeader">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-doctorList" aria-expanded="false"
-                                        aria-controls="panelsStayOpen-doctorList">Doctors</button>
-                                </h2>
-                                <div class="accordion accordion-collapse collapse p-3" id="panelsStayOpen-doctorList"
-                                    aria-labelledby="panelsStayOpen-doctorListHeader">
-                                    <% if(Doctors){ %>
-                                        <% for(let doctor of Doctors){ %>
-                                            <% let doctorIdentifier = doctor.DoctorNumber + doctor.DoctorName.replace(/ /g, "") %> 
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="panelsStayOpen-doctor<%= doctorIdentifier %>Header">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-                                                        data-bs-target="#panelsStayOpen-doctor<%= doctorIdentifier %>"
-                                                        aria-expanded="false" aria-controls="panelsStayOpen-doctor<%= doctorIdentifier %>">
-                                                        <%= doctor.DoctorName %> 
-                                                    </button>
-                                                </h2>
-                                                <div class="accordion-collapse collapse p-3" id="panelsStayOpen-doctor<%= doctorIdentifier %>"
-                                                    aria-labelledby="panelsStayOpen-doctor<%= doctorIdentifier %>Header">
-                                                    <%- include("../Partials/EmployeePage/info.ejs", {info: [doctor], role: "Doctor"}) %> 
-                                                </div> 
-                                            </div> 
-                                        <% } %>
-                                    <% } %>  
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-receptionListHeader">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-receptionList" aria-expanded="false"
-                                        aria-controls="panelsStayOpen-receptionList">Receptionists</button>
-                                </h2>
-                                <div class="accordion accordion-collapse collapse p-3" id="panelsStayOpen-receptionList"
-                                    aria-labelledby="panelsStayOpen-receptionListHeader">
-                                    <% if(Receptions){ %>
-                                        <% for(let reception of Receptions){ %>
-                                            <% let receptionIdentifier = reception.ReceptionNumber + reception.ReceptionName.replace(/ /g, "") %> 
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="panelsStayOpen-reception<%= receptionIdentifier %>Header">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-                                                        data-bs-target="#panelsStayOpen-reception<%= receptionIdentifier %>"
-                                                        aria-expanded="false" aria-controls="panelsStayOpen-reception<%= receptionIdentifier %>">
-                                                        <%= reception.ReceptionName %> 
-                                                    </button>
-                                                </h2>
-                                                <div class="accordion-collapse collapse p-3" id="panelsStayOpen-reception<%= receptionIdentifier %>"
-                                                    aria-labelledby="panelsStayOpen-reception<%= receptionIdentifier %>Header">
-                                                    <%- include("../Partials/EmployeePage/info.ejs", {info: [reception], role: "Receptionist"}) %> 
-                                                </div> 
-                                            </div> 
-                                        <% } %>
-                                    <% } %>  
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-labTechnicianListHeader">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#panelsStayOpen-labTechnicianList" aria-expanded="false"
-                                        aria-controls="panelsStayOpen-labTechnicianList">Lab Technicians</button>
-                                </h2>
-                                <div class="accordion accordion-collapse collapse p-3" id="panelsStayOpen-labTechnicianList"
-                                    aria-labelledby="panelsStayOpen-labTechnicianListHeader">
-                                    <% if(Doctors){ %>
-                                        <% for(let technician of LabTechnicians){ %>
-                                            <% let technicianIdentifier = technician.TechnicianNumber + technician.TechnicianName.replace(/ /g, "") %> 
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="panelsStayOpen-labTechnician<%= technicianIdentifier %>Header">
-                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-                                                        data-bs-target="#panelsStayOpen-labTechnician<%= technicianIdentifier %>"
-                                                        aria-expanded="false" aria-controls="panelsStayOpen-labTechnician<%= technicianIdentifier %>">
-                                                        <%= technician.TechnicianName %> 
-                                                    </button>
-                                                </h2>
-                                                <div class="accordion-collapse collapse p-3" id="panelsStayOpen-labTechnician<%= technicianIdentifier %>"
-                                                    aria-labelledby="panelsStayOpen-labTechnician<%= technicianIdentifier %>Header">
-                                                    <%- include("../Partials/EmployeePage/info.ejs", {info: [technician], role: "Lab Technician"}) %> 
-                                                </div> 
-                                            </div> 
-                                        <% } %>
-                                    <% } %>  
-                                </div>
-                            </div>
-                        </div>
+                    <%- include('../Partials/EmployeePage/search.ejs') %> 
                 </main>
             </div>
     </div>

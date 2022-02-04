@@ -17,6 +17,6 @@ Doctor Dashboard
 -Reception Add Doctor Assignment
 -Management All Employee
 -Mangement Employee Accordion
-Management Redesign Reception Transactions
+-Management Redesign Reception Transactions
 Max Phone Number When Inserting Data
 Management Employee Schedule//
