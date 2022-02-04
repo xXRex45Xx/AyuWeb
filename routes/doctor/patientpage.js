@@ -209,7 +209,7 @@ router.get('/:id/diagnostics', wrapAsync(async (req, res, next) => {
   })
 }))
 
-router.post("/:id/newDiagnosis", (req, res, next) => {
+router.post("/:id/newDiagnosis", wrapAsync(async (req, res, next) => {
   const { diagnosis } = req.body
   const { id } = req.params
   const { userId } = req.session.user
@@ -231,6 +231,41 @@ router.post("/:id/newDiagnosis", (req, res, next) => {
   })
   req.flash("success", "Diagnosis added successfully.")
   res.redirect("/doctor/patientpage")
-})
+}))
 
+router.post("/:id/appointment", wrapAsync(async (req, res, next) => {
+  const { appointmentDate, appointmentTime, patientId } = req.body
+  const { userId } = req.session.user
+  db.getConnection((err, con) => {
+    if (err) {
+      next(new AppError(500, "Database error occured! Please, contact your system administrator.", res.locals.type))
+      return
+    }
+    else {
+      con.query("call spDoctor_GetCountOfAppointment(?,?,?)", [patientId, userId, appointmentDate], (error, results, fields) => {
+        if (error) {
+          next(new AppError(500, error.sqlMessage, res.locals.type))
+          return
+        }
+        if (results[0].length > 0) {
+          con.query("call spDoctor_UpdateAppointment(?,?,?,?)", [patientId, userId, appointmentDate, appointmentTime], (error, results, fields) => {
+            if (error) {
+              next(new AppError(500, error.sqlMessage, res.locals.type))
+              return
+            }
+          })
+        }
+        else {
+          con.query("call spDoctor_AddAppointment(?,?,?,?)", [patientId, userId, appointmentDate, appointmentTime], (error, results, fields) => {
+            if (error) {
+              next(new AppError(500, error.sqlMessage, res.locals.type))
+              return
+            }
+          })
+        }
+        con.release()
+      })
+    }
+  })
+}))
 module.exports = router;
