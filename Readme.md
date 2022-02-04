@@ -12,9 +12,11 @@ Use AyuDBMSStructure.sql to create the whole database schema
 
 -PatientPage UI Redesign
 -Reception Dashboard
-Management Dashboard
+-Management Dashboard
 Doctor Dashboard
 -Reception Add Doctor Assignment
-Management All Employee
-Mangement Employee Accordion
+-Management All Employee
+-Mangement Employee Accordion
+Management Redesign Reception Transactions
+Max Phone Number When Inserting Data
 Management Employee Schedule//

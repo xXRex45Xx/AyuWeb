@@ -18,7 +18,7 @@ router.get('/', wrapAsync(async (req, res, next) => {
             return
         }
         con.query("call spReception_LoadDashboardData()", (error, results, fields) => {
-            if(err)
+            if(error)
             {
                 next(new AppError("Database Error Occured! Please contact your system administrator", res.locals.type))
                 return

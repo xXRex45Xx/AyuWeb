@@ -63,9 +63,6 @@ router.get('/', wrapAsync(async (req, res, next) => {
             const Doctors = results[0]
             const Receptions = results[1]
             const LabTechnicians = results[2]
-            // console.log("Doctors: ", Doctors)
-            // console.log("Receptions: ", Receptions)
-            // console.log("LabTechnicians: ", LabTechnicians)
 
             res.render('Management/EmployeePage.ejs', { page: "employeepage", Doctors, Receptions, LabTechnicians })
         })

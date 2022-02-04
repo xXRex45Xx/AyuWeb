@@ -380,7 +380,35 @@ begin
     where userNo = `@userNo`;
 end && 
 
-select * from AppUser
+delimiter &&
+create procedure spManagement_LoadDashboardData()
+begin
+	select COUNT(*) as HospitalizedPatients from Patient
+    where type = true;
+    
+    select COUNT(distinct cardNo) as TodaysPatients from diagnosis
+    where dateOfDiagnosis = CURDATE();
+    
+    select SUM(price) as TotalIncome from payment
+    where dateOfPayment = CURDATE() and PaymentCompleted = true;
+    
+    select weekday(dateOfPayment) as DayOfWeek, sum(price) as TotalIncome from Payment
+	where week(dateOfPayment) = week(now()) and PaymentCompleted = true
+	group by weekday(dateOfPayment);
+    
+    select
+		CONCAT(Pat.firstName, ' ', Pat.fatherName) as PatientName,
+		Pay.paymentDetails as PaymentDetails,
+		Pay.price as Price,
+		Pat.phoneNo as PhoneNumber
+	from payment as Pay
+	join patient as Pat
+		on Pay.patientNo = Pat.patientNo
+	where PaymentCompleted = true
+	order by paymentNo desc
+	limit 5;
+end &&
+
 
 /* Doctor Procedures */
 delimiter &&
