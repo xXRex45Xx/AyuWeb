@@ -4,6 +4,7 @@ const { AppError, wrapAsync } = require("./utils/error");
 const methodOverride = require("method-override");
 const appRoutes = require("./routes");
 const session = require("express-session");
+const helmet = require("helmet")
 const flash = require("connect-flash");
 
 const app = express();
@@ -13,6 +14,7 @@ app.set("views", path.join(__dirname, "/views"));
 app.set("queue", new Array());
 
 const sessionConfig = {
+  name: "session",
   secret: "passdfgpassdfg",
   resave: false,
   saveUninitialized: false,
@@ -23,6 +25,7 @@ const sessionConfig = {
   },
 };
 
+app.use(helmet())
 app.use(express.static(path.join(__dirname, "/views/Assets")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
