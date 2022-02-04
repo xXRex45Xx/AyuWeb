@@ -50,7 +50,23 @@ const validateEmployee = async (req, res, next) => {
 }
 
 router.get('/', wrapAsync(async (req, res, next) => {
-    res.render('Management/EmployeePage.ejs', { page: "employeepage" })
+    db.getConnection((err, con) => {
+        if (err) {
+            next(new AppError(500, "Database Error Occured!", res.locals.type))
+            return
+        }
+        con.query("call spManagement_GetAllEmployee()", (error, results, fields) => {
+            if (error) {
+                next(new AppError(500, "Database Error Occured!", res.locals.type))
+                return
+            }
+            const Doctors = results[0]
+            const Receptions = results[1]
+            const LabTechnicians = results[2]
+
+            res.render('Management/EmployeePage.ejs', { page: "employeepage", Doctors, Receptions, LabTechnicians })
+        })
+    })
 }))
 
 router.get('/search', wrapAsync(async (req, res, next) => {
@@ -68,76 +84,27 @@ router.get('/search', wrapAsync(async (req, res, next) => {
                 return
             }
             else
-                res.render('Partials/EmployeePage/search.ejs', { doctors: results[0], labTechnicians: results[1], receptionists: results[2] })
+                res.render('Partials/EmployeePage/search.ejs', { Doctors: results[0], LabTechnicians: results[1], Receptions: results[2] })
         })
         con.release()
     })
 }))
 
-router.get('/:id/info', wrapAsync(async (req, res, next) => {
+router.get("/:id/transactions", wrapAsync(async (req, res, next) => {
     const { id } = req.params
-    const { role } = req.query
-    if (!role || !id)
-        throw new AppError(400, "Invalid Parameters!")
+    if (!id)
+        throw new AppError(400, "Invalid Paramaters")
     db.getConnection((err, con) => {
         if (err) {
-            next(new AppError(500, "Database error occured!", res.locals.type))
-            return
-        }
-        let query;
-        if (role === "Doctor")
-            query = "call spManagement_GetDoctorInfo(?)"
-        else if (role === "Lab Technician")
-            query = "call spManagement_GetLabTechnicianInfo(?)"
-        else if (role === "Receptionist")
-            query = "call spManagement_GetReceptionInfo(?)"
-        else {
-            next(new AppError(400, "Invalid Role"))
-            return
-        }
-        con.query(query, id, (error, info, fields) => {
-            if (error) {
-                next(new AppError(500, "Database error occured!", res.locals.type))
-                return
-            }
-            else {
-                // con.query(`call spManagement_GetPatientAppointments(?)`, id, (error, appointments, fields) => {
-                //     if (error) {
-                //         next(new AppError(500, "Database error occured!",res.locals.type))
-                //         return
-                //     }
-                //     else {
-                //         if (!info[0][0]) {
-                //             con.release()
-                //             next(new AppError(404, "Employee Not Found",res.locals.type))
-                //             return
-                //         }
-                //         res.render('Partials/EmployeePage/info.ejs', { info, appointments })
-                //     }
-                //     con.release()
-                // })
-                res.render("Partials/EmployeePage/info.ejs", { info: info[0], role })
-            }
-        })
-
-    })
-}))
-
-router.get("/:id/transactions", wrapAsync(async (req, res, next) =>{
-    const{id} = req.params
-    if(!id)
-        throw new AppError(400, "Invalid Paramaters")
-    db.getConnection((err, con) =>{
-        if(err){
             next(new AppError(500, "Database Error Occured!", res.locals.type))
             return
         }
         con.query("call spManagement_GetReceptionTransactions(?)", id, (error, results, fields) => {
-            if(error){
+            if (error) {
                 next(new AppError(500, error.sqlMessage, res.locals.type))
                 return
             }
-            res.render("Partials/EmployeePage/transactions.ejs", {transactions: results[0]})
+            res.render("Partials/EmployeePage/transactions.ejs", { transactions: results[0] })
         })
     })
 }))
@@ -161,24 +128,24 @@ router.post("/", wrapAsync(validateEmployee), wrapAsync(async (req, res, next) =
                     next(new AppError(500, "Database Error Occured!", res.locals.type))
                     return
                 }
-                const {lastUserNo} = results[0][0]
+                const { lastUserNo } = results[0][0]
                 let q;
                 employee.type = parseInt(employee.type)
-                let queryParams = [employee.firstName, employee.fatherName, employee.dateOfBirth,employee.phoneNo,lastUserNo]
+                let queryParams = [employee.firstName, employee.fatherName, employee.dateOfBirth, employee.phoneNo, lastUserNo]
                 if (employee.type === userType.receptionist)
                     q = "call spManagement_AddReception(?,?,?,?,?)"
-                else if(employee.type === userType.doctor){
+                else if (employee.type === userType.doctor) {
                     q = "call spManagement_AddDoctor(?,?,?,?,?,?)"
-                    queryParams = [employee.firstName, employee.fatherName, employee.dateOfBirth,employee.phoneNo, employee.speciality,lastUserNo]
+                    queryParams = [employee.firstName, employee.fatherName, employee.dateOfBirth, employee.phoneNo, employee.speciality, lastUserNo]
                 }
-                else if(employee.type === userType.labTechnician)
+                else if (employee.type === userType.labTechnician)
                     q = "call spManagement_AddLabTechnician(?,?,?,?,?)"
-                else{
+                else {
                     next(new AppError(400, "Invalid Employee Type"))
                     return
                 }
-                con.query(q, queryParams, (error, results, fields) =>{
-                    if(error){
+                con.query(q, queryParams, (error, results, fields) => {
+                    if (error) {
                         next(new AppError(500, error.sqlMessage, res.locals.type))
                         return;
                     }

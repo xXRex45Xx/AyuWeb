@@ -1,7 +1,7 @@
 let selectedPatient = null
 
 $(".containerNav_search").on("click", async function () {
-    if (isNaN(parseInt($(".containerNav_searchPhone").val()))) {
+    if ($(".containerNav_searchPhone").val().length > 10 || isNaN(parseInt($(".containerNav_searchPhone").val()))) {
         selectedPatient = null
         alert("Please enter a valid phone number!")
         return
@@ -114,7 +114,7 @@ $(".containerNav_update").on("click", function () {
                         e.preventDefault()
                         e.stopPropagation()
                     }
-                    else if (isNaN($("#phoneNo").val())) {
+                    else if ($("#phoneNo").val().length > 10 || isNaN($("#phoneNo").val())) {
                         $("#phoneNoValidationFeedback").html(`${$('#phoneNo').val()} is not a valid phone number.`)
                         $('#phoneNo').addClass("is-invalid")
                         $('#phoneNo').val("");
