@@ -5,6 +5,7 @@ const methodOverride = require("method-override")
 const { patientSchema } = require("../../utils/validationSchemas")
 const generateCardNo = require("../../utils/card-number-generator");
 const { object } = require('joi');
+const labPrice = require('../../utils/LabRequestsPrice');
 
 const router = express.Router();
 
@@ -137,6 +138,7 @@ router.get('/:id/labRequest', wrapAsync(async (req, res, next) => {
 }))
 
 router.post("/:id/newlabRequest", (req, res, next) => {
+  var labRequestsPrice = 0;
   const { labRequest } = req.body
   const { id } = req.params
   const { userId } = req.session.user
@@ -152,7 +154,6 @@ router.post("/:id/newlabRequest", (req, res, next) => {
           next(new AppError(500, error.sqlMessage, res.locals.type))
           return
         }
-        // con.release()
         req.flash("success", "Lab Request added successfully.")
         res.redirect("/doctor/patientpage")
       })
@@ -163,6 +164,7 @@ router.post("/:id/newlabRequest", (req, res, next) => {
         }
         requestId = results[0][0].RequestNo
         for (const type of Object.keys(labRequest)) {
+          labRequestsPrice += labPrice.get(type.toString())
           con.query("call spDoctor_AddLabRequestDetail(?,?)", [requestId, type], (error, results, fields) => {
             if (error) {
               next(new AppError(500, error.sqlMessage, res.locals.type))
@@ -170,6 +172,12 @@ router.post("/:id/newlabRequest", (req, res, next) => {
             }
           })
         }
+        con.query("call spDoctor_AddLabRequestPayment(?,?,?)", [id, labRequestsPrice, now], (error, results, fields) => {
+          if (error) {
+            next(new AppError(500, error.sqlMessage, res.locals.type))
+            return
+          }
+        })
         con.release()
       })
     }
