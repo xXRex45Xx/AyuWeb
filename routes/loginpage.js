@@ -42,7 +42,7 @@ router.get("/", wrapAsync(async (req, res, next) => {
                 res.redirect("/reception/homepage")
                 break;
             case userType.labTechnician:
-                res.redirect("/laboratorist/homepage")
+                res.redirect("/laboratorist/patientpage")
                 break;
             case userType.management:
                 res.redirect("/management/homepage")
