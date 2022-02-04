@@ -6,6 +6,8 @@ const appRoutes = require("./routes");
 const session = require("express-session");
 const helmet = require("helmet")
 const flash = require("connect-flash");
+const mysql = require("mysql")
+const mysqlStore = require("connect-mysql")(session)
 
 const app = express();
 
@@ -15,7 +17,7 @@ app.set("queue", new Array());
 
 const sessionConfig = {
   name: "session",
-  secret: "passdfgpassdfg",
+  secret: "vo&yFwT244b9?Q-;CR~#lVtQ.C(VQD",
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -23,6 +25,16 @@ const sessionConfig = {
     expires: Date.now() + 24 * 60 * 60 * 1000,
     maxAge: 1000 * 60 * 60 * 24,
   },
+  store: new mysqlStore({
+    pool: true,
+    config: {
+        user: 'session-handler',
+        password: 'session.123',
+        database: 'APHMSDB'
+    },
+    retries: 5,
+    cleanup: true
+  })
 };
 
 app.use(helmet())
