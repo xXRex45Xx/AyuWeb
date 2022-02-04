@@ -8,7 +8,7 @@ $(".containerNav_search").on("click", async function () {
     if($(".containerNav_searchPhone").val() === ""){
         location.reload()
     }
-    else if (isNaN(parseInt($(".containerNav_searchPhone").val()))) {
+    else if ($(".containerNav_searchPhone").val().length > 10 || isNaN(parseInt($(".containerNav_searchPhone").val()))) {
         selectedReception = null
         
         alert("Please enter a valid phone number!")
@@ -63,7 +63,7 @@ $(".containerNav_new").on("click", async function () {
                     e.preventDefault()
                     e.stopPropagation()
                 }
-                else if (isNaN($("#phoneNo").val())) {
+                else if ($("#phoneNo").val().length > 10 || isNaN($("#phoneNo").val())) {
                     $("#phoneNoValidationFeedback").html(`${$('#phoneNo').val()} is not a valid phone number.`)
                     $('#phoneNo').addClass("is-invalid")
                     $('#phoneNo').val("");
