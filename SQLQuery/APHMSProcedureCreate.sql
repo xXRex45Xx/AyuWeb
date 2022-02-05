@@ -411,10 +411,114 @@ end &&
 
 
 /* Doctor Procedures */
-delimiter &&
-create procedure spDoctor_GetVitalSign(	in `@vitalSignNo` int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddAppointment`(
+	in `@PatientNo` int,
+    in `@DoctorNo` int,
+    in `@DateOfAppointment` date,
+    in `@TimeOfAppointment` time
+)
+begin
+insert into appointment (PatientNo, DoctorNo, DateOfAppointment,TimeOfAppointment) values 
+(`@PatientNo`,(select doctorNo from doctor where userNo =`@DoctorNo`),`@DateOfAppointment`,`@TimeOfAppointment`);
+end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddDiagnosis`(
+	in `@patientNo` int,
+    in `@dateOfDiagnosis` date,
+    in `@userNo` int,
+    in `@diagnosisDetails` longtext)
+begin
+	insert into diagnosis (cardNo, dateOfDiagnosis, doctorNo, diagnosisDetails) values
+    ((select cardNO from card where patientNo = `@patientNo`), `@dateOfDiagnosis`, (select doctorNo from doctor where userNo =`@userNo`), `@diagnosisDetails`);
+end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddLabRequest`(
+	in `@userId` int,
+    in `@patientNo` int,
+    in `@DateTimeOfRequest` datetime
+)
+begin
+insert into labrequest (DoctorNo, PatientNo, DateTimeOfRequest)  values((select doctorNo from doctor where userNo = `@userId`),`@patientNo`,`@DateTimeOFRequest`);
+end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddLabRequestDetail`(
+	in `@RequestNo` bigint,
+    in `@ReportType` varchar(15)
+)
+begin
+insert into labreport (RequestNo, ReportType) values(`@RequestNo`, `@ReportType`);
+end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddLabRequestPayment`(
+	in `@patientNo` int,
+	in `@price` decimal,
+    in `@dateOfPayment` date
+)
+begin
+	insert into payment (patientNo,paymentDetails,Price,dateOfPayment)
+    values (`@patientNo`,'Lab Request',`@price`,`@dateOfPayment`);
+end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddLabRequestPayment`(
+	in `@patientNo` int,
+	in `@price` decimal,
+    in `@dateOfPayment` date
+)
+begin
+	insert into payment (patientNo,paymentDetails,Price,dateOfPayment)
+    values (`@patientNo`,'Lab Request',`@price`,`@dateOfPayment`);
+end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_GetCountOfAppointment`(
+	in `@PatientNo` int,
+    in `@DoctorNo` int,
+    in `@DateOfAppointment` date
+)
+begin
+ select * from appointment where PatientNo = `@PatientNo`and DoctorNo = (select doctorNo from doctor where userNo =`@DoctorNo`) and DateOfAppointment = `@DateOfAppointment`;
+end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_GetLabReport`(	in `@patientNo` int)
+begin
+	SELECT labrequest.RequestNo, labrequest.PatientNo, labrequest.DateTimeOfRequest, labreport.ReportType, labreport.NormalValue, labreport.Result
+FROM labreport 
+inner join labrequest on labreport.RequestNo =labrequest.RequestNo
+where labrequest.PatientNo = `@patientNo`
+order by labrequest.RequestNo desc;
+end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_GetLastLabRequestId`()
+begin
+select RequestNo from labrequest order by RequestNo desc limit 1;
+end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_GetVitalSign`(	in `@vitalSignNo` int)
 begin
 	select * from vitalsign 
     where vitalSignNo = `@vitalSignNo`;
-end &&
-delimiter &&
+end
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_UpdateAppointment`(
+	in `@PatientNo` int,
+    in `@DoctorNo` int,
+    in `@DateOfAppointment` date,
+    in `@TimeOfAppointment` time)
+begin
+delete from appointment 
+where `DoctorNo` = (select doctorNo from doctor where userNo =`@DoctorNo`) 
+and (`PatientNo`= `@PatientNo`) and (`DateOfAppointment`=`@DateOfAppointment`);
+call spDoctor_AddAppointment(`@PatientNo`,`@DoctorNo`,`@DateOfAppointment`,`@TimeOfAppointment`);
+end
+
+/*Lab Technician*/
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spLaboratorist_AddLabReport`(
+	in `@patientNo` int,
+    in `@ReportType` varchar(15),
+    in `@Result` varchar(20),
+    in `@NormalValue` varchar(20))
+begin
+UPDATE labreport SET `Result` = `@Result`, `NormalValue` = `@NormalValue`
+WHERE 	(`RequestNo` = (select RequestNo from labrequest where PatientNo = `@patientNo` order by RequestNo desc limit 1)) 
+	and 
+		(`ReportType` = `@ReportType`);
+end
