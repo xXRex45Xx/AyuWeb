@@ -66,7 +66,6 @@ app.get("/logout", (req, res, next) => {
 });
 
 app.all("*", (req, res, next) => {
-  console.log(app.get("queue"))
   next(new AppError(404, "Page Not Found!", res.locals.type));
 });
 
@@ -76,5 +75,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(80, "localhost", () => {
-  console.log("Server started");
+  console.log(`Server started in ${process.env.NODE_ENV} mode`);
 });
