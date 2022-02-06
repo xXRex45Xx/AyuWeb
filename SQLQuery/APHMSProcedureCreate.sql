@@ -2,28 +2,28 @@ use APHMSDB;
 
 /* Reception Procedures */
 delimiter &&
-create procedure spReception_SearchPatient(in `@phoneNo` int)
+CREATE PROCEDURE spReception_SearchPatient(in `@phoneNo` int)
 begin
 	select * from ReceptionPatientSearchView
 	where PhoneNumber = `@phoneNo`;
 end &&
     
 delimiter &&
-create procedure spReception_GetPatientInfo(in `@patientNo` int)
+CREATE PROCEDURE spReception_GetPatientInfo(in `@patientNo` int)
 begin
 	select * from ReceptionPatientInfoView
 	where PatientNumber = `@patientNo`;
 end &&
 
 delimiter &&
-create procedure spReception_GetPatientAppointments(in `@patientNo` int)
+CREATE PROCEDURE spReception_GetPatientAppointments(in `@patientNo` int)
 begin
 	select * from ReceptionPatientAppointmentView
 	where PatientNumber = `@patientNo`;
 end &&
 
 delimiter &&
-create procedure spReception_GetPatientCompletedPayments(in `@patientNo` int)
+CREATE PROCEDURE spReception_GetPatientCompletedPayments(in `@patientNo` int)
 begin
 	select PaymentNumber, PaymentDetails, DateOfPayment, Price 
     from Reception_Patient_CompletedPaymentView
@@ -31,7 +31,7 @@ begin
 end &&
 
 delimiter &&
-create procedure spReception_GetPatientPendingPayments(in `@patientNo` int)
+CREATE PROCEDURE spReception_GetPatientPendingPayments(in `@patientNo` int)
 begin
 	select PaymentNumber, PaymentDetails, Price
     from Reception_Patient_PendingPaymentView
@@ -43,7 +43,7 @@ insert into Payment (paymentNo, patientNo, paymentDetails, price) value
 (1,1, "This is a test", 50.00)
 
 delimiter &&
-create procedure spReception_AddPatient(
+CREATE PROCEDURE spReception_AddPatient(
 	in `@firstName` varchar(25),
     in `@fatherName` varchar(25),
     in `@dateOfBirth` date,
@@ -59,7 +59,7 @@ begin
 end && 
 
 delimiter &&
-create procedure spReception_AddCardandRegFee(
+CREATE PROCEDURE spReception_AddCardandRegFee(
 	in `@patientNo` int,
     in `@cardNo` varchar(10))
 begin
@@ -70,14 +70,14 @@ begin
 end &&
 
 delimiter &&
-create procedure spReception_CancelPayment(in `@paymentNo` int)
+CREATE PROCEDURE spReception_CancelPayment(in `@paymentNo` int)
 begin
 	delete from Payment 
     where `@paymentNo` = paymentNo and PaymentCompleted = 0;
 end &&
 
 delimiter && 
-create procedure spReception_FinalizePayment( 
+CREATE PROCEDURE spReception_FinalizePayment( 
 	in `@paymentNo` int,
     in `@dateOfPayment` date,
     `@userNo` int)
@@ -98,7 +98,7 @@ begin
 end &&
 
 delimiter &&
-create procedure spReception_LoadDashboardData()
+CREATE PROCEDURE spReception_LoadDashboardData()
 begin
 	select COUNT(*) as HospitalizedPatients from Patient
     where type = true;
@@ -135,35 +135,35 @@ end &&
 
 /* Management Procedures */
 delimiter &&
-create procedure spManagement_SearchPatient(in `@phoneNo` int)
+CREATE PROCEDURE spManagement_SearchPatient(in `@phoneNo` int)
 begin
 	select * from Management_Patient_SearchView
 	where PhoneNumber = `@phoneNo`;
 end &&
     
 delimiter &&
-create procedure spManagement_GetPatientInfo(in `@patientNo` int)
+CREATE PROCEDURE spManagement_GetPatientInfo(in `@patientNo` int)
 begin
 	select * from Management_Patient_InfoView
 	where PatientNumber = `@patientNo`;
 end &&
 
 delimiter &&
-create procedure spManagement_GetFullPatientInfo(in `@patientNo` int)
+CREATE PROCEDURE spManagement_GetFullPatientInfo(in `@patientNo` int)
 begin
 	select * from Management_Patient_UpdateView
     where PatientNumber = `@patientNo`;
 end &&
 
 delimiter &&
-create procedure spManagement_GetPatientAppointments(in `@patientNo` int)
+CREATE PROCEDURE spManagement_GetPatientAppointments(in `@patientNo` int)
 begin
 	select * from Management_Patient_AppointmentView
 	where PatientNumber = `@patientNo`;
 end &&
 
 delimiter &&
-create procedure spManagement_GetPatientCompletedPayments(in `@patientNo` int)
+CREATE PROCEDURE spManagement_GetPatientCompletedPayments(in `@patientNo` int)
 begin
 	select PaymentNumber, PaymentDetails, DateOfPayment, Price 
     from Management_Patient_CompletedPaymentView
@@ -173,7 +173,7 @@ end &&
 call spManagement_GetPatientCompletedPayments(29)
 
 delimiter &&
-create procedure spManagement_GetPatientPendingPayments(in `@patientNo` int)
+CREATE PROCEDURE spManagement_GetPatientPendingPayments(in `@patientNo` int)
 begin
 	select PaymentNumber, PaymentDetails, Price
     from Management_Patient_PendingPaymentView
@@ -181,7 +181,7 @@ begin
 end &&
 
 delimiter &&
-create procedure spManagement_SearchEmployee(in `@phoneNo` int)
+CREATE PROCEDURE spManagement_SearchEmployee(in `@phoneNo` int)
 begin
 	select * from Management_Doctor_InfoView
     where PhoneNumber = `@phoneNo`;
@@ -192,7 +192,7 @@ begin
 end &&
 
 delimiter &&
-create procedure spManagement_GetAllEmployee()
+CREATE PROCEDURE spManagement_GetAllEmployee()
 begin
 	select * from Management_Doctor_InfoView;
     select * from Management_Reception_InfoView;
@@ -200,35 +200,35 @@ begin
 end &&
 
 delimiter &&
-create procedure spManagement_SearchReception(in `@phoneNo` int)
+CREATE PROCEDURE spManagement_SearchReception(in `@phoneNo` int)
 begin
 	select * from Management_Reception_SearchView
     where PhoneNumber = `@phoneNo`;   
 end &&
 
 delimiter &&
-create procedure spManagement_GetDoctorInfo(in `@doctorNo` int)
+CREATE PROCEDURE spManagement_GetDoctorInfo(in `@doctorNo` int)
 begin
 	select * from Management_Doctor_InfoView
     where DoctorNumber = `@doctorNo`;
 end &&
 
 delimiter &&
-create procedure spManagement_GetLabTechnicianInfo(in `@labTechNo` int)
+CREATE PROCEDURE spManagement_GetLabTechnicianInfo(in `@labTechNo` int)
 begin
 	select * from Management_LabTechnician_InfoView
     where TechnicianNumber = `@labTechNo`;
 end &&
 
 delimiter &&
-create procedure spManagement_GetReceptionInfo(in `@receptionNo` int)
+CREATE PROCEDURE spManagement_GetReceptionInfo(in `@receptionNo` int)
 begin
 	select * from Management_Reception_InfoView
     where ReceptionNumber = `@receptionNo`;
 end &&
 
 delimiter &&
-create procedure spManagement_UpdateUser(
+CREATE PROCEDURE spManagement_UpdateUser(
 	in `@patientNo` int,
     `@firstName` varchar(25),
     `@fatherName` varchar(25),
@@ -250,7 +250,7 @@ begin
 end &&
 
 delimiter &&
-create procedure spManagement_AddUser(
+CREATE PROCEDURE spManagement_AddUser(
 	in `@username` varchar(50),
     `@password` char(60) binary,
     `@role` tinyint)
@@ -261,7 +261,7 @@ begin
 end &&
 
 delimiter &&
-create procedure spManagement_AddReception(
+CREATE PROCEDURE spManagement_AddReception(
 	in `@firstName` varchar(25),
     `@fatherName` varchar(25),
     `@dateOfBirth` date,
@@ -273,7 +273,7 @@ begin
 end &&
 	
 delimiter &&
-create procedure spManagement_AddDoctor(
+CREATE PROCEDURE spManagement_AddDoctor(
 	in `@firstName` varchar(25),
     `@fatherName` varchar(25),
     `@dateOfBirth` date,
@@ -287,7 +287,7 @@ begin
 end &&
 
 delimiter &&
-create procedure spManagement_AddLabTechnician(
+CREATE PROCEDURE spManagement_AddLabTechnician(
 	in `@firstName` varchar(25),
     `@fatherName` varchar(25),
     `@dateOfBirth` date,
@@ -300,14 +300,14 @@ begin
 end &&
 
 delimiter &&
-create procedure spManagement_GetReceptionTransactions(in `@receptionNo` int)
+CREATE PROCEDURE spManagement_GetReceptionTransactions(in `@receptionNo` int)
 begin
 	select * from Management_Reception_TransactionsView
     where ReceptionNumber = `@receptionNo`;
 end &&
 
 delimiter && 
-create procedure spManagement_GetDailyTransactions(in `@dateOfPayment` date)
+CREATE PROCEDURE spManagement_GetDailyTransactions(in `@dateOfPayment` date)
 begin
 	select PaymentNumber, ReceptionName, PatientName, PaymentDetails, DATE_FORMAT(DateOfPayment, "%a, %b %e, %Y") as DateOfPayment, Price 
     from Management_CompletedPaymentsView
@@ -346,7 +346,7 @@ insert into Payment (patientNo, paymentDetails, price) values
 
 /* User Procedures */
 delimiter &&
-create procedure spGetUser(in `@username` varchar(50))
+CREATE PROCEDURE spGetUser(in `@username` varchar(50))
 begin
 	select 
 		userNo as UserNumber,
@@ -358,7 +358,7 @@ begin
 end &&
 
 delimiter &&
-create procedure spGetUserById(in `@userNo` int)
+CREATE PROCEDURE spGetUserById(in `@userNo` int)
 begin
 	select 
 		userNo as UserNumber,
@@ -370,7 +370,7 @@ begin
 end &&
 
 delimiter &&
-create procedure spUpdateUser(
+CREATE PROCEDURE spUpdateUser(
 	in `@userNo` int,
 	`@newPassword` char(60) binary
     )
@@ -381,7 +381,7 @@ begin
 end && 
 
 delimiter &&
-create procedure spManagement_LoadDashboardData()
+CREATE PROCEDURE spManagement_LoadDashboardData()
 begin
 	select COUNT(*) as HospitalizedPatients from Patient
     where type = true;
@@ -411,7 +411,8 @@ end &&
 
 
 /* Doctor Procedures */
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddAppointment`(
+delimiter &&
+CREATE PROCEDURE `spDoctor_AddAppointment`(
 	in `@PatientNo` int,
     in `@DoctorNo` int,
     in `@DateOfAppointment` date,
@@ -420,9 +421,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddAppointment`(
 begin
 insert into appointment (PatientNo, DoctorNo, DateOfAppointment,TimeOfAppointment) values 
 (`@PatientNo`,(select doctorNo from doctor where userNo =`@DoctorNo`),`@DateOfAppointment`,`@TimeOfAppointment`);
-end
+end &&
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddDiagnosis`(
+delimiter &&
+CREATE PROCEDURE `spDoctor_AddDiagnosis`(
 	in `@patientNo` int,
     in `@dateOfDiagnosis` date,
     in `@userNo` int,
@@ -430,26 +432,29 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddDiagnosis`(
 begin
 	insert into diagnosis (cardNo, dateOfDiagnosis, doctorNo, diagnosisDetails) values
     ((select cardNO from card where patientNo = `@patientNo`), `@dateOfDiagnosis`, (select doctorNo from doctor where userNo =`@userNo`), `@diagnosisDetails`);
-end
+end &&
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddLabRequest`(
+delimiter &&
+CREATE PROCEDURE `spDoctor_AddLabRequest`(
 	in `@userId` int,
     in `@patientNo` int,
     in `@DateTimeOfRequest` datetime
 )
 begin
 insert into labrequest (DoctorNo, PatientNo, DateTimeOfRequest)  values((select doctorNo from doctor where userNo = `@userId`),`@patientNo`,`@DateTimeOFRequest`);
-end
+end &&
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddLabRequestDetail`(
+delimiter &&
+CREATE PROCEDURE `spDoctor_AddLabRequestDetail`(
 	in `@RequestNo` bigint,
     in `@ReportType` varchar(15)
 )
 begin
 insert into labreport (RequestNo, ReportType) values(`@RequestNo`, `@ReportType`);
-end
+end &&
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddLabRequestPayment`(
+delimiter &&
+CREATE PROCEDURE `spDoctor_AddLabRequestPayment`(
 	in `@patientNo` int,
 	in `@price` decimal,
     in `@dateOfPayment` date
@@ -457,9 +462,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddLabRequestPayment`(
 begin
 	insert into payment (patientNo,paymentDetails,Price,dateOfPayment)
     values (`@patientNo`,'Lab Request',`@price`,`@dateOfPayment`);
-end
+end &&
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddLabRequestPayment`(
+delimiter &&
+CREATE PROCEDURE `spDoctor_AddLabRequestPayment`(
 	in `@patientNo` int,
 	in `@price` decimal,
     in `@dateOfPayment` date
@@ -467,38 +473,43 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_AddLabRequestPayment`(
 begin
 	insert into payment (patientNo,paymentDetails,Price,dateOfPayment)
     values (`@patientNo`,'Lab Request',`@price`,`@dateOfPayment`);
-end
+end &&
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_GetCountOfAppointment`(
+delimiter &&
+CREATE PROCEDURE `spDoctor_GetCountOfAppointment`(
 	in `@PatientNo` int,
     in `@DoctorNo` int,
     in `@DateOfAppointment` date
 )
 begin
  select * from appointment where PatientNo = `@PatientNo`and DoctorNo = (select doctorNo from doctor where userNo =`@DoctorNo`) and DateOfAppointment = `@DateOfAppointment`;
-end
+end &&
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_GetLabReport`(	in `@patientNo` int)
+delimiter &&
+CREATE PROCEDURE `spDoctor_GetLabReport`(	in `@patientNo` int)
 begin
 	SELECT labrequest.RequestNo, labrequest.PatientNo, labrequest.DateTimeOfRequest, labreport.ReportType, labreport.NormalValue, labreport.Result
 FROM labreport 
 inner join labrequest on labreport.RequestNo =labrequest.RequestNo
 where labrequest.PatientNo = `@patientNo`
 order by labrequest.RequestNo desc;
-end
+end &&
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_GetLastLabRequestId`()
+delimiter &&
+CREATE PROCEDURE `spDoctor_GetLastLabRequestId`()
 begin
 select RequestNo from labrequest order by RequestNo desc limit 1;
-end
+end &&
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_GetVitalSign`(	in `@vitalSignNo` int)
+delimiter &&
+CREATE PROCEDURE `spDoctor_GetVitalSign`(	in `@vitalSignNo` int)
 begin
 	select * from vitalsign 
     where vitalSignNo = `@vitalSignNo`;
-end
+end &&
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spDoctor_UpdateAppointment`(
+delimiter &&
+CREATE PROCEDURE `spDoctor_UpdateAppointment`(
 	in `@PatientNo` int,
     in `@DoctorNo` int,
     in `@DateOfAppointment` date,
@@ -508,10 +519,11 @@ delete from appointment
 where `DoctorNo` = (select doctorNo from doctor where userNo =`@DoctorNo`) 
 and (`PatientNo`= `@PatientNo`) and (`DateOfAppointment`=`@DateOfAppointment`);
 call spDoctor_AddAppointment(`@PatientNo`,`@DoctorNo`,`@DateOfAppointment`,`@TimeOfAppointment`);
-end
+end &&
 
 /*Lab Technician*/
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spLaboratorist_AddLabReport`(
+delimiter &&
+CREATE PROCEDURE `spLaboratorist_AddLabReport`(
 	in `@patientNo` int,
     in `@ReportType` varchar(15),
     in `@Result` varchar(20),
@@ -521,4 +533,4 @@ UPDATE labreport SET `Result` = `@Result`, `NormalValue` = `@NormalValue`
 WHERE 	(`RequestNo` = (select RequestNo from labrequest where PatientNo = `@patientNo` order by RequestNo desc limit 1)) 
 	and 
 		(`ReportType` = `@ReportType`);
-end
+end &&
