@@ -4,7 +4,10 @@ const { AppError, wrapAsync } = require("./utils/error");
 const methodOverride = require("method-override");
 const appRoutes = require("./routes");
 const session = require("express-session");
+const helmet = require("helmet")
 const flash = require("connect-flash");
+const mysql = require("mysql")
+const mysqlStore = require("connect-mysql")(session)
 
 const app = express();
 
@@ -13,7 +16,8 @@ app.set("views", path.join(__dirname, "/views"));
 app.set("queue", new Array());
 
 const sessionConfig = {
-  secret: "passdfgpassdfg",
+  name: "session",
+  secret: "vo&yFwT244b9?Q-;CR~#lVtQ.C(VQD",
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -21,8 +25,19 @@ const sessionConfig = {
     expires: Date.now() + 24 * 60 * 60 * 1000,
     maxAge: 1000 * 60 * 60 * 24,
   },
+  store: new mysqlStore({
+    pool: true,
+    config: {
+        user: 'session-handler',
+        password: 'session.123',
+        database: 'APHMSDB'
+    },
+    retries: 5,
+    cleanup: true
+  })
 };
 
+app.use(helmet())
 app.use(express.static(path.join(__dirname, "/views/Assets")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
@@ -51,7 +66,6 @@ app.get("/logout", (req, res, next) => {
 });
 
 app.all("*", (req, res, next) => {
-  console.log(app.get("queue"))
   next(new AppError(404, "Page Not Found!", res.locals.type));
 });
 
@@ -61,5 +75,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(80, "localhost", () => {
-  console.log("Server started");
+  console.log(`Server started in ${process.env.NODE_ENV} mode`);
 });
