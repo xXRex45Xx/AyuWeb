@@ -22,22 +22,33 @@ router.get('/', wrapAsync(async (req, res, next) => {
         return
       }
       else {
-        for (let i = 0; i < pendingPatientsCount; i++) {
-        con.query("call spDoctor_LoadDashboardData_PendingPatient(?)", pendingPatients[i].patientId, (error, results, fields) => {
-          if (error) {
-            next(new AppError(500, error.sqlMessage, res.locals.type))
-            return
+        con.query("call spDoctor_LoadDashboardData_TodayAppointment()",(error, results, fields) => {
+            if (error) {
+              next(new AppError(500, error.sqlMessage, res.locals.type))
+              return
+            }
+            const todayAppointment = results[0]
+            if(pendingPatientsCount>0){
+            for (let i = 0; i < pendingPatientsCount; i++) {
+            con.query("call spDoctor_LoadDashboardData_PendingPatient(?)", pendingPatients[i].patientId, (error, results, fields) => {
+              if (error) {
+                next(new AppError(500, error.sqlMessage, res.locals.type))
+                return
+              }
+              pendingPatientslist.push(...results[0]);
+              if(i==pendingPatientsCount-1){
+                res.render('Doctor/HomePage.ejs', { page: "homepage",todayAppointment,pendingPatientslist})
+              }
+            })}}
+            else{
+              res.render('Doctor/HomePage.ejs', { page: "homepage",todayAppointment,pendingPatientslist})
+            }
+
+            con.release()
           }
-          pendingPatientslist.push(...results[0]);
-        })
-      }}
-      con.release()
+        )}
     })
-    console.log(pendingPatientslist);
-
-
-
-  res.render('Doctor/HomePage.ejs', { page: "homepage" })
+  
 }))
 
 module.exports = router

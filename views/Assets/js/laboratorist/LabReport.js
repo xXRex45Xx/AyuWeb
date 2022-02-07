@@ -1,5 +1,6 @@
-$(".btnLabReportSave").on("click", async () => {
-    const row = document.querySelector(".btnLabReportSave").parentElement.parentElement
+$(".btnLabReportSave").on("click", async function(){
+    //const row = document.querySelector(".btnLabReportSave").parentElement.parentElement
+    const row = this.parentElement
     const normalValue = row.querySelector("[name=normalValue]").value
     const result = row.querySelector("[name=result]").value
     const type = row.querySelector(".reportType").innerHTML
