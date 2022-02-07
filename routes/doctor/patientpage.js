@@ -137,6 +137,17 @@ router.get('/:id/labRequest', wrapAsync(async (req, res, next) => {
   res.render('Partials/DoctorPage/labRequest.ejs', { id })
 }))
 
+router.get('/:id/served', wrapAsync(async (req, res, next) => {
+  const { id } = req.params
+  const queue = router.locals.settings.queue
+  for(let i = 0; i < queue.length; i++){
+    if(queue[i].patientId === id)
+      queue.splice(i, 1)
+  }
+  req.flash('success',"Patient Served Successfully")
+  res.render("Doctor/PatientPage.ejs", { page: "patientpage" });
+}))
+
 router.post("/:id/newlabRequest", (req, res, next) => {
   var labRequestsPrice = 0;
   const { labRequest } = req.body

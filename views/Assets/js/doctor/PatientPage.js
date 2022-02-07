@@ -1,3 +1,4 @@
+
 const navLink = $(".containerNav_link");
 let selectedPatient = null;
 let selectedPayment = null;
@@ -58,6 +59,20 @@ $(".containerNav_info").on("click", async function () {
       dataType: "html",
       success: function (response) {
         $(".mainContainer_subContainer").html(response);
+        $("#btnServed").on("click",()=>{
+          $.ajax({
+            type: "GET",
+            url: `/doctor/patientpage/${selectedPatient}/served`,
+            dataType: "html",
+            success: function (response) {
+              $(document.documentElement).html(response);
+              $("#patientPage").click()
+            },
+            error: function (error) {
+              $(".mainContainer_subContainer").html(error.responseText);
+            },
+          });
+        })
       },
       error: function (error) {
         $(".mainContainer_subContainer").html(error.responseText);
