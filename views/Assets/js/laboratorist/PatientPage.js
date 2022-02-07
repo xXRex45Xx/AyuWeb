@@ -81,7 +81,7 @@ $(".containerNav_labReport").on("click",  function () {
           const row = this.parentElement.parentElement
           const normalValue = row.querySelector(".inputLabReport_NormalValue").value
           const result = row.querySelector(".inputLabReport_Result").value
-          const type = row.querySelector(".reportType").innerHTML
+          const type = row.querySelector(".reportType").innerText
           if (normalValue == "" || result == "")
               alert("Please Fill Both The Normal Value and The Result")
           else {
