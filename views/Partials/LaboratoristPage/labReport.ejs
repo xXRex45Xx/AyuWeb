@@ -224,14 +224,13 @@
                             <th class="reportType"><%= labreport.ReportType%></th>
                             <%if(labreport.NormalValue == "___" || labreport.Result == "___"){%>
                                     <div class="form-group">
-                                    <td><input class="inputLabreport ps-0" type="text" placeholder="Value" name="normalValue">
-                                    </td>
-                                    <td><input class="inputLabreport ps-0" type="text" placeholder="Value " name="result">
-                                    </td>
-                                    </div>
-                                    <td>
-                                        <button type="submit" class="btn btn-primary btn-sm btnLabReportSave" >Save</button>
-                                    </td>
+                                            <td><input class="inputLabreport inputLabReport_NormalValue ps-0"  type="text" placeholder="Value" name="normalValue">
+                                            </td>
+                                            <td><input class="inputLabreport inputLabReport_Result ps-0"  type="text" placeholder="Value " name="result">
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary btn-sm btnLabReportSave" >Save</button>
+                                            </td>
                                     </div>
                                     <%}%>
                             <%if(labreport.NormalValue != "___" && labreport.Result != "___"){%>

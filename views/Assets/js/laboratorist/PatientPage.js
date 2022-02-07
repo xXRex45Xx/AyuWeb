@@ -76,10 +76,11 @@ $(".containerNav_labReport").on("click",  function () {
       dataType: "html",
       success: function (response) {
         $(".mainContainer_subContainer").html(response);
-        $(".btnLabReportSave").on("click",  () => {
-          const row = document.querySelector(".btnLabReportSave").parentElement.parentElement
-          const normalValue = row.querySelector("[name=normalValue]").value
-          const result = row.querySelector("[name=result]").value
+        $(".btnLabReportSave").on("click",  function() {
+          //const row = document.querySelector(".btnLabReportSave").parentElement.parentElement
+          const row = this.parentElement.parentElement
+          const normalValue = row.querySelector(".inputLabReport_NormalValue").value
+          const result = row.querySelector(".inputLabReport_Result").value
           const type = row.querySelector(".reportType").innerHTML
           if (normalValue == "" || result == "")
               alert("Please Fill Both The Normal Value and The Result")
