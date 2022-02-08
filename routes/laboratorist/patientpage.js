@@ -28,9 +28,10 @@ const db = mysql.createPool({
   database: 'APHMSDB'
 })
 
-router.get("/", (req, res, next) => {
+router.get("/", wrapAsync(async (req, res, next) => {
   res.render("laboratorist/PatientPage.ejs", { page: "patientpage" });
-});
+}));
+
 router.get("/search", wrapAsync(async (req, res, next) => {
   const { q } = req.query;
   if (!q || isNaN(q)) {

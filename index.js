@@ -60,10 +60,10 @@ app.use("/changepass", appRoutes.changePassword);
 app.use("/doctor", appRoutes.doctor);
 app.use("/laboratorist", appRoutes.laboratorist);
 
-app.get("/logout", (req, res, next) => {
+app.get("/logout", wrapAsync(async (req, res, next) => {
   if (req.session) req.session.destroy();
   res.redirect("/");
-});
+}));
 
 app.all("*", (req, res, next) => {
   next(new AppError(404, "Page Not Found!", res.locals.type));
