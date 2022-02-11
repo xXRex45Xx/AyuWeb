@@ -27,9 +27,10 @@ const db = mysql.createPool({
   database: 'APHMSDB'
 })
 
-router.get("/", (req, res, next) => {
+router.get("/", wrapAsync(async (req, res, next) => {
   res.render("Doctor/PatientPage.ejs", { page: "patientpage" });
-});
+}));
+
 router.get("/search", wrapAsync(async (req, res, next) => {
   const { q } = req.query;
   if (!q || isNaN(q)) {
@@ -89,7 +90,14 @@ router.get('/:id/info', wrapAsync(async (req, res, next) => {
                   next(new AppError(404, "Patient Not Found", res.locals.type))
                   return
                 }
-                res.render('Partials/DoctorPage/info.ejs', { info, appointments, vitalSign, day, month, year })
+                con.query(`call spDoctor_GetDiagnosis(?)`, id, (error, diagnosis, fields) => {
+                  if (error) {
+                    next(new AppError(500, "Database error occured! Please contact your system administrator.", res.locals.type))
+                    return
+                  }
+                  res.render('Partials/DoctorPage/info.ejs', { info, diagnosis, appointments, vitalSign, day, month, year })
+                })
+
               }
               con.release()
             })
@@ -137,7 +145,18 @@ router.get('/:id/labRequest', wrapAsync(async (req, res, next) => {
   res.render('Partials/DoctorPage/labRequest.ejs', { id })
 }))
 
-router.post("/:id/newlabRequest", (req, res, next) => {
+router.get('/:id/served', wrapAsync(async (req, res, next) => {
+  const { id } = req.params
+  const queue = router.locals.settings.queue
+  for(let i = 0; i < queue.length; i++){
+    if(queue[i].patientId === id)
+      queue.splice(i, 1)
+  }
+  req.flash('success',"Patient Served Successfully")
+  res.render("Doctor/PatientPage.ejs", { page: "patientpage" });
+}))
+
+router.post("/:id/newlabRequest", wrapAsync(async (req, res, next) => {
   var labRequestsPrice = 0;
   const { labRequest } = req.body
   const { id } = req.params
@@ -182,7 +201,8 @@ router.post("/:id/newlabRequest", (req, res, next) => {
       })
     }
   })
-})
+}));
+
 router.get('/:id/diagnostics', wrapAsync(async (req, res, next) => {
   const { id } = req.params
   db.getConnection((err, con) => {

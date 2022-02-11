@@ -5,7 +5,7 @@
                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#panelsStayOpen-collapseInformation" aria-expanded="true"
                     aria-controls="panelsStayOpen-collapseInformation">
-                    Gnegeral Information
+                    General Information
                 </button>
             </h2>
             <div id="panelsStayOpen-collapseInformation" class="accordion-collapse collapse show"
@@ -170,100 +170,17 @@
                                 <thead>
                                     <tr>
                                         <th>Date</th>
-                                        <th>Discription</th>
+                                        <th>Description</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th> 12-2-2019</th>
-                                        <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis
-                                            molestiae
-                                            adipisci excepturi
-                                            nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
-                                            Doloribus incidunt
-                                            rem sapiente cum sit.</th>
-                                    </tr>
-                                    <tr>
-                                        <th>12-2-2019</th>
-                                        <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis
-                                            molestiae
-                                            adipisci excepturi
-                                            nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
-                                            Doloribus incidunt
-                                            rem sapiente cum sit.</th>
-                                    </tr>
-                                    <tr>
-                                        <th>12-2-2019</th>
-                                        <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis
-                                            molestiae
-                                            adipisci excepturi
-                                            nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
-                                            Doloribus incidunt
-                                            rem sapiente cum sit.</th>
-                                    </tr>
-                                    <tr>
-                                        <th>12-2-2019</th>
-                                        <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis
-                                            molestiae
-                                            adipisci excepturi
-                                            nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
-                                            Doloribus incidunt
-                                            rem sapiente cum sit.</th>
-                                    </tr>
-                                    <tr>
-                                        <th>12-2-2019</th>
-                                        <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis
-                                            molestiae
-                                            adipisci excepturi
-                                            nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
-                                            Doloribus incidunt
-                                            rem sapiente cum sit.</th>
-                                    </tr>
-                                    <tr>
-                                        <th>12-2-2019</th>
-                                        <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis
-                                            molestiae
-                                            adipisci excepturi
-                                            nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
-                                            Doloribus incidunt
-                                            rem sapiente cum sit.</th>
-                                    </tr>
-                                    <tr>
-                                        <th>12-2-2019</th>
-                                        <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis
-                                            molestiae
-                                            adipisci excepturi
-                                            nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
-                                            Doloribus incidunt
-                                            rem sapiente cum sit.</th>
-                                    </tr>
-                                    <tr>
-                                        <th>12-2-2019</th>
-                                        <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis
-                                            molestiae
-                                            adipisci excepturi
-                                            nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
-                                            Doloribus incidunt
-                                            rem sapiente cum sit.</th>
-                                    </tr>
-                                    <tr>
-                                        <th>12-2-2019</th>
-                                        <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis
-                                            molestiae
-                                            adipisci excepturi
-                                            nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
-                                            Doloribus incidunt
-                                            rem sapiente cum sit.</th>
-                                    </tr>
-                                    <tr>
-                                        <th>12-2-2019</th>
-                                        <th>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis
-                                            molestiae
-                                            adipisci excepturi
-                                            nulla in velit, quisquam, error quos blanditiis optio incidunt, et impedit.
-                                            Doloribus incidunt
-                                            rem sapiente cum sit.</th>
-                                    </tr>
+                                    <% diagnosis[0].forEach(diagnosis=>{ %> 
+                                         <tr>
+                                            <td><%= diagnosis.dateOfDiagnosis %> </td>
+                                            <td><%= diagnosis.diagnosisDetails %> </td>
+                                        </tr>
+                                    <% }) %> 
+                                    
 
                                 </tbody>
                             </table>

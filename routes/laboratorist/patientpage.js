@@ -28,9 +28,10 @@ const db = mysql.createPool({
   database: 'APHMSDB'
 })
 
-router.get("/", (req, res, next) => {
+router.get("/", wrapAsync(async (req, res, next) => {
   res.render("laboratorist/PatientPage.ejs", { page: "patientpage" });
-});
+}));
+
 router.get("/search", wrapAsync(async (req, res, next) => {
   const { q } = req.query;
   if (!q || isNaN(q)) {
@@ -124,7 +125,7 @@ router.get('/:id/labReport', wrapAsync(async (req, res, next) => {
   })
 }))
 
-router.post("/:id/labReportResponse", (req, res, next) => {
+router.post("/:id/labReportResponse", wrapAsync(async (req, res, next) => {
   const { normal, result, patientId, reportType } = req.body
   db.getConnection((err, con) => {
     if (err) {
@@ -132,17 +133,18 @@ router.post("/:id/labReportResponse", (req, res, next) => {
       return
     }
     else {
-      con.query("call splaboratorist_AddLabReport(?,?,?,?)", [patientId, reportType, result, normal], (error, results, fields) => {
+      con.query("call spLaboratorist_AddLabReport(?,?,?,?)", [patientId, reportType, result, normal], (error, results, fields) => {
         if (error) {
           next(new AppError(500, error.sqlMessage, res.locals.type))
           return
         }
         con.release()
+        console.log(results);
+        res.send("success");
       })
     }
   })
-  res.redirect(`/laboratorist/patientpage/${patientId}/labReport`)
-})
-
+  // res.redirect('/laboratorist/patientpage/homepage')
+}))
 
 module.exports = router;

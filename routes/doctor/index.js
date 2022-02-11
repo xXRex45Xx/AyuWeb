@@ -7,6 +7,7 @@ const route = express.Router();
 route.use(doctorAuthorization)
 
 route.use((req, res, next) => {
+  homePage.locals = route.locals
   patientPage.locals = route.locals
   res.locals.type = "doctor";
   next();
