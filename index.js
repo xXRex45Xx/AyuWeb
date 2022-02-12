@@ -7,6 +7,8 @@ const session = require("express-session");
 const helmet = require("helmet")
 const flash = require("connect-flash");
 const mysql = require("mysql")
+const https = require("https")
+const fs = require("fs")
 const mysqlStore = require("connect-mysql")(session)
 
 const app = express();
@@ -74,6 +76,16 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("Partials/Error/error.ejs", { err });
 });
 
-app.listen(80, "localhost", () => {
-  console.log(`Server started in ${process.env.NODE_ENV} mode`);
-});
+// app.listen(3000, "192.168.43.3", () => {
+//   console.log(`Server started in ${process.env.NODE_ENV} mode`);
+// });
+
+https.createServer(
+  {
+    key: fs.readFileSync(path.join(__dirname, "/certs/ayuprimary-key.pem")),
+    cert: fs.readFileSync(path.join(__dirname, "/certs/ayuprimary-cert.pem"))
+  },
+  app
+).listen(3000,() =>{
+  console.log(`HTTPS Server Started in ${process.env.NODE_ENV} mode`)
+})
