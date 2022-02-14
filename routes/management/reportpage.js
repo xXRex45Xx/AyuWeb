@@ -1,113 +1,17 @@
 const express = require("express")
-const { AppError, wrapAsync } = require("../../utils/error")
-const db = require("../../utils/dbconnector")
+const { wrapAsync } = require("../../utils/error")
+const { reportPage } = require('../../controllers/management');
 
 const router = express.Router()
 
-router.get("/", wrapAsync(async (req, res, next) => {
-    res.render("Management/ReportPage.ejs", { page: "reportpage" })
-}))
+router.get("/", wrapAsync(reportPage.renderReportPage))
 
-router.get("/reception/search", wrapAsync(async (req, res, next) => {
-    const { q } = req.query;
-    if (!q || isNaN(q))
-        throw new AppError(400, "Please enter a valid phone number!", res.locals.type)
-    db.getConnection((err, con) => {
-        if (err) {
-            next(new AppError(500, "Database error occured! Please contact your system administrator.", res.locals.type))
-            return
-        }
-        con.query(`call spManagement_SearchReception(?)`, q, (error, results, fields) => {
-            if (error) {
-                next(new AppError(500, "Database error occured! Please contact your system administrator.", res.locals.type))
-                return
-            }
-            else
-                res.render('Partials/ReportPage/ReceptionSearch.ejs', { receptionists: results[0] })
-        })
-        con.release()
-    })
-}))
+router.get("/reception/search", wrapAsync(reportPage.searchReception))
 
-router.get("/receptiontransaction/:id", wrapAsync(async (req, res, next) => {
-    const { id } = req.params
-    if (!id || isNaN(id))
-        throw new AppError(400, "Invalid Parameters!", res.locals.type)
-    db.getConnection((err, con) => {
-        if (err) {
-            next(new AppError(500, "Database Error Occured!", res.locals.type))
-            return
-        }
-        con.query("call spManagement_GetReceptionInfo(?)", id, (error, info, fields) => {
-            if (error) {
-                next(new AppError(500, "Database Error Occured!", res.locals.type))
-                return
-            }
-            con.query("call spManagement_GetReceptionTransactions(?)", id, (error, transactions, fields) => {
-                if (error) {
-                    next(new AppError(500, "Database Error Occured!", res.locals.type))
-                    return
-                }
-                let total = 0
-                for (let transaction of transactions[0]) {
-                    total += transaction.Price
-                }
-                res.render("Partials/Reports/ReceptionTransactionReport.ejs", { info: info[0][0], transactions: transactions[0], total: total.toFixed(2) })
-            })
-        })
-    })
-}))
+router.get("/receptiontransaction/:id", wrapAsync(reportPage.showReceptionTransactionsReport))
 
-router.get("/dailyreport/:reportdate", wrapAsync(async (req, res, next) => {
-    const { reportdate } = req.params
-    if (!reportdate || isNaN(Date.parse(reportdate)))
-        throw new AppError(400, "Invalid Parameters!", res.locals.type)
-    db.getConnection((err, con) => {
-        if (err) {
-            next(new AppError(500, "Database Error Occured!", res.locals.type))
-            return
-        }
-        con.query("call spManagement_GetDailyTransactions(?)", reportdate, (error, transactions, fields) => {
-            if(error){
-                next(new AppError(500, "Database Error Occured!", res.locals.type))
-                return
-            }
-            let total = 0
-            for(let transaction of transactions[0]){
-                total += transaction.Price
-            }
-            res.render("Partials/Reports/DailyIncomeReport.ejs", {transactions: transactions[0], total: total.toFixed(2)})
-        })
-    })
-}))
+router.get("/dailyreport/:reportdate", wrapAsync(reportPage.showDailyIncomeReport))
 
-router.get("/patientpayment/:id", wrapAsync(async (req, res, next) => {
-    const { id } = req.params
-    if (!id || isNaN(id))
-        throw new AppError(400, "Invalid Parameters!", res.locals.type)
-    db.getConnection((err, con) => {
-        if (err) {
-            next(new AppError(500, "Database Error Occured!", res.locals.type))
-            return
-        }
-        con.query("call spManagement_GetPatientInfo(?)", id, (error, info, fields) => {
-            if (error) {
-                next(new AppError(500, error.sqlMessage, res.locals.type))
-                return
-            }
-            con.query("call spManagement_GetPatientCompletedPayments(?)", id, (error, payments, fields) => {
-                if (error) {
-                    next(new AppError(500, "Database Error Occured!", res.locals.type))
-                    return
-                }
-                let total = 0
-                for (let payment of payments[0]) {
-                    total += payment.Price
-                }
-                res.render("Partials/Reports/PatientPaymentReport.ejs", { info: info[0][0], payments: payments[0], total: total.toFixed(2) , attachment: false})
-            })
-        })
-    })
-}))
+router.get("/patientpayment/:id", wrapAsync(reportPage.showPatientPaymentsReport))
 
 module.exports = router

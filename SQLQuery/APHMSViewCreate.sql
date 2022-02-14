@@ -156,7 +156,8 @@ alter view Management_Reception_SearchView
 as
 select
 	receptionNo as ReceptionNumber,
-    CONCAT(firstName, ' ', fatherName) as ReceptionName,
+    firstName as FirstName,
+    fatherName as FatherName,
     phoneNo as PhoneNumber
 from Reception;
 

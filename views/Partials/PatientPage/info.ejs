@@ -50,6 +50,7 @@
             </span>
         </div>
     </div>
+    <% if(type === "reception"){ %> 
     <div class="ps-2 infBox_element align-items-center row mt-4 col-auto">
         <span class="infoBox_label me-2">Doctor Assignment: </span>
         <div class="col-6 col-md-5 col-lg-4 col-xl-3">
@@ -65,7 +66,8 @@
         <div class="col-2">
             <button type="button" class="btn btn-primary infoBox_addQueue">Queue</button>
         </div>
-    </div>
+    </div> 
+    <% } %> 
 </div>
 
 <div class="container-fluid row appointmentContainer mt-4 h-75">

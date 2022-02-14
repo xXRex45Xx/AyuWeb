@@ -126,7 +126,7 @@ $(".containerNav_newDiagnostics").on("click", async function () {
   if (selectedPatient) {
     $.ajax({
       type: "GET",
-      url: `/doctor/patientpage/${selectedPatient}/diagnostics`,
+      url: `/doctor/patientpage/${selectedPatient}/newDiagnosis`,
       dataType: "html",
       success: function (response) {
         $(".mainContainer_subContainer").html(response);
