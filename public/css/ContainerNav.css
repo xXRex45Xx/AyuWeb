@@ -1,0 +1,62 @@
+.containerNav{
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 10px 10px 0 0;
+    border-bottom: 1px solid lightgray;
+}
+
+.containerNav_form{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.containerNav_searchIcon{
+    width: 30px;
+    height: 30px;
+}
+
+.containerNav_searchPhone{
+    border: 3px solid #008cff;
+    outline-color: #0076d4;
+    border-radius: 20px;
+    font-size: 12pt;
+    padding: 0.25em 0.7em;
+}
+
+.containerNav_selectDate{
+    border: 3px solid #008cff;
+    outline-color: #0076d4;
+    border-radius: 20px;
+    font-size: 12pt;
+    padding: 0.25em 0.7em;
+}
+
+.containerNav_link{
+    text-decoration: none;
+    margin-left: 15px;
+    color: #0076d4;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    font-size: 11pt;
+    border: 0;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.containerNav_link--active{
+    border-bottom: 3px solid #0076d4;
+    border-radius: 3px;
+}
+
+.containerNav_linkIcon{
+    width: 20px;
+    height: 20px;
+}
+
+.containerNav_rightNav{
+    margin-left: auto;
+}
