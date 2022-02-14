@@ -1,11 +1,11 @@
 const express = require('express');
-const mysql = require("mysql")
 const { AppError, wrapAsync } = require("../../utils/error")
 const methodOverride = require("method-override")
 const { patientSchema } = require("../../utils/validationSchemas")
 const generateCardNo = require("../../utils/card-number-generator");
 const { object } = require('joi');
 const labPrice = require('../../utils/LabRequestsPrice');
+const db = require("../../utils/dbconnector")
 
 const router = express.Router();
 
@@ -17,15 +17,6 @@ month = date.getMonth();
 month = parseInt(month) + 1;
 year = date.getFullYear();
 var now = `${year}-${month}-${day}`
-
-
-const db = mysql.createPool({
-  connectionLimit: 100,
-  host: 'localhost',
-  user: 'Ayu',
-  password: 'ayu.123',
-  database: 'APHMSDB'
-})
 
 router.get("/", wrapAsync(async (req, res, next) => {
   res.render("Doctor/PatientPage.ejs", { page: "patientpage" });

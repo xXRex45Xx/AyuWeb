@@ -1,18 +1,10 @@
 const express = require('express');
-const mysql = require("mysql")
 const { AppError, wrapAsync } = require("../../utils/error")
 const { patientSchema } = require("../../utils/validationSchemas")
 const generateCardNo = require("../../utils/card-number-generator")
+const db = require("../../utils/dbconnector")
 
 const router = express.Router();
-
-const db = mysql.createPool({
-    connectionLimit: 100,
-    host: 'localhost',
-    user: 'Ayu',
-    password: 'ayu.123',
-    database: 'APHMSDB'
-})
 
 const validatePatient = async (req, res, next) => {
     try {

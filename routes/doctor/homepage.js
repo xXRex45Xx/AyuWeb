@@ -1,15 +1,9 @@
 const express = require('express')
 const mysql = require("mysql")
 const { wrapAsync } = require("../../utils/error")
-const router = express.Router()
+const db = require("../../utils/dbconnector")
 
-const db = mysql.createPool({
-  connectionLimit: 100,
-  host: 'localhost',
-  user: 'Ayu',
-  password: 'ayu.123',
-  database: 'APHMSDB'
-})
+const router = express.Router()
 
 router.get('/', wrapAsync(async (req, res, next) => {
   const pendingPatients = router.locals.settings.queue

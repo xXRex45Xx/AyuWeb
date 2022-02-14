@@ -6,7 +6,6 @@ const appRoutes = require("./routes");
 const session = require("express-session");
 const helmet = require("helmet")
 const flash = require("connect-flash");
-const mysql = require("mysql")
 const https = require("https")
 const fs = require("fs")
 const mysqlStore = require("connect-mysql")(session)

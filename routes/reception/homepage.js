@@ -1,15 +1,7 @@
 const express = require('express')
 const { AppError, wrapAsync } = require("../../utils/error")
-const mysql = require("mysql")
 const router = express.Router()
-
-const db = mysql.createPool({
-    connectionLimit: 100,
-    host: 'localhost',
-    user: 'Ayu',
-    password: 'ayu.123',
-    database: 'APHMSDB'
-})
+const db = require("../../utils/dbconnector")
 
 router.get('/', wrapAsync(async (req, res, next) => {
     db.getConnection((err, con) => {
